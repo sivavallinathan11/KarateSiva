@@ -1,0 +1,59 @@
+[
+    {
+        "memberNumber": "",
+        "title": "Dr",
+        "firstName": "Wilfred",
+        "lastName": "Hyphen-Bot",
+        "email": "",
+        "street": "221B Baker Street",
+        "suburb": "suburb",
+        "state": "SA",
+        "postCode": "5000",
+        "country": "AUS",
+        "mobile": "0401256156",
+        "dateOfBirth": "1950-06-22",
+        "isSenior": false,
+        "source": "GGWebsite",
+        "additionalFields": {
+            "IBEBrand": "GGWebsite"
+        }
+    },
+    {
+        "memberNumber": "",
+        "title": "Mr & Mrs",
+        "firstName": "Jack & Judy",
+        "lastName": "von Testrobot",
+        "email": "",
+        "street": "221B Baker Street",
+        "suburb": "suburb",
+        "state": "SA",
+        "postCode": "5000",
+        "country": "AUS",
+        "mobile": "0401256156",
+        "dateOfBirth": "1950-06-22",
+        "isSenior": false,
+        "source": "GGWebsite",
+        "additionalFields": {
+            "IBEBrand": "GGWebsite"
+        }
+    },
+    {
+        "memberNumber": "",
+        "title": "Mrs",
+        "firstName": "UPPERCASE",
+        "lastName": "ROBOT",
+        "email": "",
+        "street": "221B Baker Street",
+        "suburb": "suburb",
+        "state": "SA",
+        "postCode": "5000",
+        "country": "AUS",
+        "mobile": "0401256156",
+        "dateOfBirth": "1950-06-22",
+        "isSenior": false,
+        "source": "GGWebsite",
+        "additionalFields": {
+            "IBEBrand": "GGWebsite"
+        }
+    }
+]

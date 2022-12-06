@@ -19,6 +19,7 @@ Feature: CreateMemberV3 Member Join
       """
     
     * def members = read('./CreateMemberV3.json')
+    * header Authorization = bearerToken
 
   
   Scenario Outline: Join ${title} ${firstName} ${lastName}  	
@@ -27,10 +28,21 @@ Feature: CreateMemberV3 Member Join
     
     Given path 'api/Member/CreateMemberV3'
     And header Authorization = bearerToken
-    And header Content-type = "application/json"
+    #And header Content-type = "application/json"
     And request __row
     When method post
     Then status 200
+    * print response
+    * print response.memberGuid
+    * print response.memberNumber
+    
+    Given path 'api/Member'
+    And header Authorization = bearerToken
+    And param MemberGuid = response.memberGuid
+    And param MemberNumber = response.memberNumber
+    When method get
+    Then status 200
+    * print response
 
     Examples: 
       | members |

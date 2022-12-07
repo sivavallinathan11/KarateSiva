@@ -3,7 +3,7 @@ import com.intuit.karate.junit5.Karate;
 
 public class MembershipRunner {
 	@Karate.Test
-    Karate testParkCdn() {
+    Karate testMembershipRunner() {
         return Karate.run("CreateMemberV3").relativeTo(getClass());
     }    
 }

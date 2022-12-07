@@ -26,7 +26,10 @@ function fn() {
 
   // we don't have a mocked environment but it's here in case we want one
   if(env !== 'mock') {
+    // this will get a token once and use it for all tests
     var result = karate.callSingle('classpath:signin/get-token-post.feature', config)
+    // this sets the header for all api calls
+    karate.configure('headers', { 'Authorization': result.token });
     config.token = result.token
   }
   return config;

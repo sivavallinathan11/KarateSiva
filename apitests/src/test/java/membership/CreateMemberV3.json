@@ -15,7 +15,8 @@
         "isSenior": false,
         "source": "GGWebsite",
         "additionalFields": {
-            "IBEBrand": "GGWebsite"
+            "IBEBrand": "GGWebsite",
+            "isSenior": true
         }
     },
     {
@@ -30,11 +31,11 @@
         "postCode": "5000",
         "country": "AUS",
         "mobile": "0401256156",
-        "dateOfBirth": "1950-06-22",
-        "isSenior": false,
+        "dateOfBirth": "1940-06-22",
         "source": "GGWebsite",
         "additionalFields": {
-            "IBEBrand": "GGWebsite"
+            "IBEBrand": "GGWebsite",
+            "isSenior": true
         }
     },
     {
@@ -49,8 +50,7 @@
         "postCode": "5000",
         "country": "AUS",
         "mobile": "0401256156",
-        "dateOfBirth": "1950-06-22",
-        "isSenior": false,
+        "dateOfBirth": "1950-06-22T00:00:00+00:00",
         "source": "GGWebsite",
         "additionalFields": {
             "IBEBrand": "GGWebsite"

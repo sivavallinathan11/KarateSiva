@@ -27,6 +27,16 @@ Feature: CreateMemberV3 Member Join
   	* set __row.email = random_email(10)
   	* def cost = __row.additionalFields.isSenior == true ? 40 : 50
 		* print __row
+		# example of how to use this is here: https://stackoverflow.com/questions/55938266/karate-need-help-to-assert-a-single-dimension-array-for-date-range/55938480#55938480
+		* def longDate = 
+		"""
+			function(s) {
+				var SimpleDateFormat = Java.type('java.text.SimpleDateFormat');
+	  		var sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+	  		return sdf.parse(s).time;
+	  	}
+		"""
+		* print longDate
 		# member join - check difference between senior and non senior
 		# validate response structure
     Given path 'api/Member/CreateMemberV3'

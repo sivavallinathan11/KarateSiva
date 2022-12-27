@@ -11,4 +11,9 @@ public class MembershipRunner {
 	Karate testBenefitsTypeRunner() {
 		return Karate.run("BenefitType").relativeTo(getClass());
 	}
+	
+	@Karate.Test
+	Karate testCouponRunner() {
+		return Karate.run("Coupon").relativeTo(getClass());
+	}
 }

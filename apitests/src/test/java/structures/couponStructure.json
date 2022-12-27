@@ -1,0 +1,22 @@
+{
+
+            AllocatedRedemptions: '#number',
+            Code: '#string',
+            CouponArea: '#string',
+            CouponId: '#uuid',
+            CouponType: '##string',
+            Description: '#string',
+            EffectiveFrom: '#string',
+            EffectiveTo: '#string',
+            MaximumRedemptionsPerUser: '#number',
+            MaximumRedemptionsPerUserLimit: '#boolean',
+            MemberTypeModifier: '##string',
+            Name: '#string',
+            PromotionLogoUrl: '##string',
+            RedemptionCount: '##number',
+            RedemptionLimit: '#boolean',
+            ValueAmount: '##number',
+            ValueMembershipLength: '#number',
+            ValuePercentageAmount: '##number'
+
+}

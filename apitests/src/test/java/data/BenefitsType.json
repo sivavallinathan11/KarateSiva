@@ -1,0 +1,36 @@
+{
+    "BenefitTypes": [
+        {
+            "BenefitTypeId": "29852e70-a78d-e911-a84e-000d3ae02142",
+            "Name": "Keytag Presented"
+        },
+        {
+            "BenefitTypeId": "ee07dfcc-deb0-e811-a963-000d3ae12152",
+            "Name": "Early Checkin"
+        },
+        {
+            "BenefitTypeId": "0508dfcc-deb0-e811-a963-000d3ae12152",
+            "Name": "Late Checkout"
+        },
+        {
+            "BenefitTypeId": "225717d3-deb0-e811-a963-000d3ae12152",
+            "Name": "Free Night Stay"
+        },
+        {
+            "BenefitTypeId": "485717d3-deb0-e811-a963-000d3ae12152",
+            "Name": "Free Upgrade"
+        },
+        {
+            "BenefitTypeId": "dad91586-5bd3-e811-a96d-000d3ae129d7",
+            "Name": "Free Bag of Ice"
+        },
+        {
+            "BenefitTypeId": "cdc3f2f0-55c1-e811-a967-000d3ae12afe",
+            "Name": "Early Checkin, Late Checkout or Bag of Ice"
+        },
+        {
+            "BenefitTypeId": "b70a5490-13c2-e811-a96c-000d3ae12dab",
+            "Name": "Free Park Equipment Hire"
+        }
+    ]
+}

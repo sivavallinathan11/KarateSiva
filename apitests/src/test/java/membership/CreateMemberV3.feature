@@ -18,7 +18,7 @@ Feature: CreateMemberV3 Member Join
       	}
       """
    
-    * def members = read('./CreateMemberV3.json')
+    * def members = read('../data/CreateMemberV3.json')
 
   
   Scenario Outline: Join ${title} ${firstName} ${lastName} should be $40 for seniors
@@ -47,7 +47,7 @@ Feature: CreateMemberV3 Member Join
     * match response.email == __row.email
     * match response.bookingDiscountPercentage == 10
     * match response.membershipCost == cost
-    * def structure = read('createMemberV3structure.json')
+    * def structure = read('../structures/createMemberV3structure.json')
 		* match response == structure
     
     # should be able to use the get method to return standard member info

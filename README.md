@@ -1,20 +1,24 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Introduction: 
+Karate is the only open-source tool to combine API test-automation, mocks, performance-testing.  The BDD syntax popularized by Cucumber is language-neutral, and easy for even non-programmers. Assertions and HTML reports are built-in, and you can run tests in parallel for speed.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# Getting Started:
+If you are a Java developer - Karate requires at least Java 8 and then either Maven, Gradle, Eclipse or IntelliJ to be installed. Note that Karate works fine on OpenJDK.
+1. Clone the repository.
+2. Import the cloned project to Eclipse or other IDE's.
+
+# Karate Framework setup:
+Please refer to https://github.com/karatelabs/karate/ for all the documentation. Below mentioned are some of the important keywords.
+ 
+
+#Project Folder Structure:
+You will have 3 main components Feature file,Runner file and input Jsons and will be available under src/test/java.
+
+1. Create a folder for each major API's.
+2. Place your Feature, Runner, Jsons payloads inside the particular folder.
+
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Run Test Locally
+1. Open any runnerfile
+2. Right click and run as Junit Test
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)

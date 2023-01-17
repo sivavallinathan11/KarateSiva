@@ -22,9 +22,9 @@ steps:
     goals: 'test'
     
 - task: PublishTestResults@2
-  displayName: 'Publish Test Results *.xml'
+  displayName: 'Publish Test Results *.html'
   inputs:
-    testResultsFiles: '*.xml'
+    testResultsFiles: '*.html'
     searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/karate-reports'
     mergeTestResults: true
     testRunTitle: 'Platform Api testing'

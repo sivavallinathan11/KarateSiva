@@ -24,8 +24,8 @@ steps:
 - task: PublishTestResults@2
   displayName: 'Publish Test Results *.html'
   inputs:
-    testResultsFiles: '*.html'
-    searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/karate-reports'
+    testResultsFiles: '*.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/karate-reports/surefire-reports'
     mergeTestResults: true
     testRunTitle: 'Platform Api testing'
   continueOnError: true

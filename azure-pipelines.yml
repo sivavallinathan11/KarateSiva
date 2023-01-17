@@ -18,5 +18,5 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
-    testResultsFiles: 'apitests/target/karate-reports_*/karate-summary'
+    testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
     goals: 'test'

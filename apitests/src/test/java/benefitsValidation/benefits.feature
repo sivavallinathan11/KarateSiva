@@ -6,7 +6,7 @@ Feature: Benefits validations
     * def bearerToken = token
     * def expectedOutput = read('../data/BenefitsType.json')
 
-
+@smoke
   Scenario: Get all benefit types
     And path '/api/BenefitType'
     When method get

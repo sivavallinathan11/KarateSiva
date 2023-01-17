@@ -25,7 +25,7 @@ steps:
   displayName: 'Publish Test Results *.html'
   inputs:
     testResultsFiles: '*.xml'
-    searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/karate-reports/surefire-reports'
+    searchFolder: '/apitests/target/karate-reports/surefire-reports'
     mergeTestResults: true
     testRunTitle: 'Platform Api testing'
   continueOnError: true

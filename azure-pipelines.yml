@@ -25,7 +25,7 @@ steps:
   displayName: 'Publish Test Results *.html'
   inputs:
     testResultsFiles: '*.xml'
-    searchFolder: '/apitests/target/karate-reports/surefire-reports'
+    searchFolder: '/home/vsts/work/1/s/apitests/target/karate-reports/surefire-reports'
     mergeTestResults: true
     testRunTitle: 'Platform Api testing'
   continueOnError: true

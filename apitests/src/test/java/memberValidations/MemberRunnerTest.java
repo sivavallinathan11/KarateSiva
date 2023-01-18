@@ -2,7 +2,7 @@ package memberValidations;
 
 import com.intuit.karate.junit5.Karate;
 
-public class DemoRunner {
+public class MemberRunnerTest {
 
 	@Karate.Test
     Karate testMembership() {

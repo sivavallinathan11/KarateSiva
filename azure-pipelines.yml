@@ -19,7 +19,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
-    goals: 'test'
+    goals: 'mvn test -Dtest=BenefitsRunnerTest'
     
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'

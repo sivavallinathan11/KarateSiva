@@ -70,3 +70,6 @@ Feature: Member validations Happy path
     And param MemberGuid = memberid
     And method delete
     And status 204
+    And status 204
+    
+    

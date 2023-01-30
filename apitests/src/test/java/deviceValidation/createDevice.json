@@ -1,0 +1,12 @@
+{
+    "DeviceId": "119eb274-df9b-ed11-aad1-00224817f408",
+    "CreatedDate": "2023-01-24T01:59:13.584Z",
+    "DeviceType": "GDAY Card",
+    "DeviceNumber": "TestDevice",
+    "DeviceStatus": "Sent",
+    "ExpiryDate": "2024-01-24T10:59:13.584Z",
+    "MemberGuid": "a1cb2e36-fd55-423f-b5a4-1c0c05d6ed03",
+    "StatusCode": 0,
+    "StateCode": 0,
+    "ModifiedOn": "2023-01-24T01:59:13.584Z"
+}

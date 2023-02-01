@@ -35,5 +35,13 @@ steps:
   displayName: 'Publish Pipeline Artifact'
   inputs:
     targetPath: /home/vsts/work/1/s/apitests/target/karate-reports
-    artifact: 'Platform API'
+    artifact: 'Karate reports'
+  condition: succeededOrFailed()
+  
+  
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    targetPath: /home/vsts/work/1/s/apitests/target/surefire-reports
+    artifact: 'SureFire Junit reports'
   condition: succeededOrFailed()

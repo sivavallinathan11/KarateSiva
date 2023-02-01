@@ -1,0 +1,12 @@
+{
+    DeviceId: '#uuid',
+    CreatedDate: '#string',
+    DeviceType: '#string',
+    DeviceNumber: '#string',
+    DeviceStatus: '#string',
+    ExpiryDate: '#string',
+    MemberGuid: '##uuid',
+    StatusCode: '#number',
+    StateCode: '#number',
+    ModifiedOn: '#string'
+}

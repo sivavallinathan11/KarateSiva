@@ -22,7 +22,14 @@ function fn() {
     config.client_id = '3d943fca-2431-4a91-94c9-94e6d633b789';
     config.client_secret = '=G)nDvo#+}9IJmF^9x{bH';
     config.resource = 'https://discoveryparks.com.au/test-int-api-v1';
-  }
+  } else if(env == 'memberv2'){
+    config.memberUrl = 'https://test-int-dhp-api-membership-net6.azurewebsites.net/';
+    config.customerWebCdn = 'https://proddupe-strategicweb-cdn.azureedge.net';
+    config.client_id = '3d943fca-2431-4a91-94c9-94e6d633b789';
+    config.client_secret = '=G)nDvo#+}9IJmF^9x{bH';
+    config.resource = 'https://discoveryparks.com.au/test-int-api-v1';
+}
+
 
   // we don't have a mocked environment but it's here in case we want one
   if(env !== 'mock') {

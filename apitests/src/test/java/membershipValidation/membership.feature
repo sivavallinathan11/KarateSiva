@@ -52,7 +52,7 @@ Feature: Membership validation happy path
 		When method POST
 		Then status 200
 		* print response
-		* def expectedStructure = read('../structures/createMemberV3structure.json')
+		* def expectedStructure = read('../membershipValidation/createMemberV3structure.json')
 		* match response == expectedStructure
 		* match response.membershipExpiryDate contains expectedExpiryYear
 		
@@ -62,7 +62,7 @@ Feature: Membership validation happy path
 		When method GET
 		Then status 200
 		* print response
-		* def expectedStructure = read('../structures/searchMembershipStructure.json')
+		* def expectedStructure = read('../membershipValidation/searchMembershipStructure.json')
 		* def searchMemberResponse = response
 		* match searchMemberResponse == expectedStructure
 		

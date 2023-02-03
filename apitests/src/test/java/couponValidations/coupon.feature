@@ -71,7 +71,7 @@ Feature: Coupon validations happy path
 		Given path 'api/Coupon'
 		When method GET
 		Then status 200
-    * def structure = read('../structures/couponStructure.json')
+    * def structure = read('../couponValidations/couponStructure.json')
     * match response.Coupons == '#[]'
     * print response.Coupons.length
 		* match response.Coupons[0] == structure

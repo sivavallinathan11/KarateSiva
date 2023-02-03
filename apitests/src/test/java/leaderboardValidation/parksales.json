@@ -1,0 +1,7 @@
+{
+    "ParkName": '#string',
+    "TransactionPeriod": '#string',
+    "TotalRevenue": '#number',
+    "MembershipsSold": '#number',
+    
+  }

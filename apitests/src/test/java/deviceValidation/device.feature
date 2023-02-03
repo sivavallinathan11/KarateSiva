@@ -43,7 +43,7 @@ Feature: Device validation happy path
 		When method POST
 		Then status 200
 		Then print response
-		* def structure = read('../structures/deviceStructure.json')
+		* def structure = read('../deviceValidation/deviceStructure.json')
 		* match response == structure
 		* def deviceId = response.DeviceId
 		
@@ -54,7 +54,7 @@ Feature: Device validation happy path
 		When method PATCH
 		Then status 200
 		Then print response
-		* def structure = read('../structures/deviceStructure.json')
+		* def structure = read('../deviceValidation/deviceStructure.json')
 		* match response == structure
 		
 		# Delete device

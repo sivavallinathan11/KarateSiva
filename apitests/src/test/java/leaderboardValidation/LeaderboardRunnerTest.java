@@ -5,7 +5,7 @@ import com.intuit.karate.junit5.Karate;
 public class LeaderboardRunnerTest {
 
 	@Karate.Test
-    Karate testBenefits() {
+    Karate testLeaderboard() {
         return Karate.run("LeaderBoard").relativeTo(getClass());
     }
 }

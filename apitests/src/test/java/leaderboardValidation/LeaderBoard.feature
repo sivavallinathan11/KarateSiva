@@ -34,20 +34,21 @@ Feature: LeaderBoard validations
     
     Scenario: Get parksales for the month- Negative flow
     And path '/api/Leaderboard/ParkSales'
-    When param monthsAgo = String
+    When param monthsAgo = 'St'
     When method GET
     Then status 400
+    And match response == {"monthsAgo": [ "The value 'st' is not valid." ] }
     
     Scenario: Get parksales weighted for the month- Negative flow
     And path '/api/Leaderboard/ParkSalesWeighted'
-    When param monthsAgo = String
+    When param monthsAgo = 'St'
     When method GET
     Then status 400
+    And match response == {"monthsAgo": [ "The value 'st' is not valid." ] }
     
     Scenario: Get staff sales for the month - Negative flow
     And path '/api/Leaderboard/GetStaffSalesForMonth'
-    When param monthsAgo = string
+    When param monthsAgo = 'St'
     When method GET
     Then status 400
-    
-   
+    And match response == {"monthsAgo": [ "The value 'st' is not valid." ] }

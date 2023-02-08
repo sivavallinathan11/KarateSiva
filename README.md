@@ -7,8 +7,7 @@ If you are a Java developer - Karate requires at least Java 8 and then either Ma
 2. Import the cloned project to Eclipse or other IDE's.
 
 # Karate Framework setup:
-Please refer to https://github.com/karatelabs/karate/ for all the documentation. Below mentioned are some of the important keywords.
- 
+Please refer to https://github.com/karatelabs/karate/ for all the documentation.
 
 #Project Folder Structure & Naming convention :
 You will have 3 main components Feature file,Runner file and input Jsons and will be available under src/test/java.

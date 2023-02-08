@@ -22,3 +22,13 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 1. Open any runnerfile
 2. Right click and run as Junit Test
 
+# Surefire Reports in Docker
+This requires docker and docker compose to be installed
+target/karate-reports/karate-summary.html
+
+$ docker-compose build
+$ docker-compose up -d
+
+This will run the docker.compose.yaml file which will mount the target directory into a containerised nginx server.
+You can then access it by 
+[Karate Surefire Report](http://localhost/karate-reports/karate-summary.html)

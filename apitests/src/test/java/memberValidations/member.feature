@@ -26,6 +26,16 @@ Feature: Member validations Happy path
       return FinYear
       }
       """
+			
+		# This will create new member
+		* def createNewMember = 
+		"""
+			function(){
+				var result = karate.callSingle('classpath:data/createNewMember.feature');
+				return result;
+			}
+		"""
+		
     * def temp = curdate()
     * def requestpayload = read('../memberValidations/requestpayload.json')
     * set requestpayload.email = random_email(10)
@@ -37,12 +47,12 @@ Feature: Member validations Happy path
     When method post
     Then status 200
     Then print 'Memeber is created'
-    And def memberid = response.memberGuid
+    And def memberid = response.MemberGuid
     Then print memberid
-    Then def expirydate = response.membershipExpiryDate
+    Then def expirydate = response.MembershipExpiryDate
     Then print expirydate
     Then print temp
-    Then match response.membershipExpiryDate contains temp
+    Then match expirydate contains temp
     
     #Find member
     And path 'api/Member'
@@ -70,3 +80,25 @@ Feature: Member validations Happy path
     And param MemberGuid = memberid
     And method delete
     And status 204
+		
+	Scenario: Lookup Existing Member
+		* def result = createNewMember()
+		* def memberResponse = result.response
+		* print memberResponse
+	  Given path '/api/Member/Lookup'
+	  * def structure = read('../memberValidations/lookupStructure.json')
+	  * param MemberNumber = memberResponse.MemberNumber
+	  * param Surname = memberResponse.LastName
+	  * param Postcode = memberResponse.Postcode
+	  When method get
+	  Then status 200
+	  * match response == structure
+	  * print response
+    
+  Scenario: Lookup Member that doesn't exist
+  	And path '/api/Member/Lookup'
+    * param MemberNumber = '1'
+    * param Surname = 'test'
+    * param Postcode = '5000'
+    When method get
+    Then status 404

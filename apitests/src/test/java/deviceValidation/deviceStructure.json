@@ -4,7 +4,7 @@
     DeviceType: '#string',
     DeviceNumber: '#string',
     DeviceStatus: '#string',
-    ExpiryDate: '#string',
+    ExpiryDate: '##string',
     MemberGuid: '##uuid',
     StatusCode: '#number',
     StateCode: '#number',

@@ -1,10 +1,10 @@
 {
-    "ParkName": '#string',
-    "StaffName": '#string' ,
-    "TransactionPeriod": '#string',
-    "TransactionYearMonth": #string ,
-    "TotalRevenue": #number ,
-    "MembershipsSold": #number ,
-    "TargetString": #string ,
+    "parkName": '#string',
+    "staffName": '#string' ,
+    "transactionPeriod": '#string',
+    "transactionYearMonth": #string ,
+    "totalRevenue": #number ,
+    "membershipsSold": #number ,
+    "targetString": #string ,
     
   }

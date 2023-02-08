@@ -1,7 +1,7 @@
 {
-    "ParkName": '#string',
-    "TransactionPeriod": '#string',
-    "TotalRevenue": '#number',
-    "MembershipsSold": '#number',
+    "parkName": '#string',
+    "transactionPeriod": '#string',
+    "totalRevenue": '#number',
+    "membershipsSold": '#number',
     
   }

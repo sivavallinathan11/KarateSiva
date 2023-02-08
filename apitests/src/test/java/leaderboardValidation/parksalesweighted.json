@@ -1,9 +1,9 @@
 {
-    "ParkName": '#string',
-    "TransactionPeriod": '#string',
-    "Weighting": #number ,
-    "MembershipsSold": #number ,
-    "WeightedSales": #number ,
-    "TotalRevenue": #number
+    "parkName": '#string',
+    "transactionPeriod": '#string',
+    "weighting": #number ,
+    "membershipsSold": #number ,
+    "weightedSales": #number ,
+    "totalRevenue": #number
     
   }

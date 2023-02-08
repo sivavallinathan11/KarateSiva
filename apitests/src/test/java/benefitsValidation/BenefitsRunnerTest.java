@@ -6,6 +6,6 @@ public class BenefitsRunnerTest {
 
 	@Karate.Test
     Karate testBenefits() {
-        return Karate.run("benefits").tags("smoke").relativeTo(getClass());
+        return Karate.run("benefits").relativeTo(getClass());
     }
 }

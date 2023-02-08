@@ -1,0 +1,10 @@
+{
+            LoyaltyTierId:'#string' ,
+            Name: '#string' ,
+            Description: '#null',
+            MinStays: '#number' ,
+            MinNights: '#number' ,
+            BookingDiscountCap: '#number',
+            BookingDiscountCapBase: '#number',
+            BookingDiscountCapIsUnlimited: '#boolean'
+}

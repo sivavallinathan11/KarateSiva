@@ -21,6 +21,18 @@ Feature: Benefits validations
     And match response.BenefitTypes[0] == {"BenefitTypeId":"29852e70-a78d-e911-a84e-000d3ae02142","Name":"Keytag Presented"}
     And match Name contains ["Keytag Presented","Early Checkin","Late Checkout","Free Night Stay","Free Upgrade","Free Bag of Ice","Early Checkin, Late Checkout or Bag of Ice","Free Park Equipment Hire"]    
     
-    #lot more fuzzy matching options please refer to the karate Documentation.
+    Scenario: Get invalid benefit type
+    And path '/api/BenefitType'
+    And param BenefitTypeId = 'blah'
+    When method get
+    Then status 400
+    And match response == {"BenefitTypeId": [ "The value 'blah' is not valid for BenefitTypeId." ] }
+    
+      Scenario: Get invalid benefit type
+    And path '/api/BenefitType'
+    And param BenefitTypeId = '30852e70-a78d-e911-a84e-000d3ae02142'
+    When method get
+    Then status 404
+   
     
     

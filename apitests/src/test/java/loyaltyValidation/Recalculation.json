@@ -1,0 +1,5 @@
+{
+    MemberGuid: '#string',
+    MemberAnniversaryPeriodNights: '#number',
+    MemberAnniversaryPeriodStays: '#number'
+}

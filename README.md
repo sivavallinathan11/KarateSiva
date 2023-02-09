@@ -25,9 +25,20 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 # Run Test Locally using Maven
  Execute the following commands
 
-mvn test - To Execute the whole test suite
-mvn test -Dtest=BenefitsRunnerTest - To Execute any specific runner file
-mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment(environmet config will be available in karateconfig.js file)
+* mvn test - To Execute the whole test suite
+* mvn test -Dtest=BenefitsRunnerTest - To Execute any specific runner file
+* mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment(environmet config will be available in karateconfig.js file)
+
+# Containerised Surefire reports
+This requires docker and docker compose to be installed
+target/karate-reports/karate-summary.html
+
+$ docker-compose build
+$ docker-compose up -d
+
+This will run the docker.compose.yaml file which will mount the target directory into a containerised nginx server.
+You can then access it by 
+[Karate Surefire Report](http://localhost/karate-reports/karate-summary.html)
 
 
 

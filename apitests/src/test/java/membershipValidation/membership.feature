@@ -39,6 +39,17 @@ Feature: Membership validation happy path
 					return initialDate.toISOString();
 				}
 			"""
+			
+		# This will create new member
+		* def createNewMember = 
+		"""
+			function(){
+				var result = karate.callSingle('classpath:data/createNewMember.feature');
+				return result;
+			}
+		"""
+		
+		# Set variables
     * def expectedExpiryYear = curYearDate()
     * def memberRequest = read('../membershipValidation/createMember.json')
     * def firstName = randomName(10)

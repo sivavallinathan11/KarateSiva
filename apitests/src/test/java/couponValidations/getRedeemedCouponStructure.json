@@ -1,0 +1,6 @@
+{
+	couponCode: '#string',
+	redemptionIdentifier: '##string',
+	redemptionDate: '#string',
+	couponExpiry: '#string'
+}

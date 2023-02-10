@@ -33,12 +33,6 @@ Feature: Coupon validations happy path
 						return firstName;
 				}
 			"""
-		* def requestCoupon = read('../couponValidations/createCoupon.json')
-		* print requestCoupon
-		* def setName = randomName(10)
-		* set requestCoupon.purchaserFirstName = setName
-		* set requestCoupon.purchaserEmailAddress = setName + requestCoupon.purchaserEmailAddress
-		
 		
 		# Get specific coupon details (input param: couponId).
 		* def getCouponDetails = 
@@ -57,8 +51,24 @@ Feature: Coupon validations happy path
 			}
 		"""
 			
-	Scenario: Create coupon 
-	 	# Create new coupon
+		# This will create new member
+		* def createNewMember = 
+		"""
+			function(){
+				var result = karate.callSingle('classpath:data/createNewMember.feature');
+				return result;
+			}
+		"""
+		
+		* def requestCoupon = read('../couponValidations/createCoupon.json')
+		* print requestCoupon
+		* def setName = randomName(10)
+		* set requestCoupon.purchaserFirstName = setName
+		* set requestCoupon.purchaserEmailAddress = setName + requestCoupon.purchaserEmailAddress
+    * def structure = read('../couponValidations/couponStructure.json')
+		
+	@createCoupon		
+	Scenario: PLAT-400 Create new coupon 
 		Given path 'api/Coupon/CreateCoupon'
 		And request requestCoupon
 		When method POST
@@ -66,22 +76,29 @@ Feature: Coupon validations happy path
 		Then print response
 		And def couponCode = response
 		Then match response contains '#string'
-		
-		# Get coupons
+	
+	@GetListOfCoupon
+	Scenario: Get the list of coupon
 		Given path 'api/Coupon'
 		When method GET
 		Then status 200
-    * def structure = read('../couponValidations/couponStructure.json')
     * match response.Coupons == '#[]'
     * print response.Coupons.length
 		* match response.Coupons[0] == structure
-		* def setIndex = getCouponDetails(response, couponCode)
-		* print setIndex
-		* def couponResponse = response.Coupons[setIndex]
+		
+	@searchCoupon
+	Scenario: PLAT-816 Search coupon using valid Coupon Id
+		# Create new coupon
+		* def couponResult = call read('coupon.feature@createCoupon')
+		* def newCoupon = couponResult.response
+		# Get list of coupons
+		* def listCouponResult = call read('coupon.feature@GetListOfCoupon')
+		* def couponList = listCouponResult.response
+		# Get newly created coupon details
+		* def setIndex = getCouponDetails(couponList, newCoupon)
+		* def couponResponse = couponList.Coupons[setIndex]
 		* def couponId = couponResponse.CouponId
 		* print couponId
-		
-		# Search created coupon
 		Given path 'api/Coupon/Lookup'
 		And param CouponId = couponId
 		When method GET
@@ -89,6 +106,91 @@ Feature: Coupon validations happy path
 		* print response
 		* match response == structure
 		* match response.Code == couponResponse.Code
-		* match response.CouponId == couponResponse.CouponId
+		* match response.CouponId == couponId
 		
+	@redeemCoupon
+	Scenario: PLAT-817 Redeem coupon using valid coupon code and member guid
+		# create new member
+		* def result = createNewMember()
+		* def memberResponse = result.response
+		* def memberGuid = memberResponse.MemberGuid
+		# create new coupon
+		* def couponResult = call read('coupon.feature@createCoupon')
+		* def newCoupon = couponResult.response
+		* def structure = read('../couponValidations/redeemCouponStructure.json')
+		Given path 'api/Coupon'
+		* param Code = newCoupon
+		* param MemberId = memberGuid
+		When method POST
+		Then status 200
+		* match response == structure
+		* match response.Result == "SUCCESS"
+		
+	Scenario: PLAT-818 Get or redeem a redemption record linked to a member
+		# Redeem a coupon
+		* def redeemResult = call read('coupon.feature@redeemCoupon')
+		* def couponCode = redeemResult.couponResult.couponCode
+		* def memberGuid = redeemResult.memberResponse.MemberGuid
+		#Get redeemed coupon
+		Given path 'api/Coupon/GetRedemption'
+		* param memberGuid = memberGuid
+		* param couponCode = couponCode
+		When method POST
+		Then status 200
+		* def structure = read('../couponValidations/getRedeemedCouponStructure.json')
+		* match response == structure
+		* match response.couponCode == couponCode
+
+	Scenario: PLAT-835 Redeem a coupon that was already redeemed
+		* def redeemResult = call read('coupon.feature@redeemCoupon')
+		* def couponCode = redeemResult.couponResult.couponCode
+		* def memberGuid = redeemResult.memberResponse.MemberGuid
+		Given path 'api/Coupon'
+		* param Code = couponCode
+		* param MemberId = memberGuid
+		When method POST
+		Then status 400
+		* match response.promoCode[0] == "Coupon Code " +couponCode+ " cannot be redeemed as it has exceeded its maximum allocated redemptions."
+
+	Scenario: PLAT-836 Redeem a coupon with invalid member ID
+		* def couponResult = call read('coupon.feature@createCoupon')
+		* def couponCode = couponResult.response
+		* print couponCode
+		Given path 'api/Coupon'
+		* param Code = couponCode
+		* param MemberId = 'invalidMember'
+		When method POST
+		Then status 400
+		* match response.MemberId[0] == "The value 'invalidMember' is not valid for MemberId."
+
+	Scenario: PLAT-837 Redeem a coupon with invalid couponCode
+		# create new member
+		* def result = createNewMember()
+		* def memberResponse = result.response
+		* def memberGuid = memberResponse.MemberGuid
+		Given path 'api/Coupon'
+		* param Code = 'invalidCouponCode'
+		* param MemberId = memberGuid
+		When method POST
+		Then status 400
+		* match response.promoCode[0] == "Coupon Code invalidCouponCode could not be found."
+		
+	Scenario: PLAT-838 Validate coupon Id does not exist
+		Given path 'api/Coupon/Lookup'
+		And param CouponId = '11b334d9-b71f-ea11-a810-000d3a794611'
+		When method GET
+		Then status 404
+		* match response == "Could not find coupon with ID: 11b334d9-b71f-ea11-a810-000d3a794611"
+		
+	Scenario: PLAT-839 Get or redeem non-existing coupon code
+		# create new member
+		* def result = createNewMember()
+		* def memberResponse = result.response
+		* def memberGuid = memberResponse.MemberGuid
+		Given path 'api/Coupon/GetRedemption'
+		* param memberGuid = memberGuid
+		* param couponCode = 'GC2PUV3'
+		When method POST
+		Then status 400
+		* match response == "COUPON_NOT_FOUND"
 		

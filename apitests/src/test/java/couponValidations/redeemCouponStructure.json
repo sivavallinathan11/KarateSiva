@@ -1,0 +1,5 @@
+{
+	Result: '#string',
+	ResultStatusText: '#string',
+	ResultCouponGuid: '#uuid'
+}

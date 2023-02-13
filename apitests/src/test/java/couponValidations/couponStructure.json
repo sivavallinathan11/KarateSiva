@@ -1,6 +1,6 @@
 {
 
-            AllocatedRedemptions: '#number',
+            AllocatedRedemptions: '##number',
             Code: '#string',
             CouponArea: '#string',
             CouponId: '#uuid',

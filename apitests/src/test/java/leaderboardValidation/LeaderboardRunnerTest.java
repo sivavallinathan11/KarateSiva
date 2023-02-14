@@ -6,6 +6,6 @@ public class LeaderboardRunnerTest {
 
 	@Karate.Test
     Karate testLeaderboard() {
-        return Karate.run("LeaderBoard").tags("test").relativeTo(getClass());
+        return Karate.run("LeaderBoard").relativeTo(getClass());
     }
 }

@@ -1,0 +1,23 @@
+{
+  MemberBenefitId: '#string',
+  MemberId: '#string',
+  BenefitTypeId: '#string',
+  CommencementDate: '#string',
+  ExpiryDate: '#string',
+  IsRedeemed: '#boolean',
+  RedeemedPropertyId: '##string',
+  RedeemedBy: '##string',
+  RedeemedDate: '##string',
+  ReservationNumber: '##string',
+  OrderProduct: '##string',
+  IsUnlimited: '#boolean',
+  IsCustomBenefit: '#boolean',
+  IsOrderRequired: '##string',
+  Name: '##string',
+  LoyaltyTier: '##string',
+  ContactId: '##string',
+  Statuscode: '#number',
+  Statecode: '#number',
+  AccommodationType: '##string'
+}
+ 

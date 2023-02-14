@@ -47,9 +47,9 @@ Feature: Member validations Happy path
     When method post
     Then status 200
     Then print 'Memeber is created'
-    And def memberid = response.MemberGuid
+    And def memberid = response.memberGuid
     Then print memberid
-    Then def expirydate = response.MembershipExpiryDate
+    Then def expirydate = response.membershipExpiryDate
     Then print expirydate
     Then print temp
     Then match expirydate contains temp

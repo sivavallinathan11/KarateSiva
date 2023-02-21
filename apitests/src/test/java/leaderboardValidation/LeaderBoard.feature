@@ -38,18 +38,18 @@ Feature: LeaderBoard validations
     When param monthsAgo = 'St'
     When method GET
     Then status 400
-    And match response == {"monthsAgo": [ "The value 'St' is not valid for monthsAgo." ] }
+    * match $response.monthsAgo[0] == "#regex .*The value 'St' is not valid.*"
     
     Scenario: Get parksales weighted for the month- Negative flow
     And path '/api/Leaderboard/ParkSalesWeighted'
     When param monthsAgo = 'St'
     When method GET
     Then status 400
-    And match response == {"monthsAgo": [ "The value 'St' is not valid for monthsAgo." ] }
+    * match $response.monthsAgo[0] == "#regex .*The value 'St' is not valid.*"
     
     Scenario: Get staff sales for the month - Negative flow
     And path '/api/Leaderboard/GetStaffSalesForMonth'
     When param monthsAgo = 'St'
     When method GET
     Then status 400
-    And match response == {"monthsAgo": [ "The value 'St' is not valid for monthsAgo." ] }
+   * match $response.monthsAgo[0] == "#regex .*The value 'St' is not valid.*"

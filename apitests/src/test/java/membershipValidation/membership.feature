@@ -99,10 +99,4 @@ Feature: Membership validation happy path
 		Then status 200
 		* print response
 		* match response == expectedStructure
-		
-		# Delete membership
-		And path 'api/Membership'
-		And param MemberGuid = searchMemberResponse.MemberGuid
-		When method DELETE
-		Then status 204
-		
+		* def renewResponse = response

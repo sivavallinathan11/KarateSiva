@@ -1,0 +1,6 @@
+{
+    barcode: '#string',
+    message: '##string',
+    offerUnit: '#string',
+    offerValue: '#number'
+}

@@ -1,5 +1,5 @@
 #Author: fvalderramajr
-Feature: Coupon validations happy path
+Feature: Coupon validations
 
 	Background:
 		* url memberUrl
@@ -113,7 +113,7 @@ Feature: Coupon validations happy path
 		# create new member
 		* def result = createNewMember()
 		* def memberResponse = result.response
-		* def memberGuid = memberResponse.MemberGuid
+		* def memberGuid = memberResponse.memberGuid
 		# create new coupon
 		* def couponResult = call read('coupon.feature@createCoupon')
 		* def newCoupon = couponResult.response
@@ -130,7 +130,7 @@ Feature: Coupon validations happy path
 		# Redeem a coupon
 		* def redeemResult = call read('coupon.feature@redeemCoupon')
 		* def couponCode = redeemResult.couponResult.couponCode
-		* def memberGuid = redeemResult.memberResponse.MemberGuid
+		* def memberGuid = redeemResult.memberResponse.memberGuid
 		#Get redeemed coupon
 		Given path 'api/Coupon/GetRedemption'
 		* param memberGuid = memberGuid
@@ -144,7 +144,7 @@ Feature: Coupon validations happy path
 	Scenario: PLAT-835 Redeem a coupon that was already redeemed
 		* def redeemResult = call read('coupon.feature@redeemCoupon')
 		* def couponCode = redeemResult.couponResult.couponCode
-		* def memberGuid = redeemResult.memberResponse.MemberGuid
+		* def memberGuid = redeemResult.memberResponse.memberGuid
 		Given path 'api/Coupon'
 		* param Code = couponCode
 		* param MemberId = memberGuid
@@ -167,7 +167,7 @@ Feature: Coupon validations happy path
 		# create new member
 		* def result = createNewMember()
 		* def memberResponse = result.response
-		* def memberGuid = memberResponse.MemberGuid
+		* def memberGuid = memberResponse.memberGuid
 		Given path 'api/Coupon'
 		* param Code = 'invalidCouponCode'
 		* param MemberId = memberGuid
@@ -186,7 +186,7 @@ Feature: Coupon validations happy path
 		# create new member
 		* def result = createNewMember()
 		* def memberResponse = result.response
-		* def memberGuid = memberResponse.MemberGuid
+		* def memberGuid = memberResponse.memberGuid
 		Given path 'api/Coupon/GetRedemption'
 		* param memberGuid = memberGuid
 		* param couponCode = 'GC2PUV3'

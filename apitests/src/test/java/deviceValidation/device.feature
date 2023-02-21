@@ -1,6 +1,6 @@
 #Author: fvalderramajr
 
-Feature: Device validation happy path
+Feature: Device validations
 
 	Background:
 		* url memberUrl
@@ -49,7 +49,7 @@ Feature: Device validation happy path
 		* def memberRes = result.response
 		* print memberRes
 		Given path 'api/Device/list'
-		And param MemberGuid = memberRes.MemberGuid
+		And param MemberGuid = memberRes.memberGuid
 		When method GET
 		Then status 200
 		* print response
@@ -83,7 +83,8 @@ Feature: Device validation happy path
 		And request deviceRequest
 		When method POST
 		Then status 400
-		Then match response == {"DeviceId": ["The input was not valid."]}
+		* print response
+		Then match response == {"$.DeviceID":["The JSON value could not be converted to System.Guid. Path: $.DeviceID | LineNumber: 0 | BytePositionInLine: 375."]}
 
 	Scenario: PLAT-545 Update a device
 		* def deviceResult = call read('device.feature@deviceDetails')
@@ -107,11 +108,12 @@ Feature: Device validation happy path
 		* set deviceResponse.DeviceNumber = "1000XYZ"
 		* set deviceResponse.MemberGuid = "1000XYZ"
 		* print deviceResponse
-		Given path 'api/Device'
+		Given path 'api/Device'	
 		And request deviceResponse
 		When method PATCH
 		Then status 400
-		Then match response == {"DeviceId": ["The input was not valid."],"MemberGuid": ["The input was not valid."]}
+		* print response
+		* match response == {"$.DeviceId":["The JSON value could not be converted to System.Guid. Path: $.DeviceId | LineNumber: 0 | BytePositionInLine: 21."]}
 		
 	Scenario: PLAT-548 Request a card number for printing
 		* def deviceResult = call read('device.feature@deviceDetails')

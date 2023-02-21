@@ -87,9 +87,9 @@ Feature: Member validations Happy path
 		* print memberResponse
 	  Given path '/api/Member/Lookup'
 	  * def structure = read('../memberValidations/lookupStructure.json')
-	  * param MemberNumber = memberResponse.MemberNumber
-	  * param Surname = memberResponse.LastName
-	  * param Postcode = memberResponse.Postcode
+	  * param MemberNumber = memberResponse.memberNumber
+	  * param Surname = memberResponse.lastName
+	  * param Postcode = memberResponse.postcode
 	  When method get
 	  Then status 200
 	  * match response == structure

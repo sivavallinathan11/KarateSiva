@@ -1,0 +1,252 @@
+{
+  "uuid": "3f69f723-0b6e-4615-a4f3-2147f3aff2ff",
+  "lastMigration": 25,
+  "name": "Test",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "0.0.0.0",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "236fc0f9-911e-4ac5-9648-19e71f85b43e",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/BenefitType",
+      "responses": [
+        {
+          "uuid": "d011361a-0e3a-4894-a605-7a70dc22b84f",
+          "body": "{\r\n    \"BenefitTypes\": [\r\n        {\r\n            \"BenefitTypeId\": \"{{queryParam 'BenefitTypeId'}}\",\r\n            \"Name\": \"Keytags Presented\"\r\n        }\r\n    ]\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "BenefitTypeId",
+              "value": "29852e70-a78d-e911-a84e-000d3ae02142",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "BenefitTypeId",
+              "value": "29852e70-a78d-e911-a84e-000d3ae02143",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "a60ba475-f002-44e4-a54b-609f1b72ea4d",
+          "body": "{\r\n    \"BenefitTypes\": [\r\n        {\r\n            not valid\r\n        }\r\n    ]\r\n}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "BenefitTypeId",
+              "value": "29852e70-a78d-e911-a84e-000d3ae02142",
+              "invert": true,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "437450ea-ad8a-4889-b4b8-3ba9ac53a30d",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/Member/CreateMemberV3",
+      "responses": [
+        {
+          "uuid": "2340195d-705d-434a-9bd7-0789fa920027",
+          "body": "{\r\n    \"memberGuid\": \"{{ faker 'datatype.uuid' }}\",\r\n    \"memberNumber\": \"{{ faker 'datatype.number' min=10000 max=100000 }}\",\r\n    \"title\": \"Mr.\",\r\n    \"firstName\": \"{{body 'firstName'}}\",\r\n    \"lastName\": \"{{body 'firstName'}}\",\r\n    \"email\": \"${{{body 'email'}}}\",\r\n    \"dateOfBirth\": \"1990-06-05T05:18:06.8022+00:00\",\r\n    \"mobilePhone\": \"0412345678\",\r\n    \"otherPhone\": null,\r\n    \"street\": \"Light Square\",\r\n    \"suburb\": \"Adelaide\",\r\n    \"postcode\": \"5000\",\r\n    \"state\": \"SA\",\r\n    \"country\": \"Australia\",\r\n    \"bookingDiscountCap\": null,\r\n    \"bookingDiscountPercentage\": 10,\r\n    \"bookingDiscountCapIsUnlimited\": false,\r\n    \"membershipExpiryDate\": \"2025-02-15T01:13:50.5839018+00:00\",\r\n    \"membershipCost\": 50,\r\n    \"fuelAppConsentGranted\": null,\r\n    \"flyBuysAcquired\": false\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "6173ab87-3873-4e65-9723-1142318a67a1",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad request",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "",
+              "value": "",
+              "invert": false,
+              "operator": "null"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "cfc54943-53f0-44d7-8202-5f21e27b428b",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/Member/Search",
+      "responses": [
+        {
+          "uuid": "96da6384-a59d-4239-9845-e3221676c66d",
+          "body": "{\r\n    \"Members\": [\r\n        {\r\n            \"MemberGuid\": \"d3bd9e6f-bb6e-402f-8be1-6c251f83aa87\",\r\n            \"MemberNumber\": \"105325246\",\r\n            \"Name\": \"SeniorTestingv3 DanTestingv3\",\r\n            \"Address\": \"   \",\r\n            \"Mobile\": \"0412345123\",\r\n            \"Email\": \"danseniortesv3@gmailtest.com\"\r\n        }\r\n               ]\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "SearchCriteria",
+              "value": "test@gmail.com",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "f25931bd-0258-41dd-939d-724cb09c16f0",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad request",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "SearchCriteria",
+              "value": "coco",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "236fc0f9-911e-4ac5-9648-19e71f85b43e"
+    },
+    {
+      "type": "route",
+      "uuid": "437450ea-ad8a-4889-b4b8-3ba9ac53a30d"
+    },
+    {
+      "type": "route",
+      "uuid": "cfc54943-53f0-44d7-8202-5f21e27b428b"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": []
+}

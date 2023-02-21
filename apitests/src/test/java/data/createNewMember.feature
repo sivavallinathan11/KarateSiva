@@ -52,3 +52,5 @@ Feature: Membership validation happy path
 		When method POST
 		Then status 200
 		* print response
+		* def expectedStructure = read('../membershipValidation/createMemberV3structure.json')
+		* match response == expectedStructure

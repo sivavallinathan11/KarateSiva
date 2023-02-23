@@ -1,0 +1,38 @@
+[
+  {
+    "memberNumber": "",
+    "Title": "Mr",
+    "firstName": "Liam",
+    "lastName": "Lee",
+    "street": "Cork",
+    "suburb": "Cork",
+    "state": "",
+    "postCode": "514 X12",
+    "country": "Ireland",
+    "mobile": "61431266121",
+    "email": "",
+    "dateOfBirth": "1992-01-01T00:00:00Z",
+    "source": "GGWebsite",
+    "additionalFields": {
+    	"isSenior": true
+    }
+  },
+  {
+    "memberNumber": "",
+    "Title": "Mr & Mrs",
+    "firstName": "Liam & Julie",
+    "lastName": "Smith-Johnson",
+    "street": "Cork",
+    "suburb": "Cork",
+    "state": "SA",
+    "postCode": "1234",
+    "country": "Australia",
+    "mobile": "+61431266121",
+    "email": "",
+    "dateOfBirth": "1950-01-01",
+    "source": "GGWebsite",
+    "additionalFields": {
+    	"isSenior": true
+    }
+  }
+]

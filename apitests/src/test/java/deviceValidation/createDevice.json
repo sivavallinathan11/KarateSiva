@@ -1,12 +1,12 @@
 {
-    "DeviceId": "119eb274-df9b-ed11-aad1-00224817f408",
-    "CreatedDate": "2023-01-24T01:59:13.584Z",
+    "DeviceId": "2a34d58d-1f83-ebd3-30f3-c100863b91bf",
+    "CreatedDate": "2023-02-14T06:06:49+00:00",
     "DeviceType": "GDAY Card",
-    "DeviceNumber": "TestDevice",
+    "DeviceNumber": "100XYZ",
     "DeviceStatus": "Sent",
-    "ExpiryDate": "2024-01-24T10:59:13.584Z",
-    "MemberGuid": "a1cb2e36-fd55-423f-b5a4-1c0c05d6ed03",
-    "StatusCode": 0,
+    "ExpiryDate": null,
+    "MemberGuid": "2a34d58d-1f83-ebd3-30f3-c100863b91bf",
+    "StatusCode": 1,
     "StateCode": 0,
-    "ModifiedOn": "2023-01-24T01:59:13.584Z"
+    "ModifiedOn": "2023-02-14T06:06:50+00:00"
 }

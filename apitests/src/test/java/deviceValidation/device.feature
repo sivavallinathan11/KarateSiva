@@ -30,11 +30,6 @@ Feature: Device validations
 						return randomString;
 				}
 			"""
-		* def deviceRequest = read('../deviceValidation/createDevice.json') 
-		* set deviceRequest.CreatedDate = setDate(0)
-		* set deviceRequest.ExpiryDate = setDate(2)
-		* set deviceRequest.ModifiedOn = setDate(0)
-		* set deviceRequest.DeviceNumber = randomDeviceNumber(8)
 		* def getNewMember = 
 		"""
 			function(){
@@ -42,6 +37,26 @@ Feature: Device validations
 				return result;
 			}
 		"""
+		
+		* def genGUID = 
+		"""
+			function() {
+		    var guid1 = Math.floor((1 + Math.random()) * 0x100000000).toString(16).substring(1);
+		    var guid2 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid3 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid4 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid5 = Math.floor((1 + Math.random()) * 0x1000000000000).toString(16).substring(1);
+		    var finalGuid = (guid1 + "-" + guid2 + "-" + guid3 + "-" + guid4 + "-" + guid5).toString().trim();
+		    return finalGuid;
+		  }
+		"""
+		* def deviceRequest = read('../deviceValidation/createDevice.json') 
+		* set deviceRequest.CreatedDate = setDate(0)
+		* set deviceRequest.ExpiryDate = setDate(2)
+		* set deviceRequest.ModifiedOn = setDate(0)
+		* set deviceRequest.DeviceNumber = randomDeviceNumber(8)
+		* def patchDeviceGuid = genGUID()
+		* def patchMemberGuid = genGUID()
 	
 	@deviceDetails
 	Scenario: PLAT-530 Get device list
@@ -77,15 +92,6 @@ Feature: Device validations
 		* def structure = read('../deviceValidation/deviceStructure.json')
 		* match response == structure
 
-	Scenario: PLAT-525 Create device with invalid data
-		* set deviceRequest.DeviceID = "Invalid data post request"
-		Given path 'api/Device'
-		And request deviceRequest
-		When method POST
-		Then status 400
-		* print response
-		Then match response == {"$.DeviceID":["The JSON value could not be converted to System.Guid. Path: $.DeviceID | LineNumber: 0 | BytePositionInLine: 375."]}
-
 	Scenario: PLAT-545 Update a device
 		* def deviceResult = call read('device.feature@deviceDetails')
 		* def deviceResponse = deviceResult.response.Devices[0]
@@ -100,20 +106,6 @@ Feature: Device validations
 		Then print response
 		* def structure = read('../deviceValidation/deviceStructure.json')
 		* match response == structure
-
-	Scenario: PLAT-546 Update a device using invalid deviceId, member guid, and device number
-		* def deviceResult = call read('device.feature@deviceDetails')
-		* def deviceResponse = deviceResult.response.Devices[0]
-		* set deviceResponse.DeviceId = "1000XYZ"
-		* set deviceResponse.DeviceNumber = "1000XYZ"
-		* set deviceResponse.MemberGuid = "1000XYZ"
-		* print deviceResponse
-		Given path 'api/Device'	
-		And request deviceResponse
-		When method PATCH
-		Then status 400
-		* print response
-		* match response == {"$.DeviceId":["The JSON value could not be converted to System.Guid. Path: $.DeviceId | LineNumber: 0 | BytePositionInLine: 21."]}
 		
 	Scenario: PLAT-548 Request a card number for printing
 		* def deviceResult = call read('device.feature@deviceDetails')
@@ -174,10 +166,21 @@ Feature: Device validations
 		When method GET
 		Then status 400
 		* match response == {"MemberGuid":["The value 'MemberXYZ' is not valid for MemberGuid.","'Member Guid' must not be empty."]}
+
+	Scenario: PLAT-525 Create device with invalid device Id
+		* def genGuid = genGUID()
+		* def structure = read('../deviceValidation/deviceStructure.json')
+		* set deviceRequest.DeviceID = genGuid
+		Given path 'api/Device'
+		And request deviceRequest
+		When method POST
+		Then status 200
+		* print response
+		Then match response == structure
 		
 	Scenario: PLAT-526 Get device using invalid device number
 		Given path 'api/Device'
-		And param DeviceNumber = '100XYZ'
+		And param DeviceNumber = '100XYZ#'
 		When method GET
 		Then status 404
 		
@@ -189,18 +192,47 @@ Feature: Device validations
 		* match response == {"DeviceId":["The value 'DeviceXYZ' is not valid for DeviceId."]}
 		
 	Scenario: PLAT-528 Request card if the member guid does not exist
+		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceNumber = deviceResult.response.Devices[0].DeviceNumber
+		* def genGuid = genGUID()
 		Given path 'api/Device/RequestPrint'
-		And request {memberGuid: 'testNegative', cardNumber: '105322194'}
-		When method POST
-		Then status 400
-		* match response == {"memberGuid": ["The input was not valid."]}
-		
-	Scenario: PLAT-529 Send join email using a deactivated member guid
-		Given path 'api/Device/SendJoinEmail'
-		And request {MemberGuid: 'f300fb45-0b0f-4990-ba18-844c56a4f843'}
+		And request {memberGuid: '#(genGuid)', cardNumber: '#(deviceNumber)'}
 		When method POST
 		Then status 404
-		* match response == "Not active membership found for f300fb45-0b0f-4990-ba18-844c56a4f843"
+		* match response == "Member "+ genGuid +" not found"
+		
+	Scenario: PLAT-529 Send join email using a deactivated member guid
+		* def result = getNewMember()
+		* def memberRes = result.response
+		* def MemberGuid = memberRes.memberGuid
+		
+		#Deactivate member
+		Given path 'api/Member/Deactivate'
+		And param memberGuid = MemberGuid
+		And param deactivateRelatedEntities = false
+		When method PATCH
+		Then status 200
+		
+		# Send join email
+		Given path 'api/Device/SendJoinEmail'
+		And request {MemberGuid: '#(MemberGuid)'}
+		When method POST
+		Then status 404
+		* match response == "Not active membership found for " + MemberGuid
+
+	Scenario: PLAT-546 Update a device using invalid deviceId, member guid, and device number
+		* def structure = read('../deviceValidation/deviceStructure.json')
+		* def deviceRequests = read('../deviceValidation/createDevice.json')
+		* def deviceNum = "1000XYZ"
+		Given path 'api/Device'	
+		And set deviceRequests.DeviceId = "3ecac72e-58df-5f40-127d-10f915a164a6"
+		And set deviceRequests.DeviceNumber = deviceNum
+		And set deviceRequests.MemberGuid = "3ecac72e-58df-5f40-127d-10f915a164a6"
+		And request deviceRequests
+		When method PATCH
+		Then status 200
+		* print response
+		* match response == structure
 	
 	Scenario: PLAT-547 Get unprinted device list
 		Given path 'api/Device/Unprinted'

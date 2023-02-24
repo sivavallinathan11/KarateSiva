@@ -93,12 +93,32 @@ Feature: Member validations Happy path
 	  When method get
 	  Then status 200
 	  * match response == structure
-	  * print response
     
   Scenario: Lookup Member that doesn't exist
-  	And path '/api/Member/Lookup'
+  	Given path '/api/Member/Lookup'
     * param MemberNumber = '1'
     * param Surname = 'test'
     * param Postcode = '5000'
     When method get
     Then status 404
+    
+  Scenario: PLAT-709 Get a valid member type
+		* def memberResult = createNewMember()
+		* print memberResult.response
+		* def memberResponse = memberResult.response
+		* def structure = read('../MemberValidations/memberTypeStructure.json')
+		
+		# Get MemberTypeID
+  	Given path '/api/Member'
+    And param MemberGuid = memberResponse.memberGuid
+    When method GET
+    Then status 200
+    * def memberTypeID = response.MemberTypeId
+    
+    # Get valid member type
+    Given path 'api/Member/MemberType'
+    And param memberTypeId = memberTypeID
+    When method GET
+    Then status 200
+    * match response.MemberTypes[0] == structure
+    

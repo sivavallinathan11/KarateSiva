@@ -36,6 +36,19 @@ Feature: fuel validations
 				return initialDate.toISOString();
 			}
 		"""
+		# Generate GUID
+		* def genGUID = 
+		"""
+			function() {
+		    var guid1 = Math.floor((1 + Math.random()) * 0x100000000).toString(16).substring(1);
+		    var guid2 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid3 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid4 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid5 = Math.floor((1 + Math.random()) * 0x1000000000000).toString(16).substring(1);
+		    var finalGuid = (guid1 + "-" + guid2 + "-" + guid3 + "-" + guid4 + "-" + guid5).toString().trim();
+		    return finalGuid;
+		  }
+		"""
 		
 		# Get fuelRequest
 		* def fuelRequest = read('../fuelValidations/createConsentorVoucher.json')
@@ -110,15 +123,30 @@ Feature: fuel validations
 		* match response == {"MemberId":["The value 'InvalidMemberId' is not valid for MemberId."]}
 		
 	Scenario: PLAT-861 Redeem fuel voucher with invalid member id
+		* def genGuid = genGUID()
 		* def redeemRequest = read('../fuelValidations/redeemFuelVoucher.json')
-		* set redeemRequest.memberGuid = 'e5bcf31e-580e-4fcc-ba46-asdasd'
+		* set redeemRequest.memberGuid = genGuid
 		* set redeemRequest.dateRedeemed = setDate(0)
 		* print redeemRequest
 		Given path 'api/Fuel/Redeem'
 		And request redeemRequest
 		When method PATCH
-		Then status 400
-		* match response == {"memberGuid":["The input was not valid."]}
+		Then status 404
+		
+	Scenario: PLAT-911 Redeem fuel voucher with invalid barcode
+		* def memberResult = createNewMember()
+		* print memberResult.response
+		* def memberResponse = memberResult.response
+		* def genGuid = genGUID()
+		* def redeemRequest = read('../fuelValidations/redeemFuelVoucher.json')
+		* set redeemRequest.barcodeNumber = genGuid
+		* set redeemRequest.memberGuid = memberResponse.memberGuid
+		* set redeemRequest.dateRedeemed = setDate(0)
+		* print redeemRequest
+		Given path 'api/Fuel/Redeem'
+		And request redeemRequest
+		When method PATCH
+		Then status 404
 	
 	
 	

@@ -1,19 +1,20 @@
 {
-  "memberNumber": "",
-  "title": "Mr.",
-  "firstName": "Robot",
-  "lastName": "DHPTestKarate",
-  "street": "Light Square",
-  "suburb": "Adelaide",
-  "state": "SA",
-  "postCode": "5000",
-  "country": "Australia",
-  "mobile": "0412345678",
-  "email": "",
-  "dateOfBirth": "1990-06-05T05:18:06.8022",
-  "isSenior": false,
-  "source": "GGWebsite",
-  "additionalFields": {
-        "IBEBrand": "GGWebsite"
-   }
+	"memberNumber": "",
+	"title": "Dr",
+	"firstName": "RobotMichael",
+	"lastName": "APITestSchumacher",
+	"email": "",
+	"street": "221B Baker Street",
+	"suburb": "suburb",
+	"state": "SA",
+	"postCode": "5000",
+	"country": "AUS",
+	"mobile": "0401256156",
+	"dateOfBirth": "1990-06-22",
+	"source": "GGWebsite",
+	"additionalFields": {
+	    "IBEBrand": "GGWebsite",
+	    "IsSenior": false,
+	    "CouponCode": ""
+	}
 }

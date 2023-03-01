@@ -1,0 +1,8 @@
+{
+    MemberGuid: '#uuid',
+    MemberNumber: '#string',
+    Name: '#string',
+    Address: '#string',
+    Mobile: '##string',
+    Email: '#string'
+}

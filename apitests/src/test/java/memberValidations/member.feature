@@ -8,7 +8,7 @@ Feature: Member validations Happy path
       """
       	function(s) {
       		var text = "";
-      		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
       		return text + "@gmail.com";
@@ -26,63 +26,153 @@ Feature: Member validations Happy path
       return FinYear
       }
       """
-			
-		# This will create new member
-		* def createNewMember = 
+		
+		# This will set specific date (param: Number of years. Date today if 0)
+		* def setDate = 
+		"""
+			function(numberOfYear){
+				var initialDate = new Date();
+				initialDate.setFullYear(initialDate.getFullYear() + numberOfYear);
+				return initialDate.toISOString();
+			}
+		"""
+		
+		# This wil delete one field from the json.
+		* def deleteJsonField =
+		"""
+			function(json, key){
+				delete json[key];
+				return json;
+			}
+		"""
+		
+		# This will return random required field
+		* def randomRequiredField = 
 		"""
 			function(){
-				var result = karate.callSingle('classpath:data/createNewMember.feature');
-				return result;
+				var fieldNames = ["firstName", "lastName", "street", "suburb", "postCode", "country", "mobile", "email", "source"];
+				var selectedName = fieldNames[Math.floor((Math.random() * fieldNames.length))];
+				var formattedFieldName = selectedName.charAt(0).toUpperCase() + selectedName.slice(1);
+				return [selectedName, formattedFieldName];
 			}
+		"""
+		
+		# Get object message
+		* def returnKeyAndMessage = 
+		"""
+			function(response){
+				var actualKey = Object.keys(response)[0];
+				var actualMessage = Object.values(response)[0][0];
+				return [actualKey, actualMessage]
+			}
+		"""
+		# Create random guid
+		* def genGUID = 
+		"""
+			function() {
+		    var guid1 = Math.floor((1 + Math.random()) * 0x100000000).toString(16).substring(1);
+		    var guid2 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid3 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid4 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+		    var guid5 = Math.floor((1 + Math.random()) * 0x1000000000000).toString(16).substring(1);
+		    var finalGuid = (guid1 + "-" + guid2 + "-" + guid3 + "-" + guid4 + "-" + guid5).toString().trim();
+		    return finalGuid;
+		  }
 		"""
 		
     * def temp = curdate()
     * def requestpayload = read('../memberValidations/requestpayload.json')
     * set requestpayload.email = random_email(10)
+    * def structure = read('../membershipValidation/createMemberV3structure.json')
 
-  Scenario: Member validations(Create,Find,update,Delete) positive flow- Happy path
-    #Create member and verify the expiry date is 2 years ahead.
+  Scenario: Create member and verify the expiry date is 2 years ahead.
     Given path 'api/Member/CreateMemberV3'
     And request requestpayload
     When method post
     Then status 200
-    Then print 'Memeber is created'
-    And def memberid = response.memberGuid
-    Then print memberid
-    Then def expirydate = response.membershipExpiryDate
-    Then print expirydate
-    Then print temp
-    Then match expirydate contains temp
+    * match response == structure
+    * def expirydate = response.membershipExpiryDate
+    * print expirydate
+    * print temp
+    * match expirydate contains temp
     
-    #Find member
-    And path 'api/Member'
-    And param MemberGuid = memberid
+
+  Scenario: PLAT-714 Create a senior member and verify the expiry date is 2 years ahead.
+  	* def DOB = setDate(-70)
+		* set requestpayload.additionalFields.isSenior = true
+		* set requestpayload.dateOfBirth = DOB
+		* print requestpayload
+    Given path 'api/Member/CreateMemberV3'
+    And request requestpayload
+    When method post
+    Then status 200
+    * match response == structure
+    * def expirydate = response.membershipExpiryDate
+    * print expirydate
+    * print temp
+    * match expirydate contains temp
+    * match response.membershipCost == 40
+
+  Scenario: PLAT-715 Create a senior member where DOB is outside senior age
+		* set requestpayload.additionalFields.isSenior = true
+		* print requestpayload
+    Given path 'api/Member/CreateMemberV3'
+    And request requestpayload
+    When method post
+    Then status 200
+    * match response == structure
+    * def expirydate = response.membershipExpiryDate
+    * print expirydate
+    * print temp
+    * match expirydate contains temp
+    * match response.membershipCost == 50
+
+  Scenario: PLAT-716 Create member using a valid promo code
+  	* set requestpayload.additionalFields.CouponCode = '12MONTH'
+		* print requestpayload
+    Given path 'api/Member/CreateMemberV3'
+    And request requestpayload
+    When method post
+    Then status 200
+    * match response == structure
+
+  Scenario: PLAT-717 Create member using a invalid promo code
+  	* def structure = read('../membershipValidation/createMemberV3structure.json')
+  	* set requestpayload.additionalFields.CouponCode = 'NOTACOUPON'
+		* print requestpayload
+    Given path 'api/Member/CreateMemberV3'
+    And request requestpayload
+    When method post
+    Then status 400
+    * match response == {"promoCode": ["Coupon Code NOTACOUPON could not be found."]}
+
+  Scenario: PLAT-700 Create member where request body has missing fields
+  	* def jsonField = randomRequiredField()
+  	* def expectedMessage = "The " + jsonField[1] + " field is required."
+  	* def initialRequest = requestpayload
+  	* def missingFieldRequest =  deleteJsonField(initialRequest, jsonField[0])
+  	* print missingFieldRequest
+  	Given path 'api/Member/CreateMemberV3'
+    And request missingFieldRequest
+    When method POST
+    Then status 400
+    * def responseValues = returnKeyAndMessage(response)
+    * match responseValues[0] == jsonField[1]
+    * match responseValues[1] == expectedMessage
+    
+  Scenario: Find a member using valid guid
+  	* def structure = read('../memberValidations/lookupStructure.json')
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
+    Given path 'api/Member'
+    And param MemberGuid = memberResponse.memberGuid
     When method get
     Then status 200
-    
-    #Update member
-    And path 'api/Member'
-    And def updatepayload = read('../memberValidations/Updatemember.json')
-    And set updatepayload.memberGuid = memberid
-    And request updatepayload
-    And method patch
-    Then status 200
-    
-    #Deactivate member
-    And path 'api/Member/Deactivate'
-    And param MemberGuid = memberid
-    And param deactivateRelatedEntities = 'true'
-    And method patch
-    And status 200
-    
-    #Delete member
-    And path 'api/Member'
-    And param MemberGuid = memberid
-    And method delete
-    And status 204
+    * match response == structure
 		
-	Scenario: Lookup Existing Member
-		* def result = createNewMember()
+	Scenario: PLAT-692 Lookup Existing Member
+		* def result = call read('classpath:data/createNewMember.feature')
 		* def memberResponse = result.response
 		* print memberResponse
 	  Given path '/api/Member/Lookup'
@@ -94,7 +184,7 @@ Feature: Member validations Happy path
 	  Then status 200
 	  * match response == structure
     
-  Scenario: Lookup Member that doesn't exist
+  Scenario: PLAT-694 Lookup Member that doesn't exist
   	Given path '/api/Member/Lookup'
     * param MemberNumber = '1'
     * param Surname = 'test'
@@ -102,8 +192,94 @@ Feature: Member validations Happy path
     When method get
     Then status 404
     
+  Scenario: PLAT-706 Update a member using valid guid
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
+		* def expectedLastname = "Updated" + memberResponse.lastName
+    * def updatepayload = read('../memberValidations/Updatemember.json')
+    * set updatepayload.memberGuid = memberResponse.memberGuid
+    * set updatepayload.memberNumber = memberResponse.memberNumber
+    * set updatepayload.title = memberResponse.title
+    * set updatepayload.firstName = memberResponse.firstName
+    * set updatepayload.surname = expectedLastname
+    * set updatepayload.email = memberResponse.email
+    * def structure = read('../memberValidations/lookupStructure.json')
+    Given path 'api/Member'
+    And request updatepayload
+    When method PATCH
+    Then status 200
+    * match response == structure
+    * match response.Surname == expectedLastname
+    
+  Scenario: PLAT-706 Update a member using invalid guid
+    * def updatepayload = read('../memberValidations/Updatemember.json')
+    * set updatepayload.memberGuid = 'f19b900e-134x1-4b16-a114-0fdfebaf7cbe'
+    Given path 'api/Member'
+    And request updatepayload
+    When method PATCH
+    Then status 400
+    
+  Scenario: PLAT-707 Update a member using invalid deactivated member guid
+		* def result = call read('member.feature@deactivateMember')
+		* def memberResponse = result.response
+		* print memberResponse
+    * def updatepayload = read('../memberValidations/Updatemember.json')
+    * set updatepayload.memberGuid = memberResponse.memberGuid
+    * set updatepayload.memberNumber = memberResponse.memberNumber
+    * set updatepayload.title = memberResponse.title
+    * set updatepayload.firstName = memberResponse.firstName
+    * set updatepayload.surname = memberResponse.lastName
+    * set updatepayload.email = memberResponse.email
+    Given path 'api/Member'
+    And request updatepayload
+    When method PATCH
+    Then status 500
+    
+  @deactivateMember
+  Scenario: Deactivate a member
+  	* def structure = read('../memberValidations/lookupStructure.json')
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
+    Given path 'api/Member/Deactivate'
+    And param MemberGuid = memberResponse.memberGuid
+    And param deactivateRelatedEntities = 'true'
+    When method PATCH
+    Then status 200
+    * match response == structure
+    
+    
+  Scenario: PLAT-702 Delete a member using invalid guid
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
+    Given path 'api/Member'
+    And param MemberGuid = 'bla-bla-bla'
+    When method DELETE
+    Then status 400
+    * match response == {"MemberGuid": ["The value 'bla-bla-bla' is not valid for MemberGuid."]}
+    
+  Scenario: PLAT-703 Delete a member
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
+    Given path 'api/Member'
+    And param MemberGuid = memberResponse.memberGuid
+    When method DELETE
+    Then status 204
+    
+  Scenario: PLAT-704 Delete a deactivated member
+		* def result = call read('member.feature@deactivateMember')
+		* def resMember = result.response
+		* print resMember
+    Given path 'api/Member'
+    And param MemberGuid = resMember.memberGuid
+    When method DELETE
+    Then status 204
+    
   Scenario: PLAT-709 Get a valid member type
-		* def memberResult = createNewMember()
+		* def memberResult = call read('classpath:data/createNewMember.feature')
 		* print memberResult.response
 		* def memberResponse = memberResult.response
 		* def structure = read('../MemberValidations/memberTypeStructure.json')
@@ -122,3 +298,100 @@ Feature: Member validations Happy path
     Then status 200
     * match response.MemberTypes[0] == structure
     
+  Scenario: Get member type if membertype id is invalid
+  	* def invalidMemberType = '2a6ac894-afc2-e811-a96c-000d3ae1blatest'
+    Given path 'api/Member/MemberType'
+    And param memberTypeId = invalidMemberType
+    When method GET
+    Then status 400
+    * match returnKeyAndMessage(response)[1] == "The value '" + invalidMemberType + "' is not valid for memberTypeId."
+
+	Scenario: PLAT-719 Search a member using search criteria
+		* def structure = read('../memberValidations/memberSearchStructure.json')
+		Given path 'api/Member/Search'
+		And param SearchCriteria = 'test'
+		When method GET
+		Then status 200
+		* match each response.Members == structure
+
+	Scenario: PLAT-720 Search a member using search criteria that does NOT exist
+		* def structure = read('../memberValidations/memberSearchStructure.json')
+		Given path 'api/Member/Search'
+		And param SearchCriteria = 'wheelsonthebus'
+		When method GET
+		Then status 404
+  	
+  Scenario: PLAT-721 Advanced search for members
+		* def memberResult = call read('classpath:data/createNewMember.feature')
+		* print memberResult.response
+		* def memberResponse = memberResult.response
+		* def structure = read('../memberValidations/memberSearchStructure.json')
+		* def searchRequest = read('../memberValidations/advanceSearch.json')
+		* set searchRequest.MemberGuid = memberResponse.memberGuid
+		* set searchRequest.MemberNumber = memberResponse.memberNumber
+		* set searchRequest.Name = memberResponse.RobotTestGda4xA8SUX
+		* set searchRequest.Address = memberResponse.street
+		* set searchRequest.Mobile = memberResponse.mobilePhone
+		* set searchRequest.Email = memberResponse.email
+		Given path 'api/Member/SearchAdvanced'
+		And request searchRequest
+		When method POST
+		Then status 200
+		* match each response.Members == structure
+		
+  Scenario: PLAT-723 search a valid email address
+		* def memberResult = call read('classpath:data/createNewMember.feature')
+		* print memberResult.response
+		* def memberResponse = memberResult.response
+  	* def structure = read('../MemberValidations/lookupStructure.json')
+  	Given path 'api/Member/SearchEmail'
+  	And param emailAddress = memberResponse.email
+  	When method GET
+  	Then status 200
+  	* match response == structure
+  	
+  Scenario: PLAT-724 search an invalid email address
+  	* def invalidEmail = "invalidEmail@gmailtest"
+  	Given path 'api/Member/SearchEmail'
+  	And param emailAddress = invalidEmail
+  	When method GET
+  	Then status 404
+  	* match response == "Contact with email: " + invalidEmail + " could not be found"
+  	
+  Scenario: PLAT-725 Senior check
+  	Given path 'api/Member/SeniorCheck'
+  	When method GET
+  	Then status 404
+  	* match response == "Failed to find any contacts."
+  	
+  Scenario: PLAT-726 Deidentify member account
+  	* def structure = read('../memberValidations/deidentifyMemberStructure.json')
+		* def memberResult = call read('classpath:data/createNewMember.feature')
+		* print memberResult.response
+		* def memberResponse = memberResult.response
+		Given path 'api/Member/DeidentifyMemberAccount'
+		And request {source: 'GDAY', memberGuid: '#(memberResponse.memberGuid)', requestedBy: 'Robot'}
+		When method POST
+		Then status 200
+		* match response == structure
+		* match response.success == true
+		* match response.message == 'Member account successfully deleted.'
+		
+		#Check that the deleted account no longer exist
+		Given path 'api/Membership/Lookup'
+		And param MemberGuid = memberResponse.memberGuid
+		When method GET
+		Then status 404
+
+	Scenario: PLAT-727 Deidentify member account using invalid member guid
+  	* def structure = read('../memberValidations/deidentifyMemberStructure.json')
+  	* def genGuid = genGUID()
+  	* print genGuid
+		Given path 'api/Member/DeidentifyMemberAccount'
+		And request {source: 'GDAY', memberGuid: '#(genGuid)', requestedBy: 'Robot'}
+		When method POST
+		Then status 200
+		* match response == structure
+		* match response.success == false
+		* match response.message == 'Could not delete member.'
+		

@@ -47,7 +47,7 @@ Feature: CreateMemberV3 Member Join
     * match response.email == __row.email
     * match response.bookingDiscountPercentage == 10
     * match response.membershipCost == cost
-    * def structure = read('../structures/createMemberV3structure.json')
+    * def structure = read('../membershipValidation/createMemberV3structure.json')
 		* match response == structure
     
     # should be able to use the get method to return standard member info

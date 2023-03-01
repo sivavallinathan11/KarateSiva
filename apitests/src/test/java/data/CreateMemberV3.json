@@ -16,7 +16,8 @@
         "source": "GGWebsite",
         "additionalFields": {
             "IBEBrand": "GGWebsite",
-            "isSenior": true
+            "isSenior": true,
+        	"CouponCode": ""
         }
     },
     {

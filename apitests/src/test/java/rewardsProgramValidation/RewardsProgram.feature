@@ -15,7 +15,7 @@ Feature: Rewards Program validations
     * match response == '#string'
     
     
-    Scenario: Get GUID of rewards program for the partner - Negative Flow
+  Scenario: Get GUID of rewards program for the partner - Negative Flow
     And path '/api/RewardsProgram'
     When param PartnerName = "Test"
     When method GET

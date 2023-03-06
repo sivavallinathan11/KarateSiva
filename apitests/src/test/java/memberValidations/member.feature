@@ -18,8 +18,6 @@ Feature: Member validations Happy path
       """
        function(){
       const date = new Date();
-      let day = date.getDate();
-      let month = date.getMonth();
       let year = date.getFullYear();
       let yearfinal = year+2
       var FinYear = yearfinal.toString();
@@ -66,6 +64,7 @@ Feature: Member validations Happy path
 				return [actualKey, actualMessage]
 			}
 		"""
+
 		# Create random guid
 		* def genGUID = 
 		"""
@@ -170,6 +169,7 @@ Feature: Member validations Happy path
     When method get
     Then status 200
     * match response == structure
+    * match response.LoyaltyTier == 'Mate'
 		
 	Scenario: PLAT-692 Lookup Existing Member
 		* def result = call read('classpath:data/createNewMember.feature')

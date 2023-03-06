@@ -1,0 +1,16 @@
+{
+    "MembershipId": "7dd117a1-d9bb-ed11-83fe-00224818a799",
+    "MembershipType": "GDAY",
+    "ExpiryDate": "2025-03-07T04:44:56+00:00",
+    "CreatedDate": null,
+    "ExpiryDateLastExtendedOn": "2023-03-06T04:45:01+00:00",
+    "MemberGuid": null,
+    "RefereeContactId": null,
+    "CommencementDate": "2023-03-06T04:45:00+00:00",
+    "MaintenanceDescriptionId": null,
+    "LevelUpDescriptionId": null,
+    "MembershipNumber": "105349593",
+    "MembershipProduct": "22b7ad9d-33d0-e811-a96f-000d3ae121f5",
+    "StatusCode": 1,
+    "StateCode": 0
+}

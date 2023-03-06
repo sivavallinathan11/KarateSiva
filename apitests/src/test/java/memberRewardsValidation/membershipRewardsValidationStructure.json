@@ -1,0 +1,16 @@
+{
+    "ContactId": '##uuid',
+    "MemberGuid": '##uuid',
+    "MemberType": '##string',
+    "MemberTypeID": '##uuid',
+    "MembershipExpiryDate": '##string',
+    "FinalCost": '##number',
+    "PromoCodeDifferenceCost": '##number',
+    "MemberCost": '##number',
+    "CouponAccepted": '#boolean',
+    "MemberRewardsProgramValid": '#boolean',
+    "BookingDiscountPercentage": '##number',
+    "CreateContact": '#boolean',
+    "CreateMember": '#boolean',
+    "RenewMembership": '#boolean',
+}

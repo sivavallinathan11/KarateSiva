@@ -54,3 +54,4 @@ Feature: Membership validation happy path
 		* print response
 		* def expectedStructure = read('../membershipValidation/createMemberV3structure.json')
 		* match response == expectedStructure
+		* match response.membershipExpiryDate contains expectedExpiryYear

@@ -1,0 +1,9 @@
+{
+    MemberGuid: '##uuid',
+    RewardsProgramId: '#uuid',
+    MemberRewardsProgramId: '#uuid',
+    Name: '#string',
+    Number: '#string',
+    LinkStatus: '#string',,
+    CreatedOn: '#string',
+}

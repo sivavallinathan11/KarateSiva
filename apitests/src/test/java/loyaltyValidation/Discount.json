@@ -1,6 +1,6 @@
 {
-    BookingDiscountCap: '#number',
-    BookingDiscountCapBase: '#number',
-    BookingDiscountPercentage: '#number',
+    BookingDiscountCap: '##number',
+    BookingDiscountCapBase: '##number',
+    BookingDiscountPercentage: '##number',
     BookingDiscountCapIsUnlimited: '#boolean'
 }

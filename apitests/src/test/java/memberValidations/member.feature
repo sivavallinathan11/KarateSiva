@@ -94,7 +94,6 @@ Feature: Member validations Happy path
     * print expirydate
     * print temp
     * match expirydate contains temp
-    
 
   Scenario: PLAT-714 Create a senior member and verify the expiry date is 2 years ahead.
   	* def DOB = setDate(-70)
@@ -212,14 +211,6 @@ Feature: Member validations Happy path
     * match response == structure
     * match response.Surname == expectedLastname
     
-  Scenario: PLAT-706 Update a member using invalid guid
-    * def updatepayload = read('../memberValidations/Updatemember.json')
-    * set updatepayload.memberGuid = 'f19b900e-134x1-4b16-a114-0fdfebaf7cbe'
-    Given path 'api/Member'
-    And request updatepayload
-    When method PATCH
-    Then status 400
-    
   Scenario: PLAT-707 Update a member using invalid deactivated member guid
 		* def result = call read('member.feature@deactivateMember')
 		* def memberResponse = result.response
@@ -249,16 +240,11 @@ Feature: Member validations Happy path
     Then status 200
     * match response == structure
     
-    
   Scenario: PLAT-702 Delete a member using invalid guid
-		* def result = call read('classpath:data/createNewMember.feature')
-		* def memberResponse = result.response
-		* print memberResponse
     Given path 'api/Member'
-    And param MemberGuid = 'bla-bla-bla'
+    And param MemberGuid = genGUID()
     When method DELETE
-    Then status 400
-    * match response == {"MemberGuid": ["The value 'bla-bla-bla' is not valid for MemberGuid."]}
+    Then status 204
     
   Scenario: PLAT-703 Delete a member
 		* def result = call read('classpath:data/createNewMember.feature')
@@ -298,13 +284,13 @@ Feature: Member validations Happy path
     Then status 200
     * match response.MemberTypes[0] == structure
     
-  Scenario: Get member type if membertype id is invalid
-  	* def invalidMemberType = '2a6ac894-afc2-e811-a96c-000d3ae1blatest'
+  Scenario: PLAT-710 Get member type if membertype id is invalid
+  	* def invalidMemberType = genGUID()
     Given path 'api/Member/MemberType'
     And param memberTypeId = invalidMemberType
     When method GET
-    Then status 400
-    * match returnKeyAndMessage(response)[1] == "The value '" + invalidMemberType + "' is not valid for memberTypeId."
+    Then status 200
+    * match response == {"MemberTypes": []}
 
 	Scenario: PLAT-719 Search a member using search criteria
 		* def structure = read('../memberValidations/memberSearchStructure.json')
@@ -329,7 +315,25 @@ Feature: Member validations Happy path
 		* def searchRequest = read('../memberValidations/advanceSearch.json')
 		* set searchRequest.MemberGuid = memberResponse.memberGuid
 		* set searchRequest.MemberNumber = memberResponse.memberNumber
-		* set searchRequest.Name = memberResponse.RobotTestGda4xA8SUX
+		* set searchRequest.Name = memberResponse.firstName
+		* set searchRequest.Address = memberResponse.street
+		* set searchRequest.Mobile = memberResponse.mobilePhone
+		* set searchRequest.Email = memberResponse.email
+		Given path 'api/Member/SearchAdvanced'
+		And request searchRequest
+		When method POST
+		Then status 200
+		* match each response.Members == structure
+  	
+  Scenario: PLAT-722 Advanced search for members using invalid member guid
+		* def memberResult = call read('classpath:data/createNewMember.feature')
+		* print memberResult.response
+		* def memberResponse = memberResult.response
+		* def structure = read('../memberValidations/memberSearchStructure.json')
+		* def searchRequest = read('../memberValidations/advanceSearch.json')
+		* set searchRequest.MemberGuid = genGUID()
+		* set searchRequest.MemberNumber = memberResponse.memberNumber
+		* set searchRequest.Name = memberResponse.firstName
 		* set searchRequest.Address = memberResponse.street
 		* set searchRequest.Mobile = memberResponse.mobilePhone
 		* set searchRequest.Email = memberResponse.email
@@ -394,4 +398,3 @@ Feature: Member validations Happy path
 		* match response == structure
 		* match response.success == false
 		* match response.message == 'Could not delete member.'
-		

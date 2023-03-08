@@ -70,6 +70,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Set variables
 		* def membershipStructure = read('../membershipValidation/searchMembershipStructure.json')
+		* def updateMembershipStructure = read('../membershipValidation/updateMembershipStructure.json')
 	
 	@MembershipLookup
 	Scenario: PLAT-804 Membership lookup using valid member guid
@@ -396,6 +397,7 @@ Feature: Membership validation for .Net upgrade
 		When method PATCH
 		Then status 200
 		* print response
+		* match response == updateMembershipStructure
 		* match response.MembershipType == expectedMembershipType
 		* match response.CommencementDate == createdDate
 		
@@ -460,6 +462,7 @@ Feature: Membership validation for .Net upgrade
 		When method PATCH
 		Then status 200
 		* print response
+		* match response == updateMembershipStructure
 		* match response.MembershipType == expectedMembershipType
 		* match response.CommencementDate == createdDate
 
@@ -494,6 +497,7 @@ Feature: Membership validation for .Net upgrade
 		When method PATCH
 		Then status 200
 		* print response
+		* match response == updateMembershipStructure
 		* match response.MemberGuid != updateRequest.MemberGuid
 
  	Scenario: PLAT-822 Update member details using invalid membership number
@@ -528,6 +532,7 @@ Feature: Membership validation for .Net upgrade
 		When method PATCH
 		Then status 200
 		* print response
+		* match response == updateMembershipStructure
 		* match response.MembershipNumber != updateRequest.MembershipNumber
 
 
@@ -562,6 +567,7 @@ Feature: Membership validation for .Net upgrade
 		When method PATCH
 		Then status 200
 		* print response
+		* match response == updateMembershipStructure
 		* match response.MembershipProduct != updateRequest.MembershipProduct
 		
 	## Expected to return 500 based on previous TEST endpoint

@@ -1,0 +1,6 @@
+[
+	{
+		memberNumber: '##string',
+	    loyaltyTier: '##string'
+	}
+]

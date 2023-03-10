@@ -50,15 +50,6 @@ Feature: Coupon validations
 				return selectedIndex;
 			}
 		"""
-			
-		# This will create new member
-		* def createNewMember = 
-		"""
-			function(){
-				var result = karate.callSingle('classpath:data/createNewMember.feature');
-				return result;
-			}
-		"""
 		
 		* def requestCoupon = read('../couponValidations/createCoupon.json')
 		* print requestCoupon
@@ -110,10 +101,11 @@ Feature: Coupon validations
 		
 	@redeemCoupon
 	Scenario: PLAT-817 Redeem coupon using valid coupon code and member guid
-		# create new member
-		* def result = createNewMember()
-		* def memberResponse = result.response
-		* def memberGuid = memberResponse.memberGuid
+  	# Call to create new member
+  	* def result = call read('classpath:data/createNewMember.feature')
+		* def memberRes = result.response
+		* print memberRes
+		* def memberGuid = memberRes.memberGuid
 		# create new coupon
 		* def couponResult = call read('coupon.feature@createCoupon')
 		* def newCoupon = couponResult.response
@@ -129,8 +121,9 @@ Feature: Coupon validations
 	Scenario: PLAT-818 Get or redeem a redemption record linked to a member
 		# Redeem a coupon
 		* def redeemResult = call read('coupon.feature@redeemCoupon')
+		* print redeemResult
 		* def couponCode = redeemResult.couponResult.couponCode
-		* def memberGuid = redeemResult.memberResponse.memberGuid
+		* def memberGuid = redeemResult.memberRes.memberGuid
 		#Get redeemed coupon
 		Given path 'api/Coupon/GetRedemption'
 		* param memberGuid = memberGuid
@@ -144,7 +137,7 @@ Feature: Coupon validations
 	Scenario: PLAT-835 Redeem a coupon that was already redeemed
 		* def redeemResult = call read('coupon.feature@redeemCoupon')
 		* def couponCode = redeemResult.couponResult.couponCode
-		* def memberGuid = redeemResult.memberResponse.memberGuid
+		* def memberGuid = redeemResult.memberRes.memberGuid
 		Given path 'api/Coupon'
 		* param Code = couponCode
 		* param MemberId = memberGuid
@@ -164,10 +157,11 @@ Feature: Coupon validations
 		* match response.MemberId[0] == "The value 'invalidMember' is not valid for MemberId."
 
 	Scenario: PLAT-837 Redeem a coupon with invalid couponCode
-		# create new member
-		* def result = createNewMember()
-		* def memberResponse = result.response
-		* def memberGuid = memberResponse.memberGuid
+  	# Call to create new member
+  	* def result = call read('classpath:data/createNewMember.feature')
+		* def memberRes = result.response
+		* print memberRes
+		* def memberGuid = memberRes.memberGuid
 		Given path 'api/Coupon'
 		* param Code = 'invalidCouponCode'
 		* param MemberId = memberGuid
@@ -183,10 +177,11 @@ Feature: Coupon validations
 		* match response == "Could not find coupon with ID: 11b334d9-b71f-ea11-a810-000d3a794611"
 		
 	Scenario: PLAT-839 Get or redeem non-existing coupon code
-		# create new member
-		* def result = createNewMember()
-		* def memberResponse = result.response
-		* def memberGuid = memberResponse.memberGuid
+  	# Call to create new member
+  	* def result = call read('classpath:data/createNewMember.feature')
+		* def memberRes = result.response
+		* print memberRes
+		* def memberGuid = memberRes.memberGuid
 		Given path 'api/Coupon/GetRedemption'
 		* param memberGuid = memberGuid
 		* param couponCode = 'GC2PUV3'

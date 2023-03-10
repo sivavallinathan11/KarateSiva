@@ -28,4 +28,5 @@ Feature: Create New Member Rewards Program
     And request rewardRequest
     When method POST
     Then status 200
+    * print response
     * match response == structure

@@ -5,7 +5,13 @@ Feature: Rewards Program validations
     * url memberUrl
     * def bearerToken = token
     
-
+  Scenario: PLAT-771 Get member rewards program
+		* def result = call read('classpath:data/createNewMemberProgram.feature')
+		* def rewards = result.response
+		* def memberDetails = result.result.response
+		* print result
+		* print memberDetails
+		* print rewards
 
   Scenario: Get GUID of rewards program for the partner
     And path '/api/RewardsProgram'

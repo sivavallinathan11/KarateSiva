@@ -30,6 +30,7 @@ Feature: Membership validation for .Net upgrade
 					return finalDate;
 				}
 			"""
+			
 		# Create random guid
 		* def genGUID = 
 		"""

@@ -29,6 +29,33 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 * mvn test -Dtest=BenefitsRunnerTest - To Execute any specific runner file
 * mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment(environmet config will be available in karateconfig.js file)
 
+# Run Tests in Parallel
+Execute the following command
+* mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
+
+When adding a new feature. Please make sure your feature is added to the commonRunner > ParallelExecutionTest.java clase:
+    class ParallelExecutionTest {
+
+        @Test
+        void testParallel() {
+            Results results = Runner.path(
+                    "classpath:couponValidations",
+                    "classpath:benefitsValidation",
+                    "classpath:deviceValidation",
+                    "classpath:fuelValidations",
+                    "classpath:leaderboardValidation",
+                    "classpath:loyaltyValidation",
+                    "classpath:memberBenefitsValidation",
+                    "classpath:memberRewardsValidation",
+                    "classpath:membershipValidation",
+                    "classpath:memberValidations",
+                    "classpath:personalDetailsValidation",
+                    "classpath:rewardsProgramValidation",
+                    "classpath:subscriptionValidation").tags("~@skipme").parallel(5);
+            assertEquals(0, results.getFailCount(), results.getErrorMessages());
+        }
+    }
+
 # Containerised Surefire reports
 This requires docker and docker compose to be installed
 target/karate-reports/karate-summary.html

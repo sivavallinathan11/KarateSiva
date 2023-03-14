@@ -34,7 +34,7 @@ Execute the following command
 * mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
 
 When adding a new feature. Please make sure your feature is added to the commonRunner > ParallelExecutionTest.java class:
-
+```java
     class ParallelExecutionTest {
         @Test
         // tag any tests specifically written for the .net6 version with @net6
@@ -69,13 +69,17 @@ When adding a new feature. Please make sure your feature is added to the commonR
             
         }
     }
+```
 
 ## Containerised Surefire reports
 This requires docker and docker compose to be installed
 target/karate-reports/karate-summary.html
 
+The containers can be run by:
+```bash 
 $ docker-compose build
 $ docker-compose up -d
+```
 
 This will run the docker.compose.yaml file which will mount the target directory into a containerised nginx server.
 You can then access it by 

@@ -67,7 +67,6 @@ steps:
 - task: InvokeRESTAPI@1
   inputs:
     connectionType: 'connectedServiceNameARM'
-    azureServiceConnection: 'GDAY GROUP Enterprise Dev/Test (ff650bb8-3ff4-4fd1-865c-829ed593b384)'
     method: 'POST'
     headers: |
       {

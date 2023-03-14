@@ -4,18 +4,17 @@ Feature: Rewards Program validations
   Background: 
     * url memberUrl
     * def bearerToken = token
-    
-  Scenario: PLAT-771 Get member rewards program
-		* def result = call read('classpath:data/createNewMemberProgram.feature')
-		* def rewards = result.response
-		* def memberDetails = result.result.response
-		* print result
-		* print memberDetails
-		* print rewards
 
-  Scenario: Get GUID of rewards program for the partner
+  Scenario: Get GUID of rewards program for velocity
     And path '/api/RewardsProgram'
     When param PartnerName = "Velocity"
+    When method GET
+    Then status 200
+    * match response == '#string'
+
+  Scenario: Get GUID of rewards program for flybuys
+    And path '/api/RewardsProgram'
+    When param PartnerName = "Flybuys"
     When method GET
     Then status 200
     * match response == '#string'
@@ -32,14 +31,14 @@ Feature: Rewards Program validations
   Scenario: Validate partner rewards member number - Positive flow
     And path '/api/RewardsProgram/Validate'
     And param PartnerName = "Velocity"
-    And param PartnerMemberNumber = "1406445003"
-    And param FirstName = "TestAnna"
+    And param PartnerMemberNumber = "1406445014"
+    And param FirstName = "TestDave"
     And param LastName = "Discovery"
     When method GET
     Then status 200
     And match response == {"valid": true,"reason": null ,"rewardType": 1,"rewardProgramId": "d65fc0d8-96bc-e811-a96c-000d3ae12dab"}
    
-   Scenario: Validate partner rewards member number - Negative flow
+  Scenario: Validate partner rewards member number - Negative flow
     And path '/api/RewardsProgram/Validate'
     And param PartnerName = "Velocity"
     And param PartnerMemberNumber = "Velocity"

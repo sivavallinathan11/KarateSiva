@@ -21,28 +21,35 @@ steps:
     testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
     goals: 'test -Dtest=ParallelExecutionTest -Dkarate.env=test'
     
-- task: PublishTestResults@2
-  displayName: 'Publish Test Results'
-  inputs:
-    testResultsFiles: '*.xml'
-    searchFolder: '/home/vsts/work/1/s/apitests/target/surefire-reports'
-    mergeTestResults: true
-    testRunTitle: 'Platform Api testing'
-  continueOnError: true
-  condition: succeededOrFailed()
+# - task: PublishTestResults@2
+#   displayName: 'Publish Test Results'
+#   inputs:
+#     testResultsFiles: '*.xml'
+#     searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/surefire-reports'
+#     mergeTestResults: true
+#     testRunTitle: 'Platform Api testing'
+#   continueOnError: true
+#   condition: succeededOrFailed()
   
 - task: PublishPipelineArtifact@1
-  displayName: 'Publish Pipeline Artifact'
+  displayName: 'Publish Karate Reports'
   inputs:
-    targetPath: /home/vsts/work/1/s/apitests/target/karate-reports
+    targetPath: $(System.DefaultWorkingDirectory)/apitests/target/karate-reports
     artifact: 'Karate reports'
   condition: succeededOrFailed()
   
   
 - task: PublishPipelineArtifact@1
-  displayName: 'Publish Pipeline Artifact'
+  displayName: 'Publish Surefire Reports'
   inputs:
-    targetPath: /home/vsts/work/1/s/apitests/target/surefire-reports
+    targetPath: $(System.DefaultWorkingDirectory)/apitests/target/surefire-reports
+    artifact: 'SureFire Junit reports'
+  condition: succeededOrFailed()
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Cucumber Reports'
+  inputs:
+    targetPath: $(System.DefaultWorkingDirectory)/apitests/target/surefire-reports
     artifact: 'SureFire Junit reports'
   condition: succeededOrFailed()
 

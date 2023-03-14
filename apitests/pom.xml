@@ -28,7 +28,6 @@
     		<version>5.7.5</version>
 		</dependency>		
     </dependencies>
-
     <build>
         <testResources>
             <testResource>

@@ -33,43 +33,12 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 Execute the following command
 * mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
 
-When adding a new feature. Please make sure your feature is added to the commonRunner > ParallelExecutionTest.java class:
-```java
-    class ParallelExecutionTest {
-        @Test
-        // tag any tests specifically written for the .net6 version with @net6
-        // then we create another runner to include @net6
-        // run:
-        // mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
-        void testParallel() {
-            Results results = Runner.path(
-                    "classpath:couponValidations"
-                    ,"classpath:benefitsValidation"
-                    ,"classpath:deviceValidation"
-                    ,"classpath:fuelValidations"
-                    ,"classpath:leaderboardValidation"
-                    ,"classpath:loyaltyValidation"
-                    ,"classpath:memberBenefitsValidation"
-                    ,"classpath:memberRewardsValidation"
-                    ,"classpath:membershipValidation"
-                    ,"classpath:memberValidations"
-                    ,"classpath:personalDetailsValidation"
-                    ,"classpath:rewardsProgramValidation"
-                    ,"classpath:subscriptionValidation"
-                )
-                    .outputCucumberJson(true)
-                    .outputJunitXml(true)
-                    
-                    .tags("~@net6").parallel(5);
-            // this will generate the cucumber html results
-            generateReport(results.getReportDir());
-            // Cause the runner to error if there are test failures
-            // this means we can pick it up on the pipelines
-            assertEquals(0, results.getFailCount(), results.getErrorMessages());
-            
-        }
-    }
-```
+
+commonRunner > ParallelExecutionTest.java
+[ParallelExecutionTest.java](https://discoveryparks.visualstudio.com/Test%20Automation/_git/KarateApiTests?path=/apitests/src/test/java/commonRunner/ParallelExecutionTest.java)
+
+<mark style="background-color: #faf1ac">When adding new features, make sure they are added to the list in ParallelExecutionTest.java</mark>  
+
 
 ## Containerised Surefire reports
 This requires docker and docker compose to be installed

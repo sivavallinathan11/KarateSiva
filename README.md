@@ -18,22 +18,23 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 
 
 # Build and Test
-# Run Test Locally in Eclipse
+## Run Test Locally in Eclipse
 1. Open any runnerfile
 2. Right click and run as Junit Test
 
-# Run Test Locally using Maven
+## Run Test Locally using Maven
  Execute the following commands
 
 * mvn test - To Execute the whole test suite
 * mvn test -Dtest=BenefitsRunnerTest - To Execute any specific runner file
 * mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment(environmet config will be available in karateconfig.js file)
 
-# Run Tests in Parallel
+## Run Tests in Parallel
 Execute the following command
 * mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
 
-When adding a new feature. Please make sure your feature is added to the commonRunner > ParallelExecutionTest.java clase:
+When adding a new feature. Please make sure your feature is added to the commonRunner > ParallelExecutionTest.java class:
+
     class ParallelExecutionTest {
 
         @Test
@@ -56,7 +57,7 @@ When adding a new feature. Please make sure your feature is added to the commonR
         }
     }
 
-# Containerised Surefire reports
+## Containerised Surefire reports
 This requires docker and docker compose to be installed
 target/karate-reports/karate-summary.html
 

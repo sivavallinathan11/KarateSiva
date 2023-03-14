@@ -19,7 +19,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
-    goals: 'test -Dtest=BenefitsRunnerTest'
+    goals: 'test -Dtest=ParallelExecutionTest -Dkarate.env=test'
     
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
@@ -44,4 +44,15 @@ steps:
   inputs:
     targetPath: /home/vsts/work/1/s/apitests/target/surefire-reports
     artifact: 'SureFire Junit reports'
+  condition: succeededOrFailed()
+
+- task: PublishTestResults@2
+  displayName: 'Publish MembershipSbe Results'
+  inputs:
+    testResultsFiles: '*.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/karate-reports'
+    mergeTestResults: true
+    failTaskOnFailedTests: true
+    testRunTitle: 'Membership SBE Tests'
+  continueOnError: true
   condition: succeededOrFailed()

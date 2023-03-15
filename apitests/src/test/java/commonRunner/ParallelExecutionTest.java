@@ -42,7 +42,7 @@ class ParallelExecutionTest {
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)
-        		.tags("~@net6").parallel(6);
+        		.tags("~@net6").parallel(5);
         // this will generate the cucumber html results
         generateReport(results.getReportDir());
         // Cause the runner to error if there are test failures

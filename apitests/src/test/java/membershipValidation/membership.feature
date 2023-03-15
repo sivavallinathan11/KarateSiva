@@ -1,6 +1,6 @@
 #Author: fvalderramajr
 
-Feature: Membership validation for .Net upgrade
+Feature: Membership validation
 
 	Background:
 		* url memberUrl
@@ -70,8 +70,8 @@ Feature: Membership validation for .Net upgrade
 		"""
 		
 		# Set variables
-		* def membershipStructure = read('../membershipValidation/searchMembershipStructure.json')
-		* def updateMembershipStructure = read('../membershipValidation/updateMembershipStructure.json')
+		* def membershipStructure = read('searchMembershipStructure.json')
+		* def updateMembershipStructure = read('updateMembershipStructure.json')
 	
 	@MembershipLookup
 	Scenario: PLAT-804 Membership lookup using valid member guid
@@ -150,7 +150,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Then expire membership
 		* def expiryDate = setExpectedDate("Year", -2)
-		* def expireRequest = read('../membershipValidation/expireMember.json')
+		* def expireRequest = read('expireMember.json')
 		* set expireRequest.MembershipId = membershipResult.MembershipId
 		* set expireRequest.ExpiryDate = expiryDate
 		* set expireRequest.MemberGuid = memberDetails.memberGuid
@@ -189,7 +189,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Then expire membership
 		* def expiryDate = setExpectedDate("Year", -2)
-		* def expireRequest = read('../membershipValidation/expireMember.json')
+		* def expireRequest = read('expireMember.json')
 		* set expireRequest.MembershipId = membershipResult.MembershipId
 		* set expireRequest.ExpiryDate = expiryDate
 		* set expireRequest.MemberGuid = memberDetails.memberGuid
@@ -228,7 +228,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Then expire membership
 		* def expiryDate = setExpectedDate("Year", -2)
-		* def expireRequest = read('../membershipValidation/expireMember.json')
+		* def expireRequest = read('expireMember.json')
 		* set expireRequest.MembershipId = membershipResult.MembershipId
 		* set expireRequest.ExpiryDate = expiryDate
 		* set expireRequest.MemberGuid = memberDetails.memberGuid
@@ -267,7 +267,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Then expire membership
 		* def expiryDate = setExpectedDate("Year", -2)
-		* def expireRequest = read('../membershipValidation/expireMember.json')
+		* def expireRequest = read('expireMember.json')
 		* set expireRequest.MembershipId = membershipResult.MembershipId
 		* set expireRequest.ExpiryDate = expiryDate
 		* set expireRequest.MemberGuid = memberDetails.memberGuid
@@ -305,7 +305,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Then expire membership
 		* def expiryDate = setExpectedDate("Year", -2)
-		* def expireRequest = read('../membershipValidation/expireMember.json')
+		* def expireRequest = read('expireMember.json')
 		* set expireRequest.MembershipId = membershipResult.MembershipId
 		* set expireRequest.ExpiryDate = expiryDate
 		* set expireRequest.MemberGuid = memberDetails.memberGuid
@@ -344,7 +344,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Then expire membership
 		* def expiryDate = setExpectedDate("Year", -2)
-		* def expireRequest = read('../membershipValidation/expireMember.json')
+		* def expireRequest = read('expireMember.json')
 		* set expireRequest.MembershipId = membershipResult.MembershipId
 		* set expireRequest.ExpiryDate = expiryDate
 		* set expireRequest.MemberGuid = memberDetails.memberGuid
@@ -382,7 +382,7 @@ Feature: Membership validation for .Net upgrade
 		# Set and update member
 		* def createdDate = setExpectedDate("Today", 0)
 		* def expectedMembershipType = 'BOLT'
-		* def updateRequest = read('../membershipValidation/updateMember.json')
+		* def updateRequest = read('updateMember.json')
 		* set updateRequest.MembershipId = membershipResult.MembershipId
 		* set updateRequest.MembershipType = expectedMembershipType
 		* set updateRequest.ExpiryDate = membershipResult.ExpiryDate
@@ -416,7 +416,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Set and update member
 		* def createdDate = setExpectedDate("Today", 0)
-		* def updateRequest = read('../membershipValidation/updateMember.json')
+		* def updateRequest = read('updateMember.json')
 		* set updateRequest.MembershipId = genGUID()
 		* set updateRequest.ExpiryDate = membershipResult.ExpiryDate
 		* set updateRequest.CreatedDate = createdDate
@@ -447,7 +447,7 @@ Feature: Membership validation for .Net upgrade
 		# Set and update member
 		* def createdDate = setExpectedDate("Today", 0)
 		* def expectedMembershipType = 'BOLT'
-		* def updateRequest = read('../membershipValidation/updateMember.json')
+		* def updateRequest = read('updateMember.json')
 		* set updateRequest.MembershipId = membershipResult.MembershipId
 		* set updateRequest.MembershipType = expectedMembershipType
 		* set updateRequest.ExpiryDate = membershipResult.ExpiryDate
@@ -481,7 +481,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Set and update member
 		* def createdDate = setExpectedDate("Today", 0)
-		* def updateRequest = read('../membershipValidation/updateMember.json')
+		* def updateRequest = read('updateMember.json')
 		* set updateRequest.MembershipId = membershipResult.MembershipId
 		* set updateRequest.MembershipType = membershipResult.MembershipType
 		* set updateRequest.ExpiryDate = membershipResult.ExpiryDate
@@ -516,7 +516,7 @@ Feature: Membership validation for .Net upgrade
 		# Set and update member
 		* def invalidMemberNumber = '123123123'
 		* def createdDate = setExpectedDate("Today", 0)
-		* def updateRequest = read('../membershipValidation/updateMember.json')
+		* def updateRequest = read('updateMember.json')
 		* set updateRequest.MembershipId = membershipResult.MembershipId
 		* set updateRequest.MembershipType = membershipResult.MembershipType
 		* set updateRequest.ExpiryDate = membershipResult.ExpiryDate
@@ -551,7 +551,7 @@ Feature: Membership validation for .Net upgrade
 		
 		# Set and update member
 		* def createdDate = setExpectedDate("Today", 0)
-		* def updateRequest = read('../membershipValidation/updateMember.json')
+		* def updateRequest = read('updateMember.json')
 		* set updateRequest.MembershipId = membershipResult.MembershipId
 		* set updateRequest.MembershipType = membershipResult.MembershipType
 		* set updateRequest.ExpiryDate = membershipResult.ExpiryDate
@@ -572,22 +572,27 @@ Feature: Membership validation for .Net upgrade
 		* match response.MembershipProduct != updateRequest.MembershipProduct
 		
 	## Expected to return 500 based on previous TEST endpoint
-	Scenario: PLAT-840 Delete membership
+	## These are intended to test what it currently does. This endpoint is broken and should stay broken
+	Scenario: PLAT-840 Delete membership must stay broken
 		* def result = call read('classpath:data/createNewMember.feature')
 		* def member = result.response
+		* def structure = read('deleteMemberErrorStructure.json')
 		Given path 'api/Membership'
 		And param MemberGuid = member.memberGuid
 		When method DELETE
-		Then status 204
+		Then status 500
+		* match response == structure
 		
 	## Expected to return 500 based on previous TEST endpoint	
-	Scenario: PLAT-841 Delete membership using invalid member guid
+	Scenario: PLAT-841 Delete membership using invalid member guid must stay broken
 		* def result = call read('classpath:data/createNewMember.feature')
 		* def member = result.response
+		* def structure = read('deleteMemberErrorStructure.json')
 		Given path 'api/Membership'
 		And param MemberGuid = genGUID()
 		When method DELETE
-		Then status 204
+		Then status 500
+		* match response == structure
 
 	Scenario: PLAT-843 Member validation of member not due for renewal
 		* def result = call read('classpath:data/createNewMemberProgram.feature')
@@ -621,7 +626,7 @@ Feature: Membership validation for .Net upgrade
 		# Expire membership
 		# Set details for expiring member
 		* def expiryDate = setExpectedDate("Year", -2)
-		* def expireRequest = read('../membershipValidation/expireMember.json')
+		* def expireRequest = read('expireMember.json')
 		* set expireRequest.MembershipId = membershipResult.MembershipId
 		* set expireRequest.ExpiryDate = expiryDate
 		* set expireRequest.MemberGuid = member.memberGuid

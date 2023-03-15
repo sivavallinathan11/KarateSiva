@@ -16,7 +16,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
-class ParallelExecutionTest {
+class ParallelNet6ExecutionTest {
 
 
 	@Test
@@ -26,23 +26,24 @@ class ParallelExecutionTest {
 	// mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
     void testParallel() {
         Results results = Runner.path(
-        		"classpath:couponValidations"
-        		,"classpath:benefitsValidation"
-        		,"classpath:deviceValidation"
-        		,"classpath:fuelValidations"
-        		,"classpath:leaderboardValidation"
-        		,"classpath:loyaltyValidation"
-        		,"classpath:memberBenefitsValidation"
-        		,"classpath:memberRewardsValidation"
-        		,"classpath:membershipValidation"
-        		,"classpath:memberValidations"
-        		,"classpath:personalDetailsValidation"
-        		,"classpath:rewardsProgramValidation"
-        		,"classpath:subscriptionValidation"
+//        		"classpath:couponValidations"
+//        		,"classpath:benefitsValidation"
+//        		,"classpath:deviceValidation"
+//        		,"classpath:fuelValidations"
+//        		,"classpath:leaderboardValidation"
+//        		,"classpath:loyaltyValidation"
+//        		,"classpath:memberBenefitsValidation"
+//        		,"classpath:memberRewardsValidation"
+//        		,
+        		"classpath:membershipValidation"
+//        		,"classpath:memberValidations"
+//        		,"classpath:personalDetailsValidation"
+//        		,"classpath:rewardsProgramValidation"
+//        		,"classpath:subscriptionValidation"
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)
-        		.tags("~@net6").parallel(6);
+        		.tags("~@deprecated").parallel(5);
         // this will generate the cucumber html results
         generateReport(results.getReportDir());
         // Cause the runner to error if there are test failures

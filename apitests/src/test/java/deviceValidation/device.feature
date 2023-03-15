@@ -159,13 +159,20 @@ Feature: Device validations
 		When method POST
 		Then status 400
 		* match response == "Invalid card number format provided"
-		
+	@net6
 	Scenario: PLAT-524 Get device list using invalid member guid
 		Given path 'api/Device/list'
 		And param MemberGuid = 'MemberXYZ'
 		When method GET
 		Then status 400
 		* match response == {"MemberGuid":["The value 'MemberXYZ' is not valid for MemberGuid.","'Member Guid' must not be empty."]}
+	@deprecated
+	Scenario: PLAT-524 Deprecated Get device list using invalid member guid
+		Given path 'api/Device/list'
+		And param MemberGuid = 'MemberXYZ'
+		When method GET
+		Then status 400
+		* match response == {"MemberGuid":["The value 'MemberXYZ' is not valid for MemberGuid.","'Member Guid' should not be empty."]}
 
 	Scenario: PLAT-525 Create device with invalid device Id
 		* def genGuid = genGUID()
@@ -234,9 +241,10 @@ Feature: Device validations
 		* print response
 		* match response == structure
 	
-	Scenario: PLAT-547 Get unprinted device list
-		Given path 'api/Device/Unprinted'
-		When method GET
-		Then status 200
+# Pointless test. Endpoint is not live	
+#	Scenario: PLAT-547 Get unprinted device list
+#		Given path 'api/Device/Unprinted'
+#		When method GET
+#		Then status 200
 		
 		

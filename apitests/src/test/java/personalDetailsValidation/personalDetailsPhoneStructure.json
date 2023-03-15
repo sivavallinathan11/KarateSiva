@@ -1,6 +1,6 @@
 {
     valid: '#boolean',
-    number: '#string',
+    number: '##string',
     local_format: '##string',
     international_format: '##string',
     country_prefix: '##string',

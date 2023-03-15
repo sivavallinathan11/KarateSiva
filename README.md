@@ -32,14 +32,14 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 ## Run Tests in Parallel
 Execute the following command
 * mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
+* mvn test -Dtest=ParallelNet6ExecutionTest -Dkarate.env=memberv2
+
 
 There's a general purpose parallel runner file: [ParallelExecutionTest.java](https://discoveryparks.visualstudio.com/Test%20Automation/_git/KarateApiTests?path=/apitests/src/test/java/commonRunner/ParallelExecutionTest.java)
 
 <mark style="background-color: #faf1ac">When adding new features, make sure they are added to the list in ParallelExecutionTest.java</mark>  
 
 Any new features not added to the runner will not run on the pipelines!
-- [ ] Create a runner specifically for @net6 tags
-
 
 
 ## Containerised Surefire reports

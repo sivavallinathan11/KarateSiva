@@ -20,8 +20,7 @@ class ParallelExecutionTest {
 
 
 	@Test
-	// the line .tags("~@skipme").parallel(5) we can change to ~net6
-	// then tag any tests specifically written for the .net6 version with @net6
+	// tag any tests specifically written for the .net6 version with @net6
 	// then we create another runner to include @net6
 	// run:
 	// mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
@@ -43,7 +42,6 @@ class ParallelExecutionTest {
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)
-        		
         		.tags("~@net6").parallel(5);
         // this will generate the cucumber html results
         generateReport(results.getReportDir());

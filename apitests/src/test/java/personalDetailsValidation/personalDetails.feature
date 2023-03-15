@@ -12,7 +12,7 @@ Feature: Validate personal details
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../PersonalDetailsValidation/personalDetailsEmailStructure.json')
+		* def structure = read('personalDetailsEmailStructure.json')
 		* match response == structure
 		
 	Scenario: PLAT-557 Validate a contacts phone number
@@ -21,7 +21,7 @@ Feature: Validate personal details
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../PersonalDetailsValidation/personalDetailsPhoneStructure.json')
+		* def structure = read('personalDetailsPhoneStructure.json')
 		* match response == structure
 		
 	Scenario: PLAT-558 Validate a contacts address
@@ -59,7 +59,7 @@ Feature: Validate personal details
 		And param emailAddress = 'xyzgmail'
 		When method GET
 		Then status 200
-		* def structure =  read('../PersonalDetailsValidation/invalidEmailPersonalDetailStructure.json')
+		* def structure =  read('invalidEmailPersonalDetailStructure.json')
 		* match response == structure
 		
 	Scenario: PLAT-763 Validate a contacts invalid phone number
@@ -68,7 +68,7 @@ Feature: Validate personal details
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../PersonalDetailsValidation/personalDetailsPhoneStructure.json')
+		* def structure = read('personalDetailsPhoneStructure.json')
 		* match response == structure
 		* match response.valid == false
 		

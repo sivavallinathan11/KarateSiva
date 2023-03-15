@@ -27,7 +27,7 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 
 * mvn test - To Execute the whole test suite
 * mvn test -Dtest=BenefitsRunnerTest - To Execute any specific runner file
-* mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment(environmet config will be available in karateconfig.js file)
+* mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment (environment config will be available in karateconfig.js file)
 
 ## Run Tests in Parallel
 Execute the following command

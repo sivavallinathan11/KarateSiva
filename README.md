@@ -27,42 +27,30 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 
 * mvn test - To Execute the whole test suite
 * mvn test -Dtest=BenefitsRunnerTest - To Execute any specific runner file
-* mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment(environmet config will be available in karateconfig.js file)
+* mvn test -Dkarate.env=memberv2 - To Execute tests in specifc environment (environment config will be available in karateconfig.js file)
 
 ## Run Tests in Parallel
 Execute the following command
 * mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
+* mvn test -Dtest=ParallelNet6ExecutionTest -Dkarate.env=memberv2
 
-When adding a new feature. Please make sure your feature is added to the commonRunner > ParallelExecutionTest.java class:
 
-    class ParallelExecutionTest {
+There's a general purpose parallel runner file: [ParallelExecutionTest.java](https://discoveryparks.visualstudio.com/Test%20Automation/_git/KarateApiTests?path=/apitests/src/test/java/commonRunner/ParallelExecutionTest.java)
 
-        @Test
-        void testParallel() {
-            Results results = Runner.path(
-                    "classpath:couponValidations",
-                    "classpath:benefitsValidation",
-                    "classpath:deviceValidation",
-                    "classpath:fuelValidations",
-                    "classpath:leaderboardValidation",
-                    "classpath:loyaltyValidation",
-                    "classpath:memberBenefitsValidation",
-                    "classpath:memberRewardsValidation",
-                    "classpath:membershipValidation",
-                    "classpath:memberValidations",
-                    "classpath:personalDetailsValidation",
-                    "classpath:rewardsProgramValidation",
-                    "classpath:subscriptionValidation").tags("~@skipme").parallel(5);
-            assertEquals(0, results.getFailCount(), results.getErrorMessages());
-        }
-    }
+<mark style="background-color: #faf1ac">When adding new features, make sure they are added to the list in ParallelExecutionTest.java</mark>  
+
+Any new features not added to the runner will not run on the pipelines!
+
 
 ## Containerised Surefire reports
 This requires docker and docker compose to be installed
 target/karate-reports/karate-summary.html
 
+The containers can be run by:
+```bash 
 $ docker-compose build
 $ docker-compose up -d
+```
 
 This will run the docker.compose.yaml file which will mount the target directory into a containerised nginx server.
 You can then access it by 
@@ -70,3 +58,4 @@ You can then access it by
 
 
 
+<img src="https://i.imgur.com/dqhfFk4.png" alt="karate" style="height: 50px; width:50px"/>

@@ -1,0 +1,4 @@
+{
+    CorrelationId: '#string',
+    Message: '#string'
+}

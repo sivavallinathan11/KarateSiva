@@ -8,29 +8,29 @@ Feature: Validate personal details
 		
 	Scenario: PLAT-556 Validate a contacts email address
 		Given path 'api/PersonalDetailsValidation/Email'
-		And param emailAddress = 'drone1controller1test@gmail.com'
+		* param emailAddress = 'drone1controller1test@gmail.com'
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../PersonalDetailsValidation/personalDetailsEmailStructure.json')
+		* def structure = read('personalDetailsEmailStructure.json')
 		* match response == structure
 		
 	Scenario: PLAT-557 Validate a contacts phone number
 		Given path 'api/PersonalDetailsValidation/Phone'
-		And param phoneNumber = '0412999999'
+		* param phoneNumber = '0412999999'
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../PersonalDetailsValidation/personalDetailsPhoneStructure.json')
+		* def structure = read('personalDetailsPhoneStructure.json')
 		* match response == structure
 		
 	Scenario: PLAT-558 Validate a contacts address
 		Given path 'api/PersonalDetailsValidation/Address'
-		And param Street = '60 Light Square'
-		And param Suburb = 'Adelaide'
-		And param State = 'SA'
-		And param Postcode = '5000'
-		And param suggestedAddress = 'true'
+		* param Street = '60 Light Square'
+		* param Suburb = 'Adelaide'
+		* param State = 'SA'
+		* param Postcode = '5000'
+		* param suggestedAddress = 'true'
 		When method GET
 		Then status 200
 		* print response
@@ -41,11 +41,11 @@ Feature: Validate personal details
 		
 	Scenario: PLAT-559 Validate suggestions of autocompletions for address
 		Given path 'api/PersonalDetailsValidation/AddressAutocomplete'
-		And param Street = '60 Light Square'
-		And param Suburb = 'Adelaide'
-		And param State = 'SA'
-		And param Postcode = '5000'
-		And param suggestedAddress = 'true'
+		* param Street = '60 Light Square'
+		* param Suburb = 'Adelaide'
+		* param State = 'SA'
+		* param Postcode = '5000'
+		* param suggestedAddress = 'true'
 		When method GET
 		Then status 200
 		* print response
@@ -56,19 +56,19 @@ Feature: Validate personal details
 		
 	Scenario: PLAT-762 Validate a contacts invalid email address
 		Given path 'api/PersonalDetailsValidation/Email'
-		And param emailAddress = 'xyzgmail'
+		* param emailAddress = 'xyzgmail'
 		When method GET
 		Then status 200
-		* def structure =  read('../PersonalDetailsValidation/invalidEmailPersonalDetailStructure.json')
+		* def structure =  read('invalidEmailPersonalDetailStructure.json')
 		* match response == structure
 		
 	Scenario: PLAT-763 Validate a contacts invalid phone number
 		Given path 'api/PersonalDetailsValidation/Phone'
-		And param phoneNumber = '123131315365345'
+		* param phoneNumber = '123131315365345'
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../PersonalDetailsValidation/personalDetailsPhoneStructure.json')
+		* def structure = read('personalDetailsPhoneStructure.json')
 		* match response == structure
 		* match response.valid == false
 		

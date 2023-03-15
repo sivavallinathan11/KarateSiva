@@ -16,7 +16,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
-class ParallelExecutionTest {
+class ParallelNet6ExecutionTest {
 
 
 	@Test
@@ -42,7 +42,7 @@ class ParallelExecutionTest {
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)
-        		.tags("~@net6").parallel(5);
+        		.tags("~@deprecated").parallel(5);
         // this will generate the cucumber html results
         generateReport(results.getReportDir());
         // Cause the runner to error if there are test failures

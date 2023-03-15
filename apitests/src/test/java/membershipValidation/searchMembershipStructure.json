@@ -12,5 +12,6 @@
     MembershipNumber: '#string',
     MembershipProduct: '#string',
     StatusCode: '#number',
-    StateCode: '#number'
+    StateCode: '#number',
+    Source: '#string'
 }

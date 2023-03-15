@@ -5,10 +5,10 @@ Feature: Loyalty Program validations
   Background: 
     * url memberUrl
     * def bearerToken = token
-    * def LoyaltyStruct = read('../loyaltyValidation/LoyaltyTier.json')
-    * def LoyaltyRecalculate = read('../loyaltyValidation/Recalculation.json')
-    * def LoyaltyDiscount = read('../loyaltyValidation/Discount.json')
-    * def LoyaltyViaMemberNumber = read('../loyaltyValidation/tierByMemberNumberStructure.json')
+    * def LoyaltyStruct = read('LoyaltyTier.json')
+    * def LoyaltyRecalculate = read('Recalculation.json')
+    * def LoyaltyDiscount = read('Discount.json')
+    * def LoyaltyViaMemberNumber = read('tierByMemberNumberStructure.json')
     
     # Get random loyalty tier index
     * def returnRandomLoyaltyTierIndex =
@@ -54,7 +54,7 @@ Feature: Loyalty Program validations
     * match response.LoyaltyTiers[0] == LoyaltyStruct
     
   Scenario: PLAT-562 Get a specific loyalty tier
-  	* def result = call read('loyalty.feature@LoyaltyTierList')
+  	* def result = call read('Loyalty.feature@LoyaltyTierList')
   	* def loyaltyTiers = result.response.LoyaltyTiers
   	* def loyaltyTier = returnRandomLoyaltyTierIndex(loyaltyTiers)
   	* def loyaltyTierId = loyaltyTier.LoyaltyTierId

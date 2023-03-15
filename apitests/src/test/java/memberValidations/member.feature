@@ -81,8 +81,9 @@ Feature: Member validations Happy path
 		"""
 		
     * def temp = curdate()
-    * def requestpayload = read('../memberValidations/requestpayload.json')
+    * def requestpayload = read('requestpayload.json')
     * set requestpayload.email = random_email(10)
+    # note this is in another package
     * def structure = read('../membershipValidation/createMemberV3structure.json')
 
   Scenario: Create member and verify the expiry date is 2 years ahead.
@@ -160,7 +161,7 @@ Feature: Member validations Happy path
     * match responseValues[1] == expectedMessage
     
   Scenario: Find a member using valid guid
-  	* def structure = read('../memberValidations/lookupStructure.json')
+  	* def structure = read('lookupStructure.json')
 		* def result = call read('classpath:data/createNewMember.feature')
 		* def memberResponse = result.response
 		* print memberResponse
@@ -176,7 +177,7 @@ Feature: Member validations Happy path
 		* def memberResponse = result.response
 		* print memberResponse
 	  Given path '/api/Member/Lookup'
-	  * def structure = read('../memberValidations/lookupStructure.json')
+	  * def structure = read('lookupStructure.json')
 	  * param MemberNumber = memberResponse.memberNumber
 	  * param Surname = memberResponse.lastName
 	  * param Postcode = memberResponse.postcode
@@ -197,14 +198,14 @@ Feature: Member validations Happy path
 		* def memberResponse = result.response
 		* print memberResponse
 		* def expectedLastname = "Updated" + memberResponse.lastName
-    * def updatepayload = read('../memberValidations/Updatemember.json')
+    * def updatepayload = read('Updatemember.json')
     * set updatepayload.memberGuid = memberResponse.memberGuid
     * set updatepayload.memberNumber = memberResponse.memberNumber
     * set updatepayload.title = memberResponse.title
     * set updatepayload.firstName = memberResponse.firstName
     * set updatepayload.surname = expectedLastname
     * set updatepayload.email = memberResponse.email
-    * def structure = read('../memberValidations/lookupStructure.json')
+    * def structure = read('lookupStructure.json')
     Given path 'api/Member'
     And request updatepayload
     When method PATCH
@@ -216,7 +217,7 @@ Feature: Member validations Happy path
 		* def result = call read('member.feature@deactivateMember')
 		* def memberResponse = result.response
 		* print memberResponse
-    * def updatepayload = read('../memberValidations/Updatemember.json')
+    * def updatepayload = read('Updatemember.json')
     * set updatepayload.memberGuid = memberResponse.memberGuid
     * set updatepayload.memberNumber = memberResponse.memberNumber
     * set updatepayload.title = memberResponse.title
@@ -230,7 +231,7 @@ Feature: Member validations Happy path
     
   @deactivateMember
   Scenario: Deactivate a member
-  	* def structure = read('../memberValidations/lookupStructure.json')
+  	* def structure = read('lookupStructure.json')
 		* def result = call read('classpath:data/createNewMember.feature')
 		* def memberResponse = result.response
 		* print memberResponse
@@ -269,7 +270,7 @@ Feature: Member validations Happy path
 		* def memberResult = call read('classpath:data/createNewMember.feature')
 		* print memberResult.response
 		* def memberResponse = memberResult.response
-		* def structure = read('../MemberValidations/memberTypeStructure.json')
+		* def structure = read('memberTypeStructure.json')
 		
 		# Get MemberTypeID
   	Given path '/api/Member'
@@ -294,7 +295,7 @@ Feature: Member validations Happy path
     * match response == {"MemberTypes": []}
 
 	Scenario: PLAT-719 Search a member using search criteria
-		* def structure = read('../memberValidations/memberSearchStructure.json')
+		* def structure = read('memberSearchStructure.json')
 		Given path 'api/Member/Search'
 		And param SearchCriteria = 'test'
 		When method GET
@@ -302,7 +303,7 @@ Feature: Member validations Happy path
 		* match each response.Members == structure
 
 	Scenario: PLAT-720 Search a member using search criteria that does NOT exist
-		* def structure = read('../memberValidations/memberSearchStructure.json')
+		* def structure = read('memberSearchStructure.json')
 		Given path 'api/Member/Search'
 		And param SearchCriteria = 'wheelsonthebus'
 		When method GET
@@ -312,8 +313,8 @@ Feature: Member validations Happy path
 		* def memberResult = call read('classpath:data/createNewMember.feature')
 		* print memberResult.response
 		* def memberResponse = memberResult.response
-		* def structure = read('../memberValidations/memberSearchStructure.json')
-		* def searchRequest = read('../memberValidations/advanceSearch.json')
+		* def structure = read('memberSearchStructure.json')
+		* def searchRequest = read('advanceSearch.json')
 		* set searchRequest.MemberGuid = memberResponse.memberGuid
 		* set searchRequest.MemberNumber = memberResponse.memberNumber
 		* set searchRequest.Name = memberResponse.firstName
@@ -330,8 +331,8 @@ Feature: Member validations Happy path
 		* def memberResult = call read('classpath:data/createNewMember.feature')
 		* print memberResult.response
 		* def memberResponse = memberResult.response
-		* def structure = read('../memberValidations/memberSearchStructure.json')
-		* def searchRequest = read('../memberValidations/advanceSearch.json')
+		* def structure = read('memberSearchStructure.json')
+		* def searchRequest = read('advanceSearch.json')
 		* set searchRequest.MemberGuid = genGUID()
 		* set searchRequest.MemberNumber = memberResponse.memberNumber
 		* set searchRequest.Name = memberResponse.firstName
@@ -348,7 +349,7 @@ Feature: Member validations Happy path
 		* def memberResult = call read('classpath:data/createNewMember.feature')
 		* print memberResult.response
 		* def memberResponse = memberResult.response
-  	* def structure = read('../MemberValidations/lookupStructure.json')
+  	* def structure = read('lookupStructure.json')
   	Given path 'api/Member/SearchEmail'
   	And param emailAddress = memberResponse.email
   	When method GET
@@ -370,7 +371,7 @@ Feature: Member validations Happy path
   	* match response == "Failed to find any contacts."
   	
   Scenario: PLAT-726 Deidentify member account
-  	* def structure = read('../memberValidations/deidentifyMemberStructure.json')
+  	* def structure = read('deidentifyMemberStructure.json')
 		* def memberResult = call read('classpath:data/createNewMember.feature')
 		* print memberResult.response
 		* def memberResponse = memberResult.response
@@ -389,7 +390,7 @@ Feature: Member validations Happy path
 		Then status 404
 
 	Scenario: PLAT-727 Deidentify member account using invalid member guid
-  	* def structure = read('../memberValidations/deidentifyMemberStructure.json')
+  	* def structure = read('deidentifyMemberStructure.json')
   	* def genGuid = genGUID()
   	* print genGuid
 		Given path 'api/Member/DeidentifyMemberAccount'

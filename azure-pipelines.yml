@@ -20,31 +20,13 @@ steps:
     publishJUnitResults: true
     testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
     goals: 'test -Dtest=ParallelExecutionTest -Dkarate.env=test'
-    
-# - task: PublishTestResults@2
-#   displayName: 'Publish Test Results'
-#   inputs:
-#     testResultsFiles: '*.xml'
-#     searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/surefire-reports'
-#     mergeTestResults: true
-#     testRunTitle: 'Platform Api testing'
-#   continueOnError: true
-#   condition: succeededOrFailed()
-  
+
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Karate Reports'
   inputs:
     targetPath: $(System.DefaultWorkingDirectory)/apitests/target/karate-reports
     artifact: 'Karate reports'
   condition: succeededOrFailed()
-  
-  
-# - task: PublishPipelineArtifact@1
-#   displayName: 'Publish Surefire Reports'
-#   inputs:
-#     targetPath: $(System.DefaultWorkingDirectory)/apitests/target/surefire-reports
-#     artifact: 'SureFire Junit reports'
-#   condition: succeededOrFailed()
 
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Cucumber Reports'

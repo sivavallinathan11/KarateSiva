@@ -199,7 +199,7 @@ Feature: Device validations
 		* match response == {"DeviceId":["The value 'DeviceXYZ' is not valid for DeviceId."]}
 		
 	Scenario: PLAT-528 Request card if the member guid does not exist
-		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceResult = call read('Device.feature@deviceDetails')
 		* def deviceNumber = deviceResult.response.Devices[0].DeviceNumber
 		* def genGuid = genGUID()
 		Given path 'api/Device/RequestPrint'

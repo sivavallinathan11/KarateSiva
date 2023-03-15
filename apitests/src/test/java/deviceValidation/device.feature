@@ -1,5 +1,5 @@
 #Author: fvalderramajr
-
+@parallel=false
 Feature: Device validations
 
 	Background:

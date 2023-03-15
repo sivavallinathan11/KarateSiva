@@ -50,7 +50,7 @@ Feature: Device validations
 		    return finalGuid;
 		  }
 		"""
-		* def deviceRequest = read('../deviceValidation/createDevice.json') 
+		* def deviceRequest = read('createDevice.json') 
 		* set deviceRequest.CreatedDate = setDate(0)
 		* set deviceRequest.ExpiryDate = setDate(2)
 		* set deviceRequest.ModifiedOn = setDate(0)
@@ -68,7 +68,7 @@ Feature: Device validations
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../deviceValidation/deviceStructure.json')
+		* def structure = read('deviceStructure.json')
 		* match response.Devices[0] == structure
 		* def deviceNum = response.Devices[0].DeviceNumber
 		
@@ -80,7 +80,7 @@ Feature: Device validations
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../deviceValidation/deviceStructure.json')
+		* def structure = read('deviceStructure.json')
 		* match response.Devices[0] == structure
 
 	Scenario: PLAT-532 Create new device
@@ -89,7 +89,7 @@ Feature: Device validations
 		When method POST
 		Then status 200
 		Then print response
-		* def structure = read('../deviceValidation/deviceStructure.json')
+		* def structure = read('deviceStructure.json')
 		* match response == structure
 
 	Scenario: PLAT-545 Update a device
@@ -104,7 +104,7 @@ Feature: Device validations
 		When method PATCH
 		Then status 200
 		Then print response
-		* def structure = read('../deviceValidation/deviceStructure.json')
+		* def structure = read('deviceStructure.json')
 		* match response == structure
 		
 	Scenario: PLAT-548 Request a card number for printing
@@ -121,7 +121,7 @@ Feature: Device validations
 		When method GET
 		Then status 200
 		* print response
-		* def structure = read('../deviceValidation/deviceListStructure.json')
+		* def structure = read('deviceListStructure.json')
 		* match response[0] == structure
     * def cardCode = karate.jsonPath(response,"$..['code']")
     * def cardName = karate.jsonPath(response,"$..['name']")
@@ -176,7 +176,7 @@ Feature: Device validations
 
 	Scenario: PLAT-525 Create device with invalid device Id
 		* def genGuid = genGUID()
-		* def structure = read('../deviceValidation/deviceStructure.json')
+		* def structure = read('deviceStructure.json')
 		* set deviceRequest.DeviceID = genGuid
 		Given path 'api/Device'
 		And request deviceRequest
@@ -199,7 +199,7 @@ Feature: Device validations
 		* match response == {"DeviceId":["The value 'DeviceXYZ' is not valid for DeviceId."]}
 		
 	Scenario: PLAT-528 Request card if the member guid does not exist
-		* def deviceResult = call read('Device.feature@deviceDetails')
+		* def deviceResult = call read('device.feature@deviceDetails')
 		* def deviceNumber = deviceResult.response.Devices[0].DeviceNumber
 		* def genGuid = genGUID()
 		Given path 'api/Device/RequestPrint'
@@ -228,8 +228,8 @@ Feature: Device validations
 		* match response == "Not active membership found for " + MemberGuid
 
 	Scenario: PLAT-546 Update a device using invalid deviceId, member guid, and device number
-		* def structure = read('../deviceValidation/deviceStructure.json')
-		* def deviceRequests = read('../deviceValidation/createDevice.json')
+		* def structure = read('deviceStructure.json')
+		* def deviceRequests = read('createDevice.json')
 		* def deviceNum = "1000XYZ"
 		Given path 'api/Device'	
 		And set deviceRequests.DeviceId = "3ecac72e-58df-5f40-127d-10f915a164a6"

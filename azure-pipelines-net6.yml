@@ -1,0 +1,47 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- feature/FrameworkModifications
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'apitests/pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
+    goals: 'test -Dtest=ParallelNet6ExecutionTest -Dkarate.env=memberv2'
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Karate Reports'
+  inputs:
+    targetPath: $(System.DefaultWorkingDirectory)/apitests/target/karate-reports
+    artifact: 'Karate reports'
+  condition: succeededOrFailed()
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Cucumber Reports'
+  inputs:
+    targetPath: $(System.DefaultWorkingDirectory)/apitests/target/cucumber-html-reports
+    artifact: 'Cucumber reports'
+  condition: succeededOrFailed()
+
+- task: PublishTestResults@2
+  displayName: 'Publish MembershipSbe Results'
+  inputs:
+    testResultsFiles: '*.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/karate-reports'
+    mergeTestResults: true
+    failTaskOnFailedTests: true
+    testRunTitle: 'Membership SBE Tests'
+  continueOnError: true
+  condition: succeededOrFailed()

@@ -33,6 +33,7 @@ You will have 3 main components Feature file,Runner file and input Jsons and wil
 Execute the following command
 * mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
 * mvn test -Dtest=ParallelNet6ExecutionTest -Dkarate.env=memberv2
+* mvn test -Dtest=SingleThreaded -Dkarate.env=test
 
 
 There's a general purpose parallel runner file: [ParallelExecutionTest.java](https://discoveryparks.visualstudio.com/Test%20Automation/_git/KarateApiTests?path=/apitests/src/test/java/commonRunner/ParallelExecutionTest.java)

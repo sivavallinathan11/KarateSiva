@@ -58,7 +58,6 @@ Feature: Coupon validations
 		* set requestCoupon.purchaserEmailAddress = setName + requestCoupon.purchaserEmailAddress
     * def structure = read('../couponValidations/couponStructure.json')
 		
-	@createCoupon		
 	Scenario: PLAT-400 Create new coupon 
 		Given path 'api/Coupon/CreateCoupon'
 		And request requestCoupon
@@ -68,8 +67,7 @@ Feature: Coupon validations
 		And def couponCode = response
 		Then match response contains '#string'
 	
-	@GetListOfCoupon
-	Scenario: Get the list of coupon
+	Scenario: PLAT-399 Get the list of coupon
 		Given path 'api/Coupon'
 		When method GET
 		Then status 200
@@ -79,16 +77,9 @@ Feature: Coupon validations
 		
 	@searchCoupon
 	Scenario: PLAT-816 Search coupon using valid Coupon Id
-		# Create new coupon
-		* def couponResult = call read('coupon.feature@createCoupon')
-		* def newCoupon = couponResult.response
-		# Get list of coupons
-		* def listCouponResult = call read('coupon.feature@GetListOfCoupon')
-		* def couponList = listCouponResult.response
-		# Get newly created coupon details
-		* def setIndex = getCouponDetails(couponList, newCoupon)
-		* def couponResponse = couponList.Coupons[setIndex]
-		* def couponId = couponResponse.CouponId
+    * def result = call read('classpath:data/createCoupon.feature')
+    * print result
+    * def couponId = result.couponId
 		* print couponId
 		Given path 'api/Coupon/Lookup'
 		And param CouponId = couponId
@@ -96,7 +87,7 @@ Feature: Coupon validations
 		Then status 200
 		* print response
 		* match response == structure
-		* match response.Code == couponResponse.Code
+		* match response.Code == result.couponResponse.Code
 		* match response.CouponId == couponId
 		
 	@redeemCoupon
@@ -107,11 +98,12 @@ Feature: Coupon validations
 		* print memberRes
 		* def memberGuid = memberRes.memberGuid
 		# create new coupon
-		* def couponResult = call read('coupon.feature@createCoupon')
-		* def newCoupon = couponResult.response
-		* def structure = read('../couponValidations/redeemCouponStructure.json')
+    * def result = call read('classpath:data/createCoupon.feature')
+    * print result
+    * def couponCode = result.couponResponse.Code
+		* def structure = read('redeemCouponStructure.json')
 		Given path 'api/Coupon'
-		* param Code = newCoupon
+		* param Code = couponCode
 		* param MemberId = memberGuid
 		When method POST
 		Then status 200
@@ -122,7 +114,8 @@ Feature: Coupon validations
 		# Redeem a coupon
 		* def redeemResult = call read('coupon.feature@redeemCoupon')
 		* print redeemResult
-		* def couponCode = redeemResult.couponResult.couponCode
+		* def couponCode = redeemResult.result.couponResponse.Code
+		* print couponCode
 		* def memberGuid = redeemResult.memberRes.memberGuid
 		#Get redeemed coupon
 		Given path 'api/Coupon/GetRedemption'
@@ -130,13 +123,13 @@ Feature: Coupon validations
 		* param couponCode = couponCode
 		When method POST
 		Then status 200
-		* def structure = read('../couponValidations/getRedeemedCouponStructure.json')
+		* def structure = read('getRedeemedCouponStructure.json')
 		* match response == structure
 		* match response.couponCode == couponCode
 
 	Scenario: PLAT-835 Redeem a coupon that was already redeemed
 		* def redeemResult = call read('coupon.feature@redeemCoupon')
-		* def couponCode = redeemResult.couponResult.couponCode
+		* def couponCode = redeemResult.result.couponResponse.Code
 		* def memberGuid = redeemResult.memberRes.memberGuid
 		Given path 'api/Coupon'
 		* param Code = couponCode
@@ -146,9 +139,9 @@ Feature: Coupon validations
 		* match response.promoCode[0] == "Coupon Code " +couponCode+ " cannot be redeemed as it has exceeded its maximum allocated redemptions."
 
 	Scenario: PLAT-836 Redeem a coupon with invalid member ID
-		* def couponResult = call read('coupon.feature@createCoupon')
-		* def couponCode = couponResult.response
-		* print couponCode
+    * def result = call read('classpath:data/createCoupon.feature')
+    * print result
+    * def couponCode = result.couponResponse.Code
 		Given path 'api/Coupon'
 		* param Code = couponCode
 		* param MemberId = 'invalidMember'

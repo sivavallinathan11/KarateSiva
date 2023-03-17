@@ -1,5 +1,4 @@
 #Author: fvalderramajr
-@parallel=false
 Feature: Device validations
 
 	Background:
@@ -58,7 +57,6 @@ Feature: Device validations
 		* def patchDeviceGuid = genGUID()
 		* def patchMemberGuid = genGUID()
 	
-	@deviceDetails
 	Scenario: PLAT-530 Get device list
 		* def result = getNewMember()
 		* def memberRes = result.response
@@ -73,7 +71,7 @@ Feature: Device validations
 		* def deviceNum = response.Devices[0].DeviceNumber
 		
 	Scenario: PLAT-531 Get a device
-		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceResult = call read('classpath:data/getDeviceDetails.feature')
 		* def deviceNumber = deviceResult.response.Devices[0].DeviceNumber
 		Given path 'api/Device'
 		And param DeviceNumber = deviceNumber
@@ -93,7 +91,7 @@ Feature: Device validations
 		* match response == structure
 
 	Scenario: PLAT-545 Update a device
-		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceResult = call read('classpath:data/getDeviceDetails.feature')
 		* def deviceResponse = deviceResult.response.Devices[0]
 		* def deviceStatus = "Printed"
 		* if(deviceResponse.DeviceStatus=="Printed"){deviceStatus = "Sent"}
@@ -108,7 +106,7 @@ Feature: Device validations
 		* match response == structure
 		
 	Scenario: PLAT-548 Request a card number for printing
-		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceResult = call read('classpath:data/getDeviceDetails.feature')
 		* def deviceNumber = deviceResult.response.Devices[0].DeviceNumber
 		* def memberGuid = deviceResult.response.Devices[0].MemberGuid
 		Given path 'api/Device/RequestPrint'
@@ -131,7 +129,7 @@ Feature: Device validations
 		* match cardName contains ["Other Debit","American Express","Diners Club","MasterCard","Other","VISA"]
 
 	Scenario: PLAT-550 Send join email
-		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceResult = call read('classpath:data/getDeviceDetails.feature')
 		* def memberGuid = deviceResult.response.Devices[0].MemberGuid
 		Given path 'api/Device/SendJoinEmail'
 		And request {MemberGuid: '#(memberGuid)'}
@@ -139,7 +137,7 @@ Feature: Device validations
 		Then status 200
 		
 	Scenario: PLAT-533 Delete device
-		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceResult = call read('classpath:data/getDeviceDetails.feature')
 		* def deviceId = deviceResult.response.Devices[0].DeviceId
 		Given path 'api/Device'
 		And param DeviceId = deviceId
@@ -199,7 +197,7 @@ Feature: Device validations
 		* match response == {"DeviceId":["The value 'DeviceXYZ' is not valid for DeviceId."]}
 		
 	Scenario: PLAT-528 Request card if the member guid does not exist
-		* def deviceResult = call read('device.feature@deviceDetails')
+		* def deviceResult = call read('classpath:data/getDeviceDetails.feature')
 		* def deviceNumber = deviceResult.response.Devices[0].DeviceNumber
 		* def genGuid = genGUID()
 		Given path 'api/Device/RequestPrint'

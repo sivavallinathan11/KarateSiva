@@ -5,10 +5,21 @@ Feature: Validate personal details
 	Background:
 		* url memberUrl
 		* def bearerToken = token
+		* def getNewMember = 
+		"""
+			function(){
+				var result = karate.callSingle('classpath:data/createNewMember.feature');
+				return result;
+			}
+		"""
 		
 	Scenario: PLAT-556 Validate a contacts email address
+		* def result = getNewMember()
+		* def memberRes = result.response
+		* print memberRes
+		* def email = memberRes.email
 		Given path 'api/PersonalDetailsValidation/Email'
-		* param emailAddress = 'drone1controller1test@gmail.com'
+		* param emailAddress = email
 		When method GET
 		Then status 200
 		* print response
@@ -16,8 +27,12 @@ Feature: Validate personal details
 		* match response == structure
 		
 	Scenario: PLAT-557 Validate a contacts phone number
+		* def result = getNewMember()
+		* def memberRes = result.response
+		* print memberRes
+		* def phone = memberRes.mobilePhone
 		Given path 'api/PersonalDetailsValidation/Phone'
-		* param phoneNumber = '0412999999'
+		* param phoneNumber = phone
 		When method GET
 		Then status 200
 		* print response

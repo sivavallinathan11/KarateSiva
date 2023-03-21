@@ -1,4 +1,6 @@
 #Author: spalaniappan
+# tagging this feature as being dependendent on a 3rd party API. We can't guarantee these tests will pass everytime
+@ignore
 Feature: Rewards Program validations
 
   Background: 

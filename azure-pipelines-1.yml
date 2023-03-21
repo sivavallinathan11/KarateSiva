@@ -18,14 +18,30 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
-    testResultsFiles: 'apitests/target/gatling/index.html'
-    goals: 'clean test-compile gatling:test'
+    testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
+    goals: 'test -Dtest=ParallelNet6ExecutionTest -Dkarate.env=memberv2'
 
-    
-  
 - task: PublishPipelineArtifact@1
-  displayName: 'Publish Pipeline Artifact'
+  displayName: 'Publish Karate Reports'
   inputs:
-    targetPath: /home/vsts/work/1/s/apitests/target/gatling
-    artifact: 'Platform API'
+    targetPath: $(System.DefaultWorkingDirectory)/apitests/target/karate-reports
+    artifact: 'Karate reports'
+  condition: succeededOrFailed()
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Cucumber Reports'
+  inputs:
+    targetPath: $(System.DefaultWorkingDirectory)/apitests/target/cucumber-html-reports
+    artifact: 'Cucumber reports'
+  condition: succeededOrFailed()
+
+- task: PublishTestResults@2
+  displayName: 'Publish MembershipSbe Results'
+  inputs:
+    testResultsFiles: '*.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/apitests/target/karate-reports'
+    mergeTestResults: true
+    failTaskOnFailedTests: true
+    testRunTitle: 'Membership SBE Tests .Net6'
+  continueOnError: true
   condition: succeededOrFailed()

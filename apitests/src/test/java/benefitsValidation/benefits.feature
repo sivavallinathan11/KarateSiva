@@ -19,7 +19,7 @@ Feature: Benefits validations
 
 	@smoke @GetAllBenefitTypes
   Scenario: Get all benefit types
-    And path '/api/BenefitType'
+    Given path '/api/BenefitType'
     When method get
     Then status 200
     * print response
@@ -34,9 +34,11 @@ Feature: Benefits validations
     And match Name contains ["Keytag Presented","Early Checkin","Late Checkout","Free Night Stay","Free Upgrade","Free Bag of Ice","Early Checkin, Late Checkout or Bag of Ice","Free Park Equipment Hire"]    
   
   Scenario: PLAT-396 Send a response with a valid benefit ID
-  	* def result = call read('benefits.feature@GetAllBenefitTypes')
-  	* print result
-    * def beneTypeIds = result.response.BenefitTypes
+    Given path '/api/BenefitType'
+    When method get
+    Then status 200
+    * print response
+    * def beneTypeIds = response.BenefitTypes
     * print beneTypeIds
     * def benefit = returnRandomBenefitId(beneTypeIds)
     Given path '/api/BenefitType'

@@ -45,7 +45,6 @@ Feature: Loyalty Program validations
 		  }
 		"""
 
-	@LoyaltyTierList
   Scenario: PLAT-561 Get the list of LoyaltyTier	
     Given path '/api/LoyaltyTier'
     When method GET
@@ -54,8 +53,11 @@ Feature: Loyalty Program validations
     * match response.LoyaltyTiers[0] == LoyaltyStruct
     
   Scenario: PLAT-562 Get a specific loyalty tier
-  	* def result = call read('Loyalty.feature@LoyaltyTierList')
-  	* def loyaltyTiers = result.response.LoyaltyTiers
+    Given path '/api/LoyaltyTier'
+    When method GET
+    Then status 200
+    * print response
+  	* def loyaltyTiers = response.LoyaltyTiers
   	* def loyaltyTier = returnRandomLoyaltyTierIndex(loyaltyTiers)
   	* def loyaltyTierId = loyaltyTier.LoyaltyTierId
     Given path '/api/LoyaltyTier/Lookup'

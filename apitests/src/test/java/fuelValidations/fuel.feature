@@ -5,15 +5,6 @@ Feature: fuel validations
 	Background:
 		* url memberUrl
 		* def bearerToken = token
-			
-		# This will create new member
-		* def createNewMember = 
-		"""
-			function(){
-				var result = karate.callSingle('classpath:data/createNewMember.feature');
-				return result;
-			}
-		"""
 		
 		# Get CRM token
 		* def getCRMToken = 
@@ -50,14 +41,22 @@ Feature: fuel validations
 		  }
 		"""
 		
+		* def staticWait = 
+		"""
+			function(ms){
+				java.lang.Thread.sleep(ms)
+			}
+		"""
+		
 		# Get fuelRequest
 		* def fuelRequest = read('../fuelValidations/createConsentorVoucher.json')
 		
 	@fuelConsent
 	Scenario: PLAT-859 Get fuel consent
-		* def memberResult = createNewMember()
-		* print memberResult.response
-		* def memberResponse = memberResult.response
+		# Create new member
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
 		* set fuelRequest.MemberId = memberResponse.memberGuid
 		* print fuelRequest
 		Given path 'api/Fuel/Consent'
@@ -68,12 +67,12 @@ Feature: fuel validations
 		Then status 200
 		* print response
 		
-	@fuelVoucher
 	Scenario: PLAT-860 Create fuel voucher
+		# Create new member
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
 		# Get fuel consent
-		* def memberResult = createNewMember()
-		* print memberResult.response
-		* def memberResponse = memberResult.response
 		* set fuelRequest.MemberId = memberResponse.memberGuid
 		* print fuelRequest
 		Given path 'api/Fuel/Consent'
@@ -95,11 +94,12 @@ Feature: fuel validations
 		* match response == structure
 		
 	Scenario: PLAT-862 Redeem fuel voucher
+		* staticWait(5000)
 		* def redeemRequest = read('classpath:fuelValidations/redeemFuelVoucher.json')
 		* def createVoucher = call read('classpath:data/createFuelVoucher.feature')
 		* print createVoucher
 		* set redeemRequest.barcodeNumber = createVoucher.response.barcode
-		* set redeemRequest.memberGuid = createVoucher.memberResult.response.memberGuid
+		* set redeemRequest.memberGuid = createVoucher.result.response.memberGuid
 		* set redeemRequest.dateRedeemed = setDate(0)
 		* print redeemRequest
 		Given path 'api/Fuel/Redeem'
@@ -108,6 +108,7 @@ Feature: fuel validations
 		Then status 200
 		
 	Scenario: PLAT-856 Get fuel consent with invalid lat and long
+		# Create new member
 		* def result = call read('classpath:data/createNewMember.feature')
 		* def memberResponse = result.response
 		* print memberResponse
@@ -143,10 +144,11 @@ Feature: fuel validations
 		Then status 404
 		
 	Scenario: PLAT-911 Redeem fuel voucher with invalid barcode
-		* def redeemRequest = read('redeemFuelVoucher.json')
+		# Create new member
 		* def result = call read('classpath:data/createNewMember.feature')
 		* def memberResponse = result.response
 		* print memberResponse
+		* def redeemRequest = read('redeemFuelVoucher.json')
 		* def genGuid = genGUID()
 		* set redeemRequest.barcodeNumber = genGuid
 		* set redeemRequest.memberGuid = memberResponse.memberGuid

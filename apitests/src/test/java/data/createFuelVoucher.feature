@@ -7,10 +7,11 @@ Feature: fuel validations
 		* def bearerToken = token
 		
 	Scenario: Create fuel voucher
+		# Create new member
+		* def result = call read('classpath:data/createNewMember.feature')
+		* def memberResponse = result.response
+		* print memberResponse
 		# Get fuel consent
-		* def memberResult = createNewMember()
-		* print memberResult.response
-		* def memberResponse = memberResult.response
 		* set fuelRequest.MemberId = memberResponse.memberGuid
 		* print fuelRequest
 		Given path 'api/Fuel/Consent'

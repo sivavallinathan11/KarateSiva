@@ -51,3 +51,109 @@ steps:
     testRunTitle: 'Membership SBE Tests .Net6'
   continueOnError: true
   condition: succeededOrFailed()
+
+- powershell: |
+   $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+   $headers.Add("Content-Type", "application/json")
+   
+   $body = @"
+   {
+       `"@type`": `"MessageCard`",
+       `"@context`": `"http://schema.org/extensions`",
+       `"themeColor`": `"d70e00`",
+       `"summary`": `"Test Robot`",
+       `"sections`": [
+           {
+               `"activityTitle`": `"Test Robot ran the Karate API Tests in Test`",
+               `"activitySubtitle`": `"Karate API Tests`",
+               `"activityImage`": `"https://i.imgur.com/17mcTqV.png`",
+               `"activityText`": `"These tests ran against the membership APIs for .Net6`",
+               `"markdown`": true
+           },
+           {
+               `"title`": `"Test Details`",
+               `"facts`": [
+                   
+                   {
+                       `"name`": `"Swagger`",
+                       `"value`": `"[Link](http://test-int-dhp-api-membership.azurewebsites.net/index.html)`"
+                   },
+                   {
+                       `"name`": `"Status`",
+                       `"value`": `"Failed`"
+                   }
+               ]
+           }
+       ],
+       `"potentialAction`": [
+           {
+               `"@type`": `"OpenUri`",
+               `"name`": `"Test Results`",
+               `"targets`": [
+                   {
+                       `"os`": `"default`",
+                       `"uri`": `"https://discoveryparks.visualstudio.com/Test%20Automation/_build/results?buildId=`$(Build.BuildId)&view=ms.vss-test-web.build-test-results-tab`"
+                   }
+               ]
+           }
+       ]
+   }
+   "@
+   
+   $response = Invoke-RestMethod 'https://discoveryholidayparks.webhook.office.com/webhookb2/62eee273-9e9f-4336-940f-636caf8f8053@1400c903-3a54-41dd-a597-241ce11262da/IncomingWebhook/cb516729ad644febaba312526da3df92/777ca911-ba2b-47d6-af57-072c05c79eb1' -Method 'POST' -Headers $headers -Body $body
+   $response | ConvertTo-Json
+  displayName: 'Notify Teams - Test Failures'
+  condition: failed()
+
+- powershell: |
+   $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+   $headers.Add("Content-Type", "application/json")
+   
+   $body = @"
+   {
+       `"@type`": `"MessageCard`",
+       `"@context`": `"http://schema.org/extensions`",
+       `"themeColor`": `"00d707`",
+       `"summary`": `"Test Robot`",
+       `"sections`": [
+           {
+               `"activityTitle`": `"Test Robot ran the Karate API Tests in Test`",
+               `"activitySubtitle`": `"Karate API Tests`",
+               `"activityImage`": `"https://i.imgur.com/17mcTqV.png`",
+               `"activityText`": `"These tests ran against the membership APIs for .Net6`",
+               `"markdown`": true
+           },
+           {
+               `"title`": `"Test Details`",
+               `"facts`": [
+                   
+                   {
+                       `"name`": `"Swagger`",
+                       `"value`": `"[Link](http://test-int-dhp-api-membership.azurewebsites.net/index.html)`"
+                   },
+                   {
+                       `"name`": `"Status`",
+                       `"value`": `"All Passed!`"
+                   }
+               ]
+           }
+       ],
+       `"potentialAction`": [
+           {
+               `"@type`": `"OpenUri`",
+               `"name`": `"Test Results`",
+               `"targets`": [
+                   {
+                       `"os`": `"default`",
+                       `"uri`": `"https://discoveryparks.visualstudio.com/Test%20Automation/_build/results?buildId=`$(Build.BuildId)&view=ms.vss-test-web.build-test-results-tab`"
+                   }
+               ]
+           }
+       ]
+   }
+   "@
+   
+   $response = Invoke-RestMethod 'https://discoveryholidayparks.webhook.office.com/webhookb2/62eee273-9e9f-4336-940f-636caf8f8053@1400c903-3a54-41dd-a597-241ce11262da/IncomingWebhook/cb516729ad644febaba312526da3df92/777ca911-ba2b-47d6-af57-072c05c79eb1' -Method 'POST' -Headers $headers -Body $body
+   $response | ConvertTo-Json
+  displayName: 'Notify Teams - Test Success'
+  

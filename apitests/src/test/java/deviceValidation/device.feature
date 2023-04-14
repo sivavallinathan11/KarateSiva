@@ -157,7 +157,6 @@ Feature: Device validations
 		When method POST
 		Then status 400
 		* match response == "Invalid card number format provided"
-	@net6
 	Scenario: PLAT-524 Get device list using invalid member guid
 		Given path 'api/Device/list'
 		And param MemberGuid = 'MemberXYZ'

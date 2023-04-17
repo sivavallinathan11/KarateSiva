@@ -6,7 +6,7 @@ function fn() {
   }
   var config = {
     env: env,
-    memberUrl: 'https://dev-int-dhp-api-membership.azurewebsites.net/',
+    memberUrl: 'http://dev-int-dhp-api-membership.azurewebsites.net/',
     authUrl: 'https://login.microsoftonline.com/1400c903-3a54-41dd-a597-241ce11262da/oauth2/token',
     client_id: '64c35ac9-496b-4ffa-9cc1-369bf75e4ace',
     client_secret: 'CZ9CAueVi+SEESpGdm4R+0aq5fR0cIJGu6t+iluWHgg=',
@@ -21,7 +21,7 @@ function fn() {
   if (env == 'dev') {
     
   } else if (env == 'test') {
-    config.memberUrl = 'https://test-int-dhp-api-membership.azurewebsites.net/';
+    config.memberUrl = 'http://test-int-dhp-api-membership.azurewebsites.net/';
     config.customerWebCdn = 'https://proddupe-strategicweb-cdn.azureedge.net';
     config.client_id = '3d943fca-2431-4a91-94c9-94e6d633b789';
     config.client_secret = '=G)nDvo#+}9IJmF^9x{bH';

@@ -1,0 +1,18 @@
+[
+    {
+	  "ContactId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	  "memberGuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	  "FirstName": "string",
+	  "LastName": "string",
+	  "Email": "string",
+	  "Mobile": "string",
+	  "PostalAddress": "string",
+	  "MemberTier": "NONE",
+	  "MemberNumber": "string"
+    },
+    {
+      "contactId": "59809f11-e63a-49b4-ad2f-c79c304166e2",
+  	  "memberTier": "NONE",
+      "memberGuid":"59809f11-e63a-49b4-ad2f-c79c304166e2"
+    }
+]

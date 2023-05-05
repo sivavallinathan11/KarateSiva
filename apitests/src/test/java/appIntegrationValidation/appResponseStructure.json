@@ -1,0 +1,14 @@
+{
+  payment: {
+    success: '#boolean',
+    message: '##string',
+    receiptNumbers: ##string,
+    tokenDetails: ##string
+  },
+  membership: {
+    membershipCreated: '#boolean',
+    membershipNumber: '#string',
+    membershipExpiry: '#string',
+    identityUserCreated: '#boolean'
+  }
+}

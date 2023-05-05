@@ -1,0 +1,25 @@
+{
+    "processPayment": {
+        "paymentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "resultKey": "string",
+        "tokeniseCard": true,
+        "token": "string"
+    },
+    "membershipJoin": {
+        "title": "Dr",
+        "firstName": "",
+        "lastName": "DHPTestMate",
+        "street": "50 Light Square",
+        "suburb": "Adelaide",
+        "state": "SA",
+        "postCode": "5000",
+        "country": "AUS",
+        "mobile": "+61431010010",
+        "email": "",
+        "dateOfBirth": "1960-02-22",
+        "couponCode": "3MONTH",
+        "isSenior": true,
+        "password": "discoveryParks1",
+        "printDevice": false
+    }
+}

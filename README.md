@@ -34,6 +34,12 @@ Execute the following command
 * mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
 * mvn test -Dtest=ParallelNet6ExecutionTest -Dkarate.env=memberv2
 
+## Separate execution for B2C
+* mvn test -Dtest=ParallelExecutionB2C -Dkarate.env=test
+
+## This will only be run in Prod
+* mvn test -Dtest=ParallelNet6ExecutionProd -Dkarate.env=prod
+
 
 There's a general purpose parallel runner file: [ParallelExecutionTest.java](https://discoveryparks.visualstudio.com/Test%20Automation/_git/KarateApiTests?path=/apitests/src/test/java/commonRunner/ParallelExecutionTest.java)
 

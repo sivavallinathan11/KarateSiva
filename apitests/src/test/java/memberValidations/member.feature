@@ -12,7 +12,7 @@ Feature: Member validations Happy path
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return text + "@gmail.com";
+      		return "dhprobot+" + text + "@gmail.com";
       	}
       """
     * def curdate =

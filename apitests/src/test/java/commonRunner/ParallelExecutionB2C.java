@@ -16,41 +16,24 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
-class ParallelExecutionTest {
-
-
+class ParallelExecutionB2C {
 	@Test
 	// tag any tests specifically written for the .net6 version with @net6
 	// then we create another runner to include @net6
 	// run:
-	// mvn test -Dtest=ParallelExecutionTest -Dkarate.env=test
+	// mvn test -Dtest=ParallelNet6ExecutionProd -Dkarate.env=prod
     void testParallel() {
         Results results = Runner.path(
-        		"classpath:couponValidations"
-        		,"classpath:benefitsValidation"
-        		,"classpath:deviceValidation"
-        		,"classpath:fuelValidations"
-        		,"classpath:leaderboardValidation"
-        		,"classpath:loyaltyValidation"
-        		,"classpath:memberBenefitsValidation"
-        		,"classpath:memberRewardsValidation"
-        		,"classpath:membershipValidation"
-        		,"classpath:memberValidations"
-        		,"classpath:personalDetailsValidation"
-        		,"classpath:rewardsProgramValidation"
-        		,"classpath:subscriptionValidation"
-        		,"classpath:memberSearchValidation"
-        		,"classpath:appIntegrationValidation"
+        		"classpath:appIntegrationValidation"
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)
-        		.tags("~@deprecated", "~b2c").parallel(5);
+        		.tags("@b2c").parallel(1);
         // this will generate the cucumber html results
         generateReport(results.getReportDir());
         // Cause the runner to error if there are test failures
         // this means we can pick it up on the pipelines
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
-        
     }
 	
 	public static void generateReport(String karateOutputPath) {

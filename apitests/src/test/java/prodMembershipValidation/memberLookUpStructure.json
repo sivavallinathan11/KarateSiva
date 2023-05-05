@@ -1,0 +1,17 @@
+{
+    MembershipId: '#uuid',
+    MembershipType: '#string',
+    ExpiryDate: '#string',
+    CreatedDate: '##string',
+    ExpiryDateLastExtendedOn: '##string',
+    MemberGuid:'##uuid',
+    RefereeContactId: '##uuid',
+    CommencementDate: '#string',
+    MaintenanceDescriptionId: '##uuid',
+    LevelUpDescriptionId: '##uuid',
+    MembershipNumber: '#string',
+    MembershipProduct: '#string',
+    StatusCode: '#number',
+    StateCode: '#number',
+    Source: '#string'
+}

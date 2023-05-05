@@ -1,0 +1,23 @@
+{
+    memberGuid: 		'#uuid',
+      memberNumber: 	'#string',
+      title: 					'#string',
+      firstName: 			'#string',
+      lastName: 			'#string',
+      email: 					'#string',
+      dateOfBirth: 		'#string',
+      mobilePhone: 		'#string',
+      otherPhone: 		'#null',
+      street: 				'#string',
+      suburb: 				'#string',
+      postcode: 			'#string',
+      state: 					'#string',
+      country: 				'#string',
+      bookingDiscountCap: 						'#null',
+      bookingDiscountPercentage: 			'#number',
+      bookingDiscountCapIsUnlimited: 	'#boolean',
+      membershipExpiryDate: 					'#string',
+      membershipCost: 								'#number',
+      fuelAppConsentGranted: 					'#null',
+      flyBuysAcquired: 								'#boolean'
+}

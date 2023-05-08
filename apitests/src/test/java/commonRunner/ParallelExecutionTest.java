@@ -44,7 +44,7 @@ class ParallelExecutionTest {
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)
-        		.tags("~@deprecated", "~b2c").parallel(5);
+        		.tags("~@deprecated", "~@b2c").parallel(5);
         // this will generate the cucumber html results
         generateReport(results.getReportDir());
         // Cause the runner to error if there are test failures

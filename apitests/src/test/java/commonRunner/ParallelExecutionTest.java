@@ -41,6 +41,7 @@ class ParallelExecutionTest {
         		,"classpath:subscriptionValidation"
         		,"classpath:memberSearchValidation"
         		,"classpath:appIntegrationValidation"
+        		,"classpath:B2C"
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)

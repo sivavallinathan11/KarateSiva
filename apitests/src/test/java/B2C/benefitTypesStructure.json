@@ -1,8 +1,0 @@
-{
-    BenefitTypes: [
-        {
-            BenefitTypeId: '#uuid',
-            Name: '#string'
-        }
-    ]
-}

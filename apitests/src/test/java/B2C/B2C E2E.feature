@@ -5,7 +5,7 @@ Feature: B2C e2e Happy path
   Background: 
     * url b2cUrl
     * def bearerToken = token
-    * def expectedOutput = read('../data/BenefitsType.json')
+    * def Usercreated = read('../B2C/Usercreated.json')
    * def random_email =
       """
       	function(s) {
@@ -37,6 +37,8 @@ Feature: B2C e2e Happy path
     """
     When method post
     Then status 200
+     * match response == Usercreated
+    
     
    ###Update user
   Given path 'api/User'

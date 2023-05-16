@@ -326,6 +326,10 @@ Feature: Member validations Happy path
 		When method POST
 		Then status 200
 		* match each response.Members == structure
+		# plat-1230 added two fields that do nothing in this case
+		# the response structure is shared across multiple endpoints.
+		# in advancedSearch, they will always be null
+
   	
   Scenario: PLAT-722 Advanced search for members using invalid member guid
 		* def memberResult = call read('classpath:data/createNewMember.feature')
@@ -344,6 +348,8 @@ Feature: Member validations Happy path
 		When method POST
 		Then status 200
 		* match each response.Members == structure
+		
+		
 		
   Scenario: PLAT-723 search a valid email address
 		* def memberResult = call read('classpath:data/createNewMember.feature')

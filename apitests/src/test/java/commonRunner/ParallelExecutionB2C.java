@@ -25,6 +25,7 @@ class ParallelExecutionB2C {
     void testParallel() {
         Results results = Runner.path(
         		"classpath:appIntegrationValidation"
+        		,"classpath:appIntegrationValidation"
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)

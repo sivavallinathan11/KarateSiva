@@ -2,6 +2,7 @@
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
 schedules:
 - cron: '0 12 * * 0'
   displayName: Weekly Sunday Test Run
@@ -10,11 +11,23 @@ schedules:
     - main
   always: true
 
-
 jobs:
-  - job: Membership_Tests
-  
+- job: myJob
+
+pool:
+  vmImage: ubuntu-latest
+
 steps:
+appendCommitMessageToRunName:
+lockBehavior:
+name: 
+parameters:
+pr:
+resources:
+trigger:
+variables:
+
+    - 
 - task: Maven@3
   inputs:
     mavenPomFile: 'apitests/pom.xml'
@@ -25,18 +38,21 @@ steps:
     publishJUnitResults: true
     testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
     goals: 'test -Dtest=ParallelExecutionTest -Dkarate.env=test'
+
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Karate Reports'
   inputs:
     targetPath: $(System.DefaultWorkingDirectory)/apitests/target/karate-reports
     artifact: 'Karate reports'
   condition: succeededOrFailed()
+
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Cucumber Reports'
   inputs:
     targetPath: $(System.DefaultWorkingDirectory)/apitests/target/cucumber-html-reports
     artifact: 'Cucumber reports'
   condition: succeededOrFailed()
+
 - task: PublishTestResults@2
   displayName: 'Publish MembershipSbe Results'
   inputs:
@@ -47,6 +63,7 @@ steps:
     testRunTitle: 'Membership SBE Tests'
   continueOnError: true
   condition: succeededOrFailed()
+
 - powershell: |
    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
    $headers.Add("Content-Type", "application/json")
@@ -99,6 +116,7 @@ steps:
    $response | ConvertTo-Json
   displayName: 'Notify Teams - Test Failures'
   condition: failed()
+
 - powershell: |
    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
    $headers.Add("Content-Type", "application/json")
@@ -152,8 +170,10 @@ steps:
   displayName: 'Notify Teams - Test Success'
 
 
-  job: B2C Tests
+  job: Test
+
   steps:
+  
 - task: Maven@3
   inputs:
     mavenPomFile: 'apitests/pom.xml'
@@ -163,7 +183,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: 'apitests/target/karate-reports/karate-summary.html'
-    goals: 'test -Dtest=ParallelExecutionB2CTest -Dkarate.env=test'
+    goals: 'test -Dtest=ParallelExecutionTest -Dkarate.env=test'
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Karate Reports'
   inputs:

@@ -1,6 +1,7 @@
 #Author: spalaniappan
 
-Feature: B2C e2e Happy path
+@b2c
+Feature: B2C Create User
 
   Background: 
     * url b2cUrl
@@ -32,7 +33,7 @@ Feature: B2C e2e Happy path
    * def random_discovery_email = random_discovery_email(10)
    
 
-	@b2c
+
   Scenario: Create new user in B2C
   
     Given path 'api/User'

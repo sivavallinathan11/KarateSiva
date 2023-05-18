@@ -13,4 +13,14 @@ public class B2CRunnerTest {
     Karate B2CCreateUser() {
         return Karate.run("B2C Create User").relativeTo(getClass());
     }
+	
+	@Karate.Test
+    Karate B2CUpdateUser() {
+        return Karate.run("B2C Update User").relativeTo(getClass());
+    }
+	
+	@Karate.Test
+    Karate B2CDeleteUser() {
+        return Karate.run("B2C Delete User").relativeTo(getClass());
+    }
 }

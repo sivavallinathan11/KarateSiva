@@ -7,7 +7,10 @@ Feature: B2C e2e Happy path
     * url b2cUrl
     * def bearerToken = token
     * def Usercreated = read('../B2C/Usercreated.json')
-   * def random_email =
+    * def Usernotcreated = read('../B2C/Usernotcreated.json')
+    * def updateschema = read('../B2C/updateschema.json')
+    * def getuser = read('../B2C/getuser.json')
+    * def random_email =
       """
       	function(s) {
       		var text = "";
@@ -17,8 +20,8 @@ Feature: B2C e2e Happy path
       		return "dhprobot" + text + "@gmail.com";
       	}
       """
-   * def email = random_email(10)
-   * def new_email = random_email(12)
+    * def email = random_email(10)
+    * def new_email = random_email(12)
    
 
 	@b2c
@@ -56,6 +59,7 @@ Feature: B2C e2e Happy path
    """
    When method put
    Then status 200
+    * match response == Usercreated
    * def Upd_email = response.newEmail
    
     ### Get user
@@ -63,12 +67,13 @@ Feature: B2C e2e Happy path
     * param email = new_email
     When method get
     Then status 200
+    * match response == getuser
     
     ### Delete User
     Given path 'api/User'
     * param email = new_email
     When method delete
     Then status 200
-    
+    * match response == Usercreated
    
     

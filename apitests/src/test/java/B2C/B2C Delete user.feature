@@ -1,5 +1,6 @@
 #Author: spalaniappan
 
+@b2c
 Feature: B2C Delete User
 
   Background: 
@@ -34,7 +35,6 @@ Feature: B2C Delete User
    
 
   
-  @b2c
   Scenario: Update all required fields,assign roles and lock and unlock user.
   
   ##Create User

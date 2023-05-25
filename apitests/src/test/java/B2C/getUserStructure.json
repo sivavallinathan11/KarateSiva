@@ -1,0 +1,8 @@
+{
+    userExists: '#boolean',
+    isExternal: '#boolean',
+    isLocked: '#boolean',
+    isLegacy: '#boolean',
+    roles: ##[] '##string',
+    claims: ##[]
+}

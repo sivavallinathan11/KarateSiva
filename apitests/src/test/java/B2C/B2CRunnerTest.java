@@ -23,4 +23,14 @@ public class B2CRunnerTest {
     Karate B2CDeleteUser() {
         return Karate.run("B2C Delete User").relativeTo(getClass());
     }
+	
+	@Karate.Test
+    Karate B2CGetUser() {
+        return Karate.run("B2C Get User").relativeTo(getClass());
+    }
+	
+	@Karate.Test
+    Karate B2CGetUserType() {
+        return Karate.run("B2C Get UserType").relativeTo(getClass());
+    }
 }

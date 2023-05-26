@@ -28,6 +28,22 @@ Feature: B2C Create User
       		return "dhprobot" + text + "@discoveryparks.com.au";
       	}
       """
+	
+		# This will return random string only
+		* def randomString = 
+			"""
+				function(s){
+						var initialName = "";
+						var initialDigit = "";
+						var finalString = "";
+						var textList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+						for(var i = 0; i<s; i++){
+							initialName += textList.charAt(Math.floor(Math.random() * textList.length()));
+						}
+						return initialName;
+				}
+				"""
+				
    * def email = random_email(10)
    * def new_email = random_email(12)
    * def random_discovery_email = random_discovery_email(10)
@@ -216,3 +232,21 @@ Feature: B2C Create User
     * param email = new_email
     When method delete
     Then status 200
+
+  Scenario: Create a user where password is not alphanumeric [No number included]
+  	## Create B2C user that has DHP Domain
+  	* def userRequest = read('classpath:B2C/b2cCreateUser.json')
+  	* set userRequest.givenName =  "dhpuser" + randomString(6)
+  	* set userRequest.familyName = "dhprobotuser" + randomString(6)
+  	* set userRequest.source = "Gday"
+  	* set userRequest.email = email
+  	
+  	# Set password that does not have number
+  	* set userRequest.password = randomString(8)
+  	* print userRequest
+  	Given path 'api/User'
+    And request userRequest
+    When method POST
+    Then status 400
+    * match response == Usernotcreated
+    * match response.message == "Could not create user in B2C"

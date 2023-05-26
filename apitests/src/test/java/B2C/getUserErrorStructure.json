@@ -1,0 +1,4 @@
+{
+    userExists: '#boolean',
+    message: '#string'
+}

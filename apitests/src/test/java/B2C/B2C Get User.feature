@@ -21,19 +21,32 @@ Feature: PLAT-897 Get User
 	      		return "dhprobot" + text + domain;
 	      	}
 	      """
-		
-			# This will return random name
-			* def randomString = 
+	
+		# This will return random alphanumeric characters
+		* def randomString = 
+			"""
+				function(s){
+						var initialLower = "";
+						var initialUpper = "";
+						var initialDigit = "";
+						var finalString = "";
+						var stringCapList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+						var stringLowList = "abcdefghijklmnopqrstuvwxyz";
+						var numList = "0123456789"
+						for(var i = 0; i<s; i++){
+							initialLower += stringLowList.charAt(Math.floor(Math.random() * stringLowList.length()));
+						}
+						for(var i = 0; i<2; i++){
+							initialUpper += stringCapList.charAt(Math.floor(Math.random() * stringCapList.length()));
+						}
+						for(var i = 0; i<1; i++){
+							initialDigit += numList.charAt(Math.floor(Math.random() * numList.length()));
+						}
+						finalString = initialUpper + initialLower + initialDigit;
+						return finalString;
+				}
 				"""
-					function(s){
-							var initialName = "";
-							var textList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-							for(var i = 0; i<s; i++){
-								initialName += textList.charAt(Math.floor(Math.random() * textList.length()));
-							}
-							return initialName;
-					}
-					"""
+				
 			# Set global create user details
 	  	* def userRequest = read('classpath:B2C/b2cCreateUser.json')
 	  	* set userRequest.givenName =  "dhpuser" + randomString(6)

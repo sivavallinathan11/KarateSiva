@@ -21,16 +21,28 @@ Feature: PLAT-995 Get User type
       	}
       """
 	
-		# This will return random name
+		# This will return random alphanumeric characters
 		* def randomString = 
 			"""
 				function(s){
-						var initialName = "";
-						var textList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+						var initialLower = "";
+						var initialUpper = "";
+						var initialDigit = "";
+						var finalString = "";
+						var stringCapList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+						var stringLowList = "abcdefghijklmnopqrstuvwxyz";
+						var numList = "0123456789"
 						for(var i = 0; i<s; i++){
-							initialName += textList.charAt(Math.floor(Math.random() * textList.length()));
+							initialLower += stringLowList.charAt(Math.floor(Math.random() * stringLowList.length()));
 						}
-						return initialName;
+						for(var i = 0; i<2; i++){
+							initialUpper += stringCapList.charAt(Math.floor(Math.random() * stringCapList.length()));
+						}
+						for(var i = 0; i<1; i++){
+							initialDigit += numList.charAt(Math.floor(Math.random() * numList.length()));
+						}
+						finalString = initialUpper + initialLower + initialDigit;
+						return finalString;
 				}
 				"""
 	

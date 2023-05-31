@@ -26,10 +26,11 @@ class ParallelExecutionB2C {
         Results results = Runner.path(
         		"classpath:appIntegrationValidation"
         		,"classpath:B2C"
+        		,"classpath:communicationsValidation"
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)
-        		.tags("@b2c").parallel(1);
+        		.tags("@b2c").parallel(2);
         // this will generate the cucumber html results
         generateReport(results.getReportDir());
         // Cause the runner to error if there are test failures

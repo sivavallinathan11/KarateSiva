@@ -12,11 +12,11 @@ Feature: PLAT-878 Send Verification Email
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return ("dhprobot" + text + domain).toString();
+      		return ("dhprobot+" + text + domain).toString();
       	}
       """
 	
-		# This will return random alphanumeric characters
+		# This will return random digits
 		* def randomDigits = 
 			"""
 				function(s){
@@ -28,12 +28,22 @@ Feature: PLAT-878 Send Verification Email
 						return finalDigits;
 				}
 				"""
+	
+		# This will return random source
+		* def randomSource = 
+			"""
+				function(){
+						var sourceList = ["gday_parks_app", "gday_parks_web", "park_web"]
+						var selectedSource = sourceList[Math.floor(Math.random() * sourceList.length)];
+						return selectedSource;
+				}
+			"""
 
   Scenario: Send email verification for a specific email address
   	* def structure = read('classpath:B2C/sendEmailVerificationStructure.json')
   	* def emailRequest = read('classpath:B2C/sendVerificationEmail.json')
-  	* set emailRequest.source = "park_web"
-  	* set emailRequest.email = "Parkweb.Dhp@gmail.com"
+  	* set emailRequest.source = randomSource()
+  	* set emailRequest.email = random_email(8, "@gmail.com")
   	* set emailRequest.code = randomDigits(6)
   	Given path 'api/User/SendVerificationEmail'
     And request emailRequest

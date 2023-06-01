@@ -16,7 +16,7 @@ Feature: B2C Delete User
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return "dhprobot" + text + "@gmail.com";
+      		return "dhprobot+" + text + "@gmail.com";
       	}
       """
       * def random_discovery_email =
@@ -26,7 +26,7 @@ Feature: B2C Delete User
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return "dhprobot" + text + "@discoveryparks.com.au";
+      		return "dhprobot+" + text + "@discoveryparks.com.au";
       	}
       """
    * def email = random_email(10)

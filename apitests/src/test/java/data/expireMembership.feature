@@ -68,7 +68,7 @@ Feature: Expire membership successfully
     * def memberRequest = read('../membershipValidation/createMember.json')
     * def firstName = randomName(10)
     * set memberRequest.firstName = firstName
-    * set memberRequest.email = firstName + "@gmail.com"
+    * set memberRequest.email = "dhprobot+" + firstName + "@gmail.com"
 		* def membershipStructure = read('classpath:membershipValidation/searchMembershipStructure.json')
 	
 	Scenario: Create a member then expire it and renew

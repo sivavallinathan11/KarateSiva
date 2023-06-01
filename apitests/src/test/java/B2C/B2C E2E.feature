@@ -17,7 +17,7 @@ Feature: B2C e2e Happy path
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return "dhprobot" + text + "@gmail.com";
+      		return "dhprobot+" + text + "@gmail.com";
       	}
       """
     * def email = random_email(10)

@@ -15,7 +15,7 @@ Feature: B2C Create User
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return "dhprobot" + text + "@gmail.com";
+      		return "dhprobot+" + text + "@gmail.com";
       	}
       """
       * def random_discovery_email =
@@ -25,7 +25,7 @@ Feature: B2C Create User
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return "dhprobot" + text + "@discoveryparks.com.au";
+      		return "dhprobot+" + text + "@discoveryparks.com.au";
       	}
       """
 	
@@ -78,7 +78,7 @@ Feature: B2C Create User
      When request
    """
    {
-  "email": "dhprobottestingnew3com",
+  "email": "dhprobot+testingnew3com",
   "givenName": "dhprobot new3test",
   "familyName": "dhp new user3test",
   "password": "Password2",

@@ -4,31 +4,6 @@
 Feature: Send Message to specific email address
   Background: 
     * url commsUrl
-    
-    # This will return random email
-   	* def random_email =
-      """
-      	function(s, domain) {
-      		var text = "";
-      		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-      		for (var i=0; i<s; i++)
-      			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return ("dhprobot" + text + domain).toString();
-      	}
-      """
-	
-		# This will return random alphanumeric characters
-		* def randomDigits = 
-			"""
-				function(s){
-						var finalDigits = "";
-						var numList = "0123456789"
-						for(var i = 0; i<s; i++){
-							finalDigits += numList.charAt(Math.floor(Math.random() * numList.length()));
-						}
-						return finalDigits;
-				}
-				"""
 
   Scenario: Send email verification for a specific email address
   	* def emailVerificationResult = call read('classpath:B2C/B2C Send Email.feature')

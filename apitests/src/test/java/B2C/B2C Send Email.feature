@@ -9,7 +9,7 @@ Feature: PLAT-878 Send Verification Email
       """
       	function(s, domain) {
       		var text = "";
-      		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      		var pattern = "0123456789";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
       		return ("dhprobot+" + text + domain).toString();
@@ -43,7 +43,7 @@ Feature: PLAT-878 Send Verification Email
   	* def structure = read('classpath:B2C/sendEmailVerificationStructure.json')
   	* def emailRequest = read('classpath:B2C/sendVerificationEmail.json')
   	* set emailRequest.source = randomSource()
-  	* set emailRequest.email = random_email(8, "@gmail.com")
+  	* set emailRequest.email = random_email(10, "@gmail.com")
   	* set emailRequest.code = randomDigits(6)
   	Given path 'api/User/SendVerificationEmail'
     And request emailRequest

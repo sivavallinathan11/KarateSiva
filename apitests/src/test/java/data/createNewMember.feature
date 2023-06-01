@@ -43,7 +43,7 @@ Feature: Membership validation happy path
     * def memberRequest = read('../membershipValidation/createMember.json')
     * def firstName = randomName(10)
     * set memberRequest.firstName = firstName
-    * set memberRequest.email = firstName + "@gmail.com"
+    * set memberRequest.email = "dhprobot+" + firstName + "@gmail.com"
 	
 	Scenario: Create a member then expire it and renew
 		#Create a member then verify that expiry date is 2 years ahead

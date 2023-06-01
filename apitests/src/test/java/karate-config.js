@@ -18,7 +18,8 @@ function fn() {
     crm_ClientSecret: 'ddd662e2-b64a-4c56-aa6e-acfe8797cdde',
     crm_Resource: 'https://discoveryparksdev.crm6.dynamics.com/',
     appUrl: 'https://dev-appintegrations-webapp.azurewebsites.net',
-    b2cUrl: 'https://dev-authb2c-dhp-api-as.azurewebsites.net/'
+    b2cUrl: 'https://dev-authb2c-dhp-api-as.azurewebsites.net/',
+    commsUrl: 'https://dev-communications-v2-dhp-api-as.azurewebsites.net/'
   }
   if (env == 'dev') {
     
@@ -33,7 +34,8 @@ function fn() {
     config.crm_ClientSecret = '2a477537-40a0-481f-ba4e-27b88440429b';
     config.crm_Resource = 'https://discoveryparkstest.crm6.dynamics.com/';
     config.appUrl = 'https://test-appintegrations-webapp.azurewebsites.net';
-    config.b2cUrl = 'https://test-authb2c-dhp-api-as.azurewebsites.net'
+    config.b2cUrl = 'https://test-authb2c-dhp-api-as.azurewebsites.net';
+    config.commsUrl = 'https://test-communications-v2-dhp-api-as.azurewebsites.net/'
   } else if(env == 'memberv2'){
 	    config.memberUrl = 'https://test-int-dhp-api-membership-net6.azurewebsites.net/';
 	    config.customerWebCdn = 'https://proddupe-strategicweb-cdn.azureedge.net';

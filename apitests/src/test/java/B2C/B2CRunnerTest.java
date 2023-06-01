@@ -33,4 +33,5 @@ public class B2CRunnerTest {
     Karate B2CGetUserType() {
         return Karate.run("B2C Get UserType").relativeTo(getClass());
     }
+	
 }

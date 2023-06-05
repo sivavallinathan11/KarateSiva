@@ -1,5 +1,6 @@
 #Author: fvalderrama
 
+@b2c
 Feature: PLAT-878 Send Verification Email
   Background: 
     * url b2cUrl

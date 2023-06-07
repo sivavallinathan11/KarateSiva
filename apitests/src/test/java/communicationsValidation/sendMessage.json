@@ -1,6 +1,6 @@
 {
   "sourceName": "park_web",
-  "eventType": "AUTH_B2C_VerificationEmail",
+  "eventType": "",
   "recipients": [
     {
       "name": "Bentest Barlowtest",
@@ -10,8 +10,8 @@
   ],
   "dynamicPayload": [
     {
-      "attributeKey": "verification_code",
-      "attributeValue": "892124"
+      "attributeKey": "",
+      "attributeValue": ""
     }
   ],
   "correlationId": "039d1294-8328-4be3-acaa-2a20da4b990",

@@ -9,6 +9,7 @@
     membershipCreated: '#boolean',
     membershipNumber: '#string',
     membershipExpiry: '#string',
-    identityUserCreated: '#boolean'
+    identityUserCreated: '#boolean',
+    code: '#string'
   }
 }

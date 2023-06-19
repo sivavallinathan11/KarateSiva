@@ -1,6 +1,5 @@
 #Author: fvalderrama
 
-@prod
 Feature: Validate member join in App Integration
 
 	Background:
@@ -69,7 +68,7 @@ Feature: Validate member join in App Integration
 		    return finalGuid;
 		  }
 		"""
-
+	@prod
   Scenario: Create a fully paid member using member join v1 that expires in a month, verify, then expire and renew
   	# Set member request details
     * def memberRequest = read('classpath:appIntegrationValidation/createMemberUsingApp.json')

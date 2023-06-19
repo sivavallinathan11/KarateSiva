@@ -1,4 +1,5 @@
 {
     "success": true,
-    "message": '#string'
+    "message": '#string',
+    "code": '#string'
 }

@@ -8,6 +8,7 @@ Feature: B2C e2e Happy path
     * def bearerToken = token
     * def Usercreated = read('../B2C/Usercreated.json')
     * def Usernotcreated = read('../B2C/Usernotcreated.json')
+    * def Userupdated = read('../B2C/Userupdated.json')
     * def updateschema = read('../B2C/updateschema.json')
     * def getuser = read('../B2C/getuser.json')
     * def random_email =
@@ -59,7 +60,7 @@ Feature: B2C e2e Happy path
    """
    When method put
    Then status 200
-    * match response == Usercreated
+    * match response == Userupdated
    * def Upd_email = response.newEmail
    
     ### Get user
@@ -74,6 +75,6 @@ Feature: B2C e2e Happy path
     * param email = new_email
     When method delete
     Then status 200
-    * match response == Usercreated
+    * match response == Userupdated
    
     

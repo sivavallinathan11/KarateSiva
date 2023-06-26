@@ -1,0 +1,4 @@
+{
+    subscriberKey: "#string",
+    email: "#string"
+}

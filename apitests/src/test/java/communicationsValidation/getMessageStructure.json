@@ -1,0 +1,30 @@
+{
+    "id": "#uuid",
+    "correlationId": "#uuid",
+    "domainType": "#string",
+    "domainId": "#uuid",
+    "messageStatus": "#string",
+    "eventType": "#string",
+    "sourceName": "#string",
+    "messageType": "#string",
+    "channels": [
+        {
+            "channelType": "#string",
+            "channelReference": "#string",
+            "channelProvider": "#string",
+            "channelDeliveryStatus": "#string",
+        },
+        {
+            "channelType": "#string",
+            "channelReference": "#string",
+            "channelProvider": "#string",
+            "channelDeliveryStatus": "#string",
+        },
+        {
+            "channelType": "#string",
+            "channelReference": "#string",
+            "channelProvider": "#string",
+            "channelDeliveryStatus": "#string",
+        }
+    ]
+}

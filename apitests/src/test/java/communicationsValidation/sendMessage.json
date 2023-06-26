@@ -15,20 +15,18 @@
     }
   ],
   "correlationId": "039d1294-8328-4be3-acaa-2a20da4b990",
-  "domainId": "039d1294-8328-4be3-acaa-2a20da4b990",
+  "domainId": "708ee87b-7e7c-404b-8a59-051596901dba",
   "domainType": "password_reset",
   "cc": [
     {
-      "name": "",
-      "emailAddress": "",
-      "mobileNumber": ""
+      "name": "Bentest Barlowtest",
+      "emailAddress": "Parkweb.Dhp@gmail.com"
     }
   ],
   "bcc": [
     {
-      "name": "",
-      "emailAddress": "",
-      "mobileNumber": ""
+      "name": "John Doe",
+      "emailAddress": "drosario@discoveryparks.com.au"
     }
   ],
   "fileAttachments": [
@@ -37,8 +35,8 @@
       "fileContents": ""
     }
   ],
-  "overrideChannel": "",
-  "overrideTemplateId": "",
+  "OverrideChannel": "test123",
+  "OverrideTemplateId": "test321",
   "messageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "communicationEventId": ""
 }

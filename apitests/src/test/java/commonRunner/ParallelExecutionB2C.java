@@ -24,9 +24,9 @@ class ParallelExecutionB2C {
 	// mvn test -Dtest=ParallelNet6ExecutionProd -Dkarate.env=prod
     void testParallel() {
         Results results = Runner.path(
-        		//"classpath:appIntegrationValidation"
-        		//,"classpath:B2C"
-        		"classpath:communicationsValidation"
+        		"classpath:appIntegrationValidation"
+        		,"classpath:B2C"
+        		,"classpath:communicationsValidation"
         	)
         		.outputCucumberJson(true)
         		.outputJunitXml(true)

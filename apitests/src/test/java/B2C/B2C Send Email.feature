@@ -34,7 +34,7 @@ Feature: PLAT-878 Send Verification Email
 		* def randomSource = 
 			"""
 				function(){
-						var sourceList = ["gday_parks_app", "gday_parks_web", "park_web"]
+						var sourceList = ["dhp_web"]
 						var selectedSource = sourceList[Math.floor(Math.random() * sourceList.length)];
 						return selectedSource;
 				}
@@ -51,5 +51,3 @@ Feature: PLAT-878 Send Verification Email
     When method POST
     Then status 200
     * match response == structure
-    
-    

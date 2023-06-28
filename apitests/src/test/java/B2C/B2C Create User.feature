@@ -8,6 +8,7 @@ Feature: B2C Create User
     * def bearerToken = token
     * def Usercreated = read('../B2C/Usercreated.json')
     * def Usernotcreated = read('../B2C/Usernotcreated.json')
+   * def pwdUsernotCreated = read('../B2C/pwdUsernotCreated.json')
    * def random_email =
       """
       	function(s) {
@@ -104,7 +105,7 @@ Feature: B2C Create User
    """
     When method post
     Then status 400
-  * match response == Usernotcreated
+  * match response == pwdUsernotCreated
   
   
   Scenario: Create new user in B2C where the email used contains @discoveryparks.com.au
@@ -248,5 +249,5 @@ Feature: B2C Create User
     And request userRequest
     When method POST
     Then status 400
-    * match response == Usernotcreated
-    * match response.message == "Could not create user in B2C"
+    * match response == pwdUsernotCreated
+    

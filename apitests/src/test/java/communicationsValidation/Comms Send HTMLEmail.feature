@@ -23,13 +23,14 @@ Feature: Send Message to specific email address
   	# Set data variables.
   	* def structure = read('classpath:communicationsValidation/sendMessageStructure.json')
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
-  	* set sendMessageRequest.eventType = "DHP-Booking-Confirmation"
+  	* set sendMessageRequest.eventType = "booking_confirmation_email"
   	* set sendMessageRequest.sourceName = emailDetails.source
-  	* set sendMessageRequest.recipients[0].name = "Discovery Parks"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
   	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
   	* set sendMessageRequest.correlationId = emailId
   	* set sendMessageRequest.domainId = emailId
+  	* set sendMessageRequest.overrideSubject = "Hello " + emailDetails.email
   	* print sendMessageRequest
   	
   	# Send message request
@@ -50,10 +51,11 @@ Feature: Send Message to specific email address
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
   	* set sendMessageRequest.sourceName = null
   	* set sendMessageRequest.eventType = "DHP-Booking-Confirmation"
-  	* set sendMessageRequest.recipients[0].name = "Parkweb Dhp"
-  	* set sendMessageRequest.recipients[0].emailAddress = "Parkweb.Dhp@gmail.com"
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
+  	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
   	* set sendMessageRequest.correlationId = emailId
+  	* set sendMessageRequest.domainId = emailId
   	* print sendMessageRequest
   	
   	# Send message request
@@ -88,10 +90,11 @@ Feature: Send Message to specific email address
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
   	* set sendMessageRequest.sourceName = emailDetails.source
   	* set sendMessageRequest.eventType = null
-  	* set sendMessageRequest.recipients[0].name = "Parkweb Dhp"
-  	* set sendMessageRequest.recipients[0].emailAddress = "Parkweb.Dhp@gmail.com"
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
+  	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
   	* set sendMessageRequest.correlationId = emailId
+  	* set sendMessageRequest.domainId = emailId
   	* print sendMessageRequest
   	
   	# Send message request
@@ -154,11 +157,11 @@ Feature: Send Message to specific email address
   	
   	# Set data variables.
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
+  	* set sendMessageRequest.eventType = "booking_confirmation_email"
   	* set sendMessageRequest.sourceName = emailDetails.source
-  	* set sendMessageRequest.eventType = "DHP-Booking-Confirmation"
-  	* set sendMessageRequest.recipients[0].name = "Parkweb Dhp"
-  	* set sendMessageRequest.recipients[0].emailAddress = "Parkweb.Dhp@gmail.com"
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
+  	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
   	* set sendMessageRequest.correlationId = emailId
   	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'htmlEmail')
   	* print sendMessageRequest
@@ -271,11 +274,11 @@ Feature: Send Message to specific email address
   	# Set data variables.
   	* def structure = read('classpath:communicationsValidation/sendMessageStructure.json')
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
+  	* set sendMessageRequest.eventType = "booking_confirmation_email"
   	* set sendMessageRequest.sourceName = emailDetails.source
-  	* set sendMessageRequest.eventType = "DHP-Booking-Confirmation"
-  	* set sendMessageRequest.recipients[0].name = "Discovery Parks"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
   	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
   	* set sendMessageRequest.correlationId = emailId
   	* set sendMessageRequest.domainId = emailId
   	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'cc')
@@ -299,11 +302,11 @@ Feature: Send Message to specific email address
   	# Set data variables.
   	* def structure = read('classpath:communicationsValidation/sendMessageStructure.json')
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
+  	* set sendMessageRequest.eventType = "booking_confirmation_email"
   	* set sendMessageRequest.sourceName = emailDetails.source
-  	* set sendMessageRequest.eventType = "DHP-Booking-Confirmation"
-  	* set sendMessageRequest.recipients[0].name = "Discovery Parks"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
   	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
   	* set sendMessageRequest.correlationId = emailId
   	* set sendMessageRequest.domainId = emailId
   	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'fileAttachments')
@@ -326,11 +329,11 @@ Feature: Send Message to specific email address
   	# Set data variables.
   	* def structure = read('classpath:communicationsValidation/sendMessageStructure.json')
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
+  	* set sendMessageRequest.eventType = "booking_confirmation_email"
   	* set sendMessageRequest.sourceName = emailDetails.source
-  	* set sendMessageRequest.eventType = "DHP-Booking-Confirmation"
-  	* set sendMessageRequest.recipients[0].name = "Discovery Parks"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
   	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
   	* set sendMessageRequest.correlationId = emailId
   	* set sendMessageRequest.domainId = emailId
   	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'overrideSubject')
@@ -352,11 +355,11 @@ Feature: Send Message to specific email address
   	
   	# Set data variables.
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendHTMLEmail.json')
+  	* set sendMessageRequest.eventType = "booking_confirmation_email"
   	* set sendMessageRequest.sourceName = emailDetails.source
-  	* set sendMessageRequest.eventType = "DHP-Booking-Confirmation"
-  	* set sendMessageRequest.recipients[0].name = "Parkweb Dhp"
-  	* set sendMessageRequest.recipients[0].emailAddress = "Parkweb.Dhp@gmail.com"
-  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
+  	* set sendMessageRequest.recipients[0].firstName = "Discovery"
+  	* set sendMessageRequest.recipients[0].lastName = "Parks"
+  	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
   	* set sendMessageRequest.correlationId = emailId
   	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'domainType')
   	* print sendMessageRequest

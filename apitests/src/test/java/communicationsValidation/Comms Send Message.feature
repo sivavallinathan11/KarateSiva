@@ -547,7 +547,7 @@ Feature: Send Message to specific email address
     * print response
     * match response == "Event Not Found"
 
-  Scenario: PLAT-1872 Send request when recipient array is missing
+  Scenario: PLAT-1871 Send request when recipient array is missing
   	# Send email verification.
   	* def emailVerificationResult = call read('classpath:B2C/B2C Send Email.feature')
   	* def emailDetails = emailVerificationResult.emailRequest
@@ -634,3 +634,35 @@ Feature: Send Message to specific email address
 		  "traceId": "#string"
 		}
     """
+
+  Scenario: PLAT-2016 Send request where overrideChannel and overrideTemplateID value are set to null
+  	# Send email verification.
+  	* def emailVerificationResult = call read('classpath:B2C/B2C Send Email.feature')
+  	* def emailDetails = emailVerificationResult.emailRequest
+  	* def emailId = emailVerificationResult.response.Id
+  	
+  	# Set data variables.
+  	* def structure = read('classpath:communicationsValidation/sendMessageStructure.json')
+  	* def sendMessageRequest = read('classpath:communicationsValidation/sendMessage.json')
+  	* set sendMessageRequest.eventType = "AUTH_B2C_VerificationEmail"
+  	* set sendMessageRequest.sourceName = emailDetails.source
+  	* set sendMessageRequest.recipients[0].name = "Discovery Parks"
+  	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
+  	* set sendMessageRequest.recipients[0].mobileNumber = "09281777187"
+  	* set sendMessageRequest.dynamicPayload[0].attributeKey = "verification_code"
+  	* set sendMessageRequest.dynamicPayload[0].attributeValue = emailDetails.code
+  	* set sendMessageRequest.correlationId = emailId
+  	* set sendMessageRequest.domainId = "6f0498ec-ecef-4a1c-a9d8-58e1a6805ca2"
+  	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'cc')
+  	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'bcc')
+  	* set sendMessageRequest.OverrideChannel = null
+  	* set sendMessageRequest.OverrideTemplateId = null
+  	* print sendMessageRequest
+  	
+  	# Send message request
+  	Given path 'api/Messages/Send'
+    And request sendMessageRequest
+    When method POST
+    Then status 202
+    * print response
+    * match response == structure

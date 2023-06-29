@@ -104,7 +104,8 @@ Feature: B2C Create User
    """
     When method post
     Then status 400
-  * match response == Usernotcreated
+    * match response == Usernotcreated
+    * match response.message == "The password does not meet the password policy requirements."
   
   
   Scenario: Create new user in B2C where the email used contains @discoveryparks.com.au
@@ -145,6 +146,7 @@ Feature: B2C Create User
     When method post
     Then status 400
   * match response == Usernotcreated 
+  * match response.message == "Could not create user in B2C"
   
   
   Scenario: Create new user in B2C where the email name is set to null
@@ -249,4 +251,4 @@ Feature: B2C Create User
     When method POST
     Then status 400
     * match response == Usernotcreated
-    * match response.message == "Could not create user in B2C"
+    * match response.message == "The password does not meet the password policy requirements."

@@ -53,7 +53,7 @@ Feature: Send Message to specific email address
   	# Set data variables.
   	* def structure = read('classpath:communicationsValidation/sendMessageStructure.json')
   	* def sendMessageRequest = read('classpath:communicationsValidation/sendMessage.json')
-  	* set sendMessageRequest.eventType = "Test_Salesforce"
+  	* set sendMessageRequest.eventType = "gp_booking_confirmation_email"
   	* set sendMessageRequest.sourceName = emailDetails.source
   	* set sendMessageRequest.recipients[0].name = "Discovery Parks"
   	* set sendMessageRequest.recipients[0].emailAddress = emailDetails.email
@@ -61,7 +61,8 @@ Feature: Send Message to specific email address
   	* set sendMessageRequest.dynamicPayload[0].attributeKey = "verification_code"
   	* set sendMessageRequest.dynamicPayload[0].attributeValue = emailDetails.code
   	* set sendMessageRequest.correlationId = emailId
-  	* set sendMessageRequest.domainId = "708ee87b-7e7c-404b-8a59-051596901dba"
+  	* set sendMessageRequest.domainId = emailId
+  	* set sendMessageRequest.domainType = "booking"
   	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'cc')
   	* def sendMessageRequest = removeJsonObject(sendMessageRequest, 'bcc')
   	* print sendMessageRequest

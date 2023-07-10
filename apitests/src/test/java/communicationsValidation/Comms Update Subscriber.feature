@@ -79,17 +79,12 @@ Feature: Update subscriber details
     * match response == structure
 
   Scenario: PLAT-1996 Update subscriber when first name is missing
-  	# Send email verification.
-  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
-  	* print subscriberResult
-  	* def subscriberDetails = subscriberResult.subsRequest
-  	
   	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
   	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
-  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.source = "gday_parks_web"
   	* set subsRequest.lastName = "Updated_Parks"
-  	* set subsRequest.email = subscriberDetails.email
-  	* set subsRequest.mobile = subscriberDetails.mobile
+  	* set subsRequest.email = "dhprobot+3021319367@gmail.com"
+  	* set subsRequest.mobile = '0412345678'
   	* def subsRequest = removeJsonObject(subsRequest, 'firstName')
   	* print subsRequest
   	Given path 'api/Subscriber/Update'
@@ -114,17 +109,12 @@ Feature: Update subscriber details
     * match response.errors.firstName[0] == "The FirstName field is required."
 
   Scenario: PLAT-1997 Update subscriber when last name is missing
-  	# Send email verification.
-  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
-  	* print subscriberResult
-  	* def subscriberDetails = subscriberResult.subsRequest
-  	
   	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
   	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
-  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.source = "gday_parks_web"
   	* set subsRequest.firstName = "Updated_Discovery"
-  	* set subsRequest.email = subscriberDetails.email
-  	* set subsRequest.mobile = subscriberDetails.mobile
+  	* set subsRequest.email = "dhprobot+3021319367@gmail.com"
+  	* set subsRequest.mobile = '0412345678'
   	* def subsRequest = removeJsonObject(subsRequest, 'lastName')
   	* print subsRequest
   	Given path 'api/Subscriber/Update'
@@ -149,18 +139,13 @@ Feature: Update subscriber details
     * match response.errors.lastName[0] == "The LastName field is required."
 
   Scenario: PLAT-1998 Update subscriber when email is left blank
-  	# Send email verification.
-  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
-  	* print subscriberResult
-  	* def subscriberDetails = subscriberResult.subsRequest
-  	
   	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
   	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
-  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.source = "gday_parks_web"
   	* set subsRequest.firstName = "Updated_Discovery"
   	* set subsRequest.lastName = "Updated_Parks"
   	* set subsRequest.email = ""
-  	* set subsRequest.mobile = subscriberDetails.mobile
+  	* set subsRequest.mobile = '0412345678'
   	* print subsRequest
   	Given path 'api/Subscriber/Update'
     And request subsRequest
@@ -184,18 +169,13 @@ Feature: Update subscriber details
     * match response.errors.email[0] == "The Email field is required."
 
   Scenario: PLAT-2061 Update subscriber when source field is left blank
-  	# Send email verification.
-  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
-  	* print subscriberResult
-  	* def subscriberDetails = subscriberResult.subsRequest
-  	
   	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
   	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
   	* set subsRequest.source = ""
   	* set subsRequest.firstName = "Updated_Discovery"
   	* set subsRequest.lastName = "Updated_Parks"
-  	* set subsRequest.email = subscriberDetails.email
-  	* set subsRequest.mobile = subscriberDetails.mobile
+  	* set subsRequest.email = "dhprobot+3021319367@gmail.com"
+  	* set subsRequest.mobile = '0412345678'
   	* print subsRequest
   	Given path 'api/Subscriber/Update'
     And request subsRequest
@@ -231,6 +211,174 @@ Feature: Update subscriber details
   	* set subsRequest.lastName = "Updated_Parks"
   	* set subsRequest.email = subscriberDetails.email
   	* def subsRequest = removeJsonObject(subsRequest, 'mobile')
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2000 Update subscriber when optin_dhp_email is set to true
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_dhp_email = true
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2001 Update subscriber when optin_dhp_email is set to false
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_dhp_email = false
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2002 Update subscriber when optin_dhp_sms is set to true
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_dhp_sms = true
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2003 Update subscriber when optin_dhp_sms is set to false
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_dhp_sms = false
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2004 Update subscriber when optin_gday_email is set to true
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_gday_email = true
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2005 Update subscriber when optin_gday_email is set to false
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_gday_email = false
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2006 Update subscriber when optin_gday_sms is set to true
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_gday_sms = true
+  	* print subsRequest
+  	Given path 'api/Subscriber/Update'
+    And request subsRequest
+    When method POST
+    Then status 200
+    * print response
+    * match response == structure
+
+  Scenario: PLAT-2007 Update subscriber when optin_gday_sms is set to false
+  	# Send email verification.
+  	* def subscriberResult = call read('classpath:data/CommsSubscriberLookup.feature')
+  	* print subscriberResult
+  	* def subscriberDetails = subscriberResult.subsRequest
+  	
+  	* def structure = read('classpath:communicationsValidation/subscriberLookupStructure.json')
+  	* def subsRequest = read('classpath:communicationsValidation/updateSubscriber.json')
+  	* set subsRequest.source = subscriberDetails.source
+  	* set subsRequest.firstName = "Updated_Discovery"
+  	* set subsRequest.lastName = "Updated_Parks"
+  	* set subsRequest.email = subscriberDetails.email
+  	* set subsRequest.optin_gday_sms = false
   	* print subsRequest
   	Given path 'api/Subscriber/Update'
     And request subsRequest

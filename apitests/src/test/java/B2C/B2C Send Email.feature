@@ -13,7 +13,7 @@ Feature: PLAT-878 Send Verification Email
       		var pattern = "0123456789";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return ("dhprobot+" + text + domain).toString();
+      		return ("dhptestrobot+" + text + domain).toString();
       	}
       """
 	
@@ -34,7 +34,7 @@ Feature: PLAT-878 Send Verification Email
 		* def randomSource = 
 			"""
 				function(){
-						var sourceList = ["dhp_web"]
+						var sourceList = ["gday_parks_web"]
 						var selectedSource = sourceList[Math.floor(Math.random() * sourceList.length)];
 						return selectedSource;
 				}

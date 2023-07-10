@@ -34,4 +34,9 @@ public class B2CRunnerTest {
         return Karate.run("B2C Get UserType").relativeTo(getClass());
     }
 	
+	@Karate.Test
+    Karate B2CValidatePassword() {
+        return Karate.run("B2C Password Validation").relativeTo(getClass());
+    }
+	
 }

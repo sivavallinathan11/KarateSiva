@@ -41,7 +41,7 @@ Feature: Subscriber Lookup
   	* def subsRequest = read('classpath:communicationsValidation/subscriberLookup.json')
   	* set subsRequest.source = randomSource()
   	* set subsRequest.email = random_email(10, "@gmail.com")
-  	* set subsRequest.mobile = "09281777187"
+  	* set subsRequest.mobile = "0412345678"
   	* print subsRequest
   	Given path 'api/Subscriber/Lookup'
     And request subsRequest

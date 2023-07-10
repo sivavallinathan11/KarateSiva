@@ -18,7 +18,7 @@ Feature: PLAT-897 Get User
 	      		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	      		for (var i=0; i<s; i++)
 	      			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-	      		return "dhprobot+" + text + domain;
+	      		return "dhptestrobot+" + text + domain;
 	      	}
 	      """
 	

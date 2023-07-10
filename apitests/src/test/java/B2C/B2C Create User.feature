@@ -15,7 +15,7 @@ Feature: B2C Create User
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return "dhprobot+" + text + "@gmail.com";
+      		return "dhptestrobot+" + text + "@gmail.com";
       	}
       """
       * def random_discovery_email =
@@ -25,7 +25,7 @@ Feature: B2C Create User
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return "dhprobot+" + text + "@discoveryparks.com.au";
+      		return "dhptestrobot+" + text + "@discoveryparks.com.au";
       	}
       """
 	
@@ -88,25 +88,6 @@ Feature: B2C Create User
     When method post
     Then status 400
   * match response == Usernotcreated
-  
-  
-  Scenario: Create new user in B2C where password has not met the b2c password criteria
-    Given path 'api/User'
-     When request
-   """
-   {
-  "email": "dhprobo@ttestingnew4.com",
-  "givenName": "dhprobot new3test",
-  "familyName": "dhp new user3test",
-  "password": "password",
-  "source": "Gday"
-   }
-   """
-    When method post
-    Then status 400
-    * match response == Usernotcreated
-    * match response.message == "The password does not meet the password policy requirements."
-  
   
   Scenario: Create new user in B2C where the email used contains @discoveryparks.com.au
     Given path 'api/User'
@@ -234,21 +215,3 @@ Feature: B2C Create User
     * param email = new_email
     When method delete
     Then status 200
-
-  Scenario: Create a user where password is not alphanumeric [No number included]
-  	## Create B2C user that has DHP Domain
-  	* def userRequest = read('classpath:B2C/b2cCreateUser.json')
-  	* set userRequest.givenName =  "dhpuser" + randomString(6)
-  	* set userRequest.familyName = "dhprobotuser" + randomString(6)
-  	* set userRequest.source = "Gday"
-  	* set userRequest.email = email
-  	
-  	# Set password that does not have number
-  	* set userRequest.password = randomString(8)
-  	* print userRequest
-  	Given path 'api/User'
-    And request userRequest
-    When method POST
-    Then status 400
-    * match response == Usernotcreated
-    * match response.message == "The password does not meet the password policy requirements."

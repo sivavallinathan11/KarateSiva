@@ -17,7 +17,7 @@ Feature: PLAT-995 Get User type
       		var pattern = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       		for (var i=0; i<s; i++)
       			text += pattern.charAt(Math.floor(Math.random() * pattern.length()));
-      		return ("dhprobot+" + text + domain).toString();
+      		return ("dhptestrobot+" + text + domain).toString();
       	}
       """
 	

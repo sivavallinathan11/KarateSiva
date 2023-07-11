@@ -1,30 +1,39 @@
 {
     "id": "#uuid",
-    "correlationId": "#uuid",
-    "domainType": "#string",
-    "domainId": "#uuid",
-    "messageStatus": "#string",
-    "eventType": "#string",
-    "sourceName": "#string",
-    "messageType": "#string",
+    "correlationId": "##string",
+    "domainType": "##string",
+    "domainId": "##string",
+    "messageStatus": "##string",
+    "eventType": "##string",
+    "sourceName": "##string",
+    "messageType": "##string",
     "channels": [
         {
-            "channelType": "#string",
-            "channelReference": "#string",
-            "channelProvider": "#string",
-            "channelDeliveryStatus": "#string",
+        	"email": "##string",
+            "channelType": "##string",
+            "channelReference": "##string",
+            "channelProvider": "##string",
+            "channelDeliveryStatus": "##string",
+            "channelResponseCode": "##number",
+            "errorReason": "##string"
         },
         {
-            "channelType": "#string",
-            "channelReference": "#string",
-            "channelProvider": "#string",
-            "channelDeliveryStatus": "#string",
+        	"email": "##string",
+            "channelType": "##string",
+            "channelReference": "##string",
+            "channelProvider": "##string",
+            "channelDeliveryStatus": "##string",
+            "channelResponseCode": "##number",
+            "errorReason": "##string"
         },
         {
-            "channelType": "#string",
-            "channelReference": "#string",
-            "channelProvider": "#string",
-            "channelDeliveryStatus": "#string",
+        	"email": "##string",
+            "channelType": "##string",
+            "channelReference": "##string",
+            "channelProvider": "##string",
+            "channelDeliveryStatus": "##string",
+            "channelResponseCode": "##number",
+            "errorReason": "##string"
         }
     ]
 }

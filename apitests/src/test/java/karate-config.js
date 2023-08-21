@@ -54,7 +54,8 @@ function fn() {
 	    config.client_id = '6f68ae69-ab4a-4b49-9408-9bc48861b27d';
 	    config.client_secret = 'FxVjLVtOfrXgzfWEa1vcxP8+CKblEZJyI9j10EFum28=';
 	    config.resource = 'https://discoveryparks.com.au/prod-int-api-v1';
-}
+            config.b2cUrl = 'https://prod-authb2c-dhp-api-as.azurewebsites.net'
+} 
 
 
   // we don't have a mocked environment but it's here in case we want one

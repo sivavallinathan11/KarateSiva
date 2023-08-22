@@ -3,13 +3,8 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-schedules:
-- cron: '0 12 * * 0'
-  displayName: Weekly Sunday Test Run
-  branches:
-    include:
-    - main
-  always: true
+trigger:
+- main
 
 pool:
   vmImage: ubuntu-latest
